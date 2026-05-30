@@ -67,13 +67,13 @@ class AppTheme {
         ),
 
         bodyLarge: TextStyle(
-          color: AppColors.textSecondary,
+          color: AppColors.textPrimary,
           fontSize: 16,
           height: 1.5,
         ),
 
         bodyMedium: TextStyle(
-          color: AppColors.textSecondary,
+          color: AppColors.textPrimary,
           fontSize: 14,
           height: 1.5,
         ),
@@ -84,6 +84,10 @@ class AppTheme {
           fontWeight: FontWeight.w500,
         ),
       ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
     ),
 
     dividerColor: AppColors.divider,
