@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/features/onboarding/view_model/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
 
-class GoalScreen extends StatelessWidget {
+class GoalScreen extends ConsumerWidget {
   const GoalScreen({super.key});
-
   static const List<String> goals = [
     'Burn Fat',
-    'Lose Weight',
+    'Increase Mobility',
     'Tone Body',
     'Build Muscle',
-    'Increase Mobility',
+    'Lose Weight',
     'Daily Movement',
     'Sleep Better',
     'Cardio Fitness',
@@ -21,7 +22,9 @@ class GoalScreen extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final onboardingState = ref.watch(onboardingProvider);
+    final onboardingNotifier = ref.read(onboardingProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -31,28 +34,37 @@ class GoalScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 8),
-
-            /// Progress
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                6,
-                (index) => Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: index == 0 ? 28 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: index == 0
-                        ? colorScheme.primary
-                        : colorScheme.onSurface.withValues(alpha: 0.25),
-                    borderRadius: BorderRadius.circular(999),
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                  tooltip: 'Go back',
+                ),
+
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      6,
+                      (index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: index == 0 ? 8 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: index == 0
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.25),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
 
-            const SizedBox(height: 36),
+            const SizedBox(height: 10),
 
             Text(
               'Choose Your Goals',
@@ -62,7 +74,7 @@ class GoalScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 25),
 
             /// GOAL CHIPS
             Wrap(
@@ -70,28 +82,44 @@ class GoalScreen extends StatelessWidget {
               spacing: 12,
               runSpacing: 12,
               children: goals.map((goal) {
-                return ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minWidth: 120,
-                    maxWidth: 250,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
+                final isSelected = onboardingState.goalTags.contains(goal);
+                return GestureDetector(
+                  onTap: () {
+                    onboardingNotifier.toggleGoal(goal);
+                    print(onboardingState.goalTags);
+                    print(onboardingState.goalTags.length);
+                    print(onboardingState.customGoal);
+                  },
+
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: 120,
+                      maxWidth: 250,
                     ),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface.withValues(alpha: 0.7),
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(
-                        color: colorScheme.outline.withValues(alpha: 0.2),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
                       ),
-                    ),
-                    child: Text(
-                      goal,
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? colorScheme.primary.withValues(alpha: 0.1)
+                            : colorScheme.surface.withValues(alpha: 0.7),
+
+                        borderRadius: BorderRadius.circular(18),
+
+                        border: Border.all(
+                          color: isSelected
+                              ? colorScheme.primary
+                              : colorScheme.outline.withValues(alpha: 0.2),
+                        ),
+                      ),
+                      child: Text(
+                        goal,
+                        textAlign: TextAlign.center,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
@@ -102,6 +130,9 @@ class GoalScreen extends StatelessWidget {
             const SizedBox(height: 25),
 
             TextField(
+              onChanged: (value) {
+                onboardingNotifier.updateCustomGoal(value);
+              },
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: 'Any custom fitness goals',
