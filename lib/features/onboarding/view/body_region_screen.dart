@@ -1,0 +1,153 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/core/widgets/button_card.dart';
+
+import '../../../core/widgets/app_scaffold.dart';
+import '../view_model/onboarding_view_model.dart';
+
+class BodyRegionScreen extends ConsumerWidget {
+  const BodyRegionScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final onboardingState = ref.watch(onboardingProvider);
+
+    final onboardingNotifier = ref.read(onboardingProvider.notifier);
+
+    return AppScaffold(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            /// Progress
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                ),
+
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      6,
+                      (index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: index == 2
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.25),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              'What would you like to focus on most?',
+              textAlign: TextAlign.center,
+              style: textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+            ButtonCard(
+              title: 'Cardio and Endurance',
+              selected:
+                  onboardingState.targetbodyRegion?.contains(
+                    'Cardio and Endurance',
+                  ) ??
+                  false,
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion(
+                  'Cardio and Endurance',
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+
+            ButtonCard(
+              title: 'Upper Body',
+              selected:
+                  onboardingState.targetbodyRegion?.contains('Upper Body') ??
+                  false,
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion('Upper Body');
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            ButtonCard(
+              title: 'Core Strength',
+              selected:
+                  onboardingState.targetbodyRegion?.contains('Core Strength') ??
+                  false,
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion('Core Strength');
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            ButtonCard(
+              title: 'Lower Body',
+              selected:
+                  onboardingState.targetbodyRegion?.contains('Lower Body') ??
+                  false,
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion('Lower Body');
+              },
+            ),
+
+            const SizedBox(height: 20),
+            ButtonCard(
+              title: 'Mobility and Flexibility',
+              selected:
+                  onboardingState.targetbodyRegion?.contains(
+                    'Mobility and Flexibility',
+                  ) ??
+                  false,
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion(
+                  'Mobility and Flexibility',
+                );
+              },
+            ),
+
+            const Spacer(),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/onboarding/equipments');
+                },
+                child: const Text('Continue'),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+}

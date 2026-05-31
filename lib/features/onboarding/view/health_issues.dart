@@ -3,22 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter/features/onboarding/view_model/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
 
-class GoalScreen extends ConsumerWidget {
-  const GoalScreen({super.key});
-  static const List<String> goals = [
-    'Burn Fat',
-    'Increase Mobility',
-    'Tone Body',
-    'Build Muscle',
-    'Lose Weight',
-    'Daily Movement',
-    'Sleep Better',
-    'Cardio Fitness',
-    'Better Posture',
-    'Reduce Stress',
-    'Core Strength',
-    'Bodyweight Only',
-    'Improve Stamina and Strength',
+class HealthIssuesScreen extends ConsumerWidget {
+  const HealthIssuesScreen({super.key});
+  static const List<String> healthIssues = [
+    'Lower Back Pain',
+    'Ankle Pain',
+    'Poor Cardiovascular Endurance',
+    'Neck Stiffness',
+    'Hip Joint',
+    'Hamstring Tightness',
+    'Knee Pain',
+    'Low Flexibility',
+    'Tight Muscles',
+    'Shortness of Breath During Light Activity',
+    'Stress-Related Body Tension',
   ];
 
   @override
@@ -67,7 +65,7 @@ class GoalScreen extends ConsumerWidget {
             const SizedBox(height: 10),
 
             Text(
-              'Choose Your Goals',
+              'Choose Your Health Issues',
               textAlign: TextAlign.center,
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w700,
@@ -79,18 +77,20 @@ class GoalScreen extends ConsumerWidget {
             /// GOAL CHIPS
             Wrap(
               alignment: WrapAlignment.center,
-              spacing: 12,
+              spacing: 10,
               runSpacing: 12,
-              children: goals.map((goal) {
-                final isSelected = onboardingState.goalTags.contains(goal);
+              children: healthIssues.map((issues) {
+                final isSelected = onboardingState.healthIssueTags.contains(
+                  issues,
+                );
                 return GestureDetector(
                   onTap: () {
-                    onboardingNotifier.toggleGoal(goal);
+                    onboardingNotifier.toggleHealthIssue(issues);
                   },
 
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
-                      minWidth: 120,
+                      minWidth: 50,
                       maxWidth: 250,
                     ),
                     child: Container(
@@ -112,7 +112,7 @@ class GoalScreen extends ConsumerWidget {
                         ),
                       ),
                       child: Text(
-                        goal,
+                        issues,
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w500,
@@ -128,11 +128,11 @@ class GoalScreen extends ConsumerWidget {
 
             TextField(
               onChanged: (value) {
-                onboardingNotifier.updateCustomGoal(value);
+                onboardingNotifier.updateCustomHealthIssue(value);
               },
               maxLines: 1,
               decoration: InputDecoration(
-                hintText: 'Any custom fitness goals',
+                hintText: 'Any custom health issues',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -145,7 +145,7 @@ class GoalScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/onboarding/health-issues');
+                  Navigator.of(context).pushNamed('/onboarding/difficulty');
                 },
                 child: const Text('Continue'),
               ),
