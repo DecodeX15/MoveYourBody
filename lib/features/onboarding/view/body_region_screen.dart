@@ -66,10 +66,9 @@ class BodyRegionScreen extends ConsumerWidget {
             ButtonCard(
               title: 'Cardio and Endurance',
               selected:
-                  onboardingState.targetbodyRegion?.contains(
+                  onboardingState.targetbodyRegion.contains(
                     'Cardio and Endurance',
-                  ) ??
-                  false,
+                  ),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion(
@@ -81,9 +80,7 @@ class BodyRegionScreen extends ConsumerWidget {
 
             ButtonCard(
               title: 'Upper Body',
-              selected:
-                  onboardingState.targetbodyRegion?.contains('Upper Body') ??
-                  false,
+              selected: onboardingState.targetbodyRegion.contains('Upper Body'),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion('Upper Body');
@@ -94,9 +91,9 @@ class BodyRegionScreen extends ConsumerWidget {
 
             ButtonCard(
               title: 'Core Strength',
-              selected:
-                  onboardingState.targetbodyRegion?.contains('Core Strength') ??
-                  false,
+              selected: onboardingState.targetbodyRegion.contains(
+                'Core Strength',
+              ),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion('Core Strength');
@@ -107,9 +104,7 @@ class BodyRegionScreen extends ConsumerWidget {
 
             ButtonCard(
               title: 'Lower Body',
-              selected:
-                  onboardingState.targetbodyRegion?.contains('Lower Body') ??
-                  false,
+              selected: onboardingState.targetbodyRegion.contains('Lower Body'),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion('Lower Body');
@@ -119,11 +114,9 @@ class BodyRegionScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             ButtonCard(
               title: 'Mobility and Flexibility',
-              selected:
-                  onboardingState.targetbodyRegion?.contains(
-                    'Mobility and Flexibility',
-                  ) ??
-                  false,
+              selected: onboardingState.targetbodyRegion.contains(
+                'Mobility and Flexibility',
+              ),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion(
