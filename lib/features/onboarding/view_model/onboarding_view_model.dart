@@ -68,16 +68,16 @@ class OnboardingViewModel extends Notifier<OnboardingState> {
     state = state.copyWith(username: username);
   }
 
-  void setAge(int age) {
-    state = state.copyWith(age: age);
-  }
-
-  void setWeight(double weight) {
+  void setWeight(double? weight) {
     state = state.copyWith(weight: weight);
   }
 
-  void setHeight(double height) {
+  void setHeight(double? height) {
     state = state.copyWith(height: height);
+  }
+
+  void setAge(int? age) {
+    state = state.copyWith(age: age);
   }
 }
 

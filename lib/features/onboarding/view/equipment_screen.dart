@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter/core/widgets/button_card.dart';
+import 'package:template_flutter/core/widgets/onboarding_progress.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -10,7 +11,6 @@ class EquipmentScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     final onboardingState = ref.watch(onboardingProvider);
@@ -23,36 +23,7 @@ class EquipmentScreen extends ConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              /// Progress
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
-                    icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                  ),
-
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        6,
-                        (index) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: index == 2
-                                ? colorScheme.primary
-                                : colorScheme.onSurface.withValues(alpha: 0.25),
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
+              const OnboardingProgress(currentStep: 5),
               const SizedBox(height: 10),
 
               Text(

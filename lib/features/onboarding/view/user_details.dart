@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/core/widgets/app_toast.dart';
+import 'package:template_flutter/core/widgets/onboarding_progress.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -10,8 +12,7 @@ class UserdataScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
-
-    final colorScheme = Theme.of(context).colorScheme;
+    final onboardingState = ref.watch(onboardingProvider);
     final textTheme = Theme.of(context).textTheme;
 
     return AppScaffold(
@@ -20,39 +21,11 @@ class UserdataScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                ),
-
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      6,
-                      (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: index == 5
-                              ? colorScheme.primary
-                              : colorScheme.onSurface.withValues(alpha: 0.25),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 24),
+            const OnboardingProgress(currentStep: 6),
+            const SizedBox(height: 10),
 
             Text(
-              'A few details about you',
+              'Let\'s personalize your fitness journey',
               textAlign: TextAlign.center,
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w700,
@@ -76,11 +49,7 @@ class UserdataScreen extends ConsumerWidget {
             TextField(
               keyboardType: TextInputType.number,
               onChanged: (value) {
-                final weight = double.tryParse(value);
-
-                if (weight != null) {
-                  onboardingNotifier.setWeight(weight);
-                }
+                onboardingNotifier.setWeight(double.tryParse(value));
               },
               decoration: InputDecoration(
                 hintText: 'Weight (kg)',
@@ -95,11 +64,7 @@ class UserdataScreen extends ConsumerWidget {
             TextField(
               keyboardType: TextInputType.number,
               onChanged: (value) {
-                final height = double.tryParse(value);
-
-                if (height != null) {
-                  onboardingNotifier.setHeight(height);
-                }
+                onboardingNotifier.setHeight(double.tryParse(value));
               },
               decoration: InputDecoration(
                 hintText: 'Height (cm)',
@@ -114,11 +79,7 @@ class UserdataScreen extends ConsumerWidget {
             TextField(
               keyboardType: TextInputType.number,
               onChanged: (value) {
-                final age = int.tryParse(value);
-
-                if (age != null) {
-                  onboardingNotifier.setAge(age);
-                }
+                onboardingNotifier.setAge(int.tryParse(value));
               },
               decoration: InputDecoration(
                 hintText: 'Age',
@@ -134,7 +95,15 @@ class UserdataScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/onboarding/result');
+                  if (onboardingState.username?.trim().isEmpty != false ||
+                      onboardingState.weight == null ||
+                      onboardingState.height == null ||
+                      onboardingState.age == null) {
+                    AppToast.show(context, 'Please fill in all fields');
+                    return;
+                  } else {
+                    Navigator.pushNamed(context, '/onboarding/result');
+                  }
                 },
                 child: const Text('Continue'),
               ),

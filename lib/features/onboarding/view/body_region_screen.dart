@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/core/widgets/app_toast.dart';
 import 'package:template_flutter/core/widgets/button_card.dart';
+import 'package:template_flutter/core/widgets/onboarding_progress.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -10,7 +12,6 @@ class BodyRegionScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     final onboardingState = ref.watch(onboardingProvider);
@@ -22,36 +23,7 @@ class BodyRegionScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            /// Progress
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                ),
-
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      6,
-                      (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: index == 2
-                              ? colorScheme.primary
-                              : colorScheme.onSurface.withValues(alpha: 0.25),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
+            const OnboardingProgress(currentStep: 4),
             const SizedBox(height: 10),
 
             Text(
@@ -65,10 +37,9 @@ class BodyRegionScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             ButtonCard(
               title: 'Cardio and Endurance',
-              selected:
-                  onboardingState.targetbodyRegion.contains(
-                    'Cardio and Endurance',
-                  ),
+              selected: onboardingState.targetbodyRegion.contains(
+                'Cardio and Endurance',
+              ),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion(
@@ -131,7 +102,15 @@ class BodyRegionScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/onboarding/equipments');
+                  if (onboardingState.targetbodyRegion.isEmpty) {
+                    AppToast.show(
+                      context,
+                      'Please select atleast one target body region',
+                    );
+                    return;
+                  } else {
+                    Navigator.pushNamed(context, '/onboarding/equipments');
+                  }
                 },
                 child: const Text('Continue'),
               ),
