@@ -13,16 +13,17 @@ class BodyRegionScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final onboardingState = ref.watch(onboardingProvider);
+    final selectedBodyRegions = ref.watch(
+      onboardingProvider.select((state) => state.targetbodyRegion),
+    );
 
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
 
     return AppScaffold(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            /// Progress
             Row(
               children: [
                 IconButton(
@@ -65,10 +66,7 @@ class BodyRegionScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             ButtonCard(
               title: 'Cardio and Endurance',
-              selected:
-                  onboardingState.targetbodyRegion.contains(
-                    'Cardio and Endurance',
-                  ),
+              selected: selectedBodyRegions.contains('Cardio and Endurance'),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion(
@@ -80,7 +78,7 @@ class BodyRegionScreen extends ConsumerWidget {
 
             ButtonCard(
               title: 'Upper Body',
-              selected: onboardingState.targetbodyRegion.contains('Upper Body'),
+              selected: selectedBodyRegions.contains('Upper Body'),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion('Upper Body');
@@ -91,9 +89,7 @@ class BodyRegionScreen extends ConsumerWidget {
 
             ButtonCard(
               title: 'Core Strength',
-              selected: onboardingState.targetbodyRegion.contains(
-                'Core Strength',
-              ),
+              selected: selectedBodyRegions.contains('Core Strength'),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion('Core Strength');
@@ -104,7 +100,7 @@ class BodyRegionScreen extends ConsumerWidget {
 
             ButtonCard(
               title: 'Lower Body',
-              selected: onboardingState.targetbodyRegion.contains('Lower Body'),
+              selected: selectedBodyRegions.contains('Lower Body'),
               titleFontSize: 20,
               onTap: () {
                 onboardingNotifier.toggleTargetBodyRegion('Lower Body');
@@ -114,7 +110,7 @@ class BodyRegionScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             ButtonCard(
               title: 'Mobility and Flexibility',
-              selected: onboardingState.targetbodyRegion.contains(
+              selected: selectedBodyRegions.contains(
                 'Mobility and Flexibility',
               ),
               titleFontSize: 20,
@@ -125,7 +121,7 @@ class BodyRegionScreen extends ConsumerWidget {
               },
             ),
 
-            const Spacer(),
+            const SizedBox(height: 50),
 
             SizedBox(
               width: double.infinity,
@@ -137,7 +133,7 @@ class BodyRegionScreen extends ConsumerWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
           ],
         ),
       ),

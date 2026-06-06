@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template_flutter/core/widgets/app_scaffold.dart';
-import './widgets/featurechip.dart';
+import '../../../core/widgets/featurechip.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
