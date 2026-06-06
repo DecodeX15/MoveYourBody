@@ -13,7 +13,9 @@ class DifficultyScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final onboardingState = ref.watch(onboardingProvider);
+    final selectedDifficulty = ref.watch(
+      onboardingProvider.select((state) => state.difficulty),
+    );
 
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
 
@@ -68,7 +70,7 @@ class DifficultyScreen extends ConsumerWidget {
               title: 'Beginner',
               subtitle:
                   'New to fitness, rarely exercise or returning after a long break.',
-              selected: onboardingState.difficulty == 'Beginner',
+              selected: selectedDifficulty == 'Beginner',
               onTap: () {
                 onboardingNotifier.setDifficulty('Beginner');
               },
@@ -80,7 +82,7 @@ class DifficultyScreen extends ConsumerWidget {
               title: 'Intermediate',
               subtitle:
                   'Exercise regularly and have a basic fitness foundation.',
-              selected: onboardingState.difficulty == 'Intermediate',
+              selected: selectedDifficulty == 'Intermediate',
               onTap: () {
                 onboardingNotifier.setDifficulty('Intermediate');
               },
@@ -92,7 +94,7 @@ class DifficultyScreen extends ConsumerWidget {
               title: 'Advanced',
               subtitle:
                   'Train consistently with strong endurance and strength.',
-              selected: onboardingState.difficulty == 'Advanced',
+              selected: selectedDifficulty == 'Advanced',
               onTap: () {
                 onboardingNotifier.setDifficulty('Advanced');
               },

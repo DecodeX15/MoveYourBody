@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter/features/onboarding/view_model/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
+import '../../../core/widgets/featurechip.dart';
 
 class HealthIssuesScreen extends ConsumerWidget {
   const HealthIssuesScreen({super.key});
@@ -21,7 +22,9 @@ class HealthIssuesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final onboardingState = ref.watch(onboardingProvider);
+    final selectedHealthIssues = ref.watch(
+      onboardingProvider.select((state) => state.healthIssueTags),
+    );
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -80,46 +83,14 @@ class HealthIssuesScreen extends ConsumerWidget {
               spacing: 10,
               runSpacing: 12,
               children: healthIssues.map((issues) {
-                final isSelected = onboardingState.healthIssueTags.contains(
-                  issues,
-                );
-                return GestureDetector(
+                final isSelected = selectedHealthIssues.contains(issues);
+                return FeatureChip(
+                  text: issues,
+                  selected: isSelected,
+                  minWidth: 50,
                   onTap: () {
                     onboardingNotifier.toggleHealthIssue(issues);
                   },
-
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minWidth: 50,
-                      maxWidth: 250,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? colorScheme.primary.withValues(alpha: 0.1)
-                            : colorScheme.surface.withValues(alpha: 0.7),
-
-                        borderRadius: BorderRadius.circular(18),
-
-                        border: Border.all(
-                          color: isSelected
-                              ? colorScheme.primary
-                              : colorScheme.outline.withValues(alpha: 0.2),
-                        ),
-                      ),
-                      child: Text(
-                        issues,
-                        textAlign: TextAlign.center,
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
                 );
               }).toList(),
             ),

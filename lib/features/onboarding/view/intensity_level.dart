@@ -13,7 +13,9 @@ class IntensityScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final onboardingState = ref.watch(onboardingProvider);
+    final selectedIntensity = ref.watch(
+      onboardingProvider.select((state) => state.intensity),
+    );
 
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
 
@@ -68,7 +70,7 @@ class IntensityScreen extends ConsumerWidget {
               title: 'Light',
               subtitle:
                   'Easy-paced workouts focused on mobility, consistency, and recovery.',
-              selected: onboardingState.intensity == 'Light',
+              selected: selectedIntensity == 'Light',
               onTap: () {
                 onboardingNotifier.setIntensity('Light');
               },
@@ -80,7 +82,7 @@ class IntensityScreen extends ConsumerWidget {
               title: 'Moderate',
               subtitle:
                   'Balanced challenge to improve endurance, fitness and strength.',
-              selected: onboardingState.intensity == 'Moderate',
+              selected: selectedIntensity == 'Moderate',
               onTap: () {
                 onboardingNotifier.setIntensity('Moderate');
               },
@@ -92,7 +94,7 @@ class IntensityScreen extends ConsumerWidget {
               title: 'High',
               subtitle:
                   'Demanding sessions designed to maximize performance and results.',
-              selected: onboardingState.intensity == 'High',
+              selected: selectedIntensity == 'High',
               onTap: () {
                 onboardingNotifier.setIntensity('High');
               },

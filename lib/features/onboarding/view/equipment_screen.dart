@@ -13,7 +13,9 @@ class EquipmentScreen extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final onboardingState = ref.watch(onboardingProvider);
+    final selectedEquipments = ref.watch(
+      onboardingProvider.select((state) => state.equipments),
+    );
 
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
 
@@ -66,7 +68,7 @@ class EquipmentScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               ButtonCard(
                 title: 'Yoga Mat',
-                selected: onboardingState.equipments.contains('Yoga Mat'),
+                selected: selectedEquipments.contains('Yoga Mat'),
                 titleFontSize: 20,
                 onTap: () {
                   onboardingNotifier.toggleEquipment('Yoga Mat');
@@ -76,7 +78,7 @@ class EquipmentScreen extends ConsumerWidget {
 
               ButtonCard(
                 title: 'Dumbbells',
-                selected: onboardingState.equipments.contains('Dumbbells'),
+                selected: selectedEquipments.contains('Dumbbells'),
                 titleFontSize: 20,
                 onTap: () {
                   onboardingNotifier.toggleEquipment('Dumbbells');
@@ -87,9 +89,7 @@ class EquipmentScreen extends ConsumerWidget {
 
               ButtonCard(
                 title: 'Resistance Bands',
-                selected: onboardingState.equipments.contains(
-                  'Resistance Bands',
-                ),
+                selected: selectedEquipments.contains('Resistance Bands'),
                 titleFontSize: 20,
                 onTap: () {
                   onboardingNotifier.toggleEquipment('Resistance Bands');
@@ -100,7 +100,7 @@ class EquipmentScreen extends ConsumerWidget {
 
               ButtonCard(
                 title: 'Pull-Up Bar',
-                selected: onboardingState.equipments.contains('Pull-Up Bar'),
+                selected: selectedEquipments.contains('Pull-Up Bar'),
                 titleFontSize: 20,
                 onTap: () {
                   onboardingNotifier.toggleEquipment('Pull-Up Bar');
@@ -110,9 +110,7 @@ class EquipmentScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               ButtonCard(
                 title: 'Yoga Blocks and Belts ',
-                selected: onboardingState.equipments.contains(
-                  'Yoga Blocks and Belts ',
-                ),
+                selected: selectedEquipments.contains('Yoga Blocks and Belts '),
                 titleFontSize: 20,
                 onTap: () {
                   onboardingNotifier.toggleEquipment('Yoga Blocks and Belts ');
@@ -122,7 +120,7 @@ class EquipmentScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               ButtonCard(
                 title: 'Exercise Bench',
-                selected: onboardingState.equipments.contains('Exercise Bench'),
+                selected: selectedEquipments.contains('Exercise Bench'),
                 titleFontSize: 20,
                 onTap: () {
                   onboardingNotifier.toggleEquipment('Exercise Bench');

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      initialRoute: '/welcome',
+      initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/onboarding/goals': (context) => const GoalScreen(),

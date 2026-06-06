@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
@@ -75,15 +76,19 @@ class UserdataScreen extends ConsumerWidget {
 
             TextField(
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+              ],
               onChanged: (value) {
                 final weight = double.tryParse(value);
 
-                if (weight != null) {
+                if (weight != null && weight > 0 && weight <= 500) {
                   onboardingNotifier.setWeight(weight);
                 }
               },
               decoration: InputDecoration(
                 hintText: 'Weight (kg)',
+                helperText: '1 - 500 kg',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -94,15 +99,19 @@ class UserdataScreen extends ConsumerWidget {
 
             TextField(
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+              ],
               onChanged: (value) {
                 final height = double.tryParse(value);
 
-                if (height != null) {
+                if (height != null && height > 50 && height <= 250) {
                   onboardingNotifier.setHeight(height);
                 }
               },
               decoration: InputDecoration(
                 hintText: 'Height (cm)',
+                helperText: '50 - 250 cm',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -113,22 +122,26 @@ class UserdataScreen extends ConsumerWidget {
 
             TextField(
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               onChanged: (value) {
                 final age = int.tryParse(value);
 
-                if (age != null) {
+                if (age != null && age > 0 && age <= 150) {
                   onboardingNotifier.setAge(age);
                 }
               },
               decoration: InputDecoration(
                 hintText: 'Age',
+                helperText: '1 - 150 years',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
 
             SizedBox(
               width: double.infinity,
@@ -139,6 +152,8 @@ class UserdataScreen extends ConsumerWidget {
                 child: const Text('Continue'),
               ),
             ),
+            const SizedBox(height: 40),
+
           ],
         ),
       ),
