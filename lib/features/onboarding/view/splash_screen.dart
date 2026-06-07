@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:template_flutter/features/onboarding/repository/user_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/core/service/seed_service.dart';
 
-class SplashScreen extends StatefulWidget {
+import '../repository/user_repository.dart';
+import '../view_model/onboarding_view_model.dart';
+
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -17,7 +21,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _checkUser() async {
     final user = await UserRepository().getUserData();
+    await SeedService().seedExercises();
     print('USER: ${user?.isOnboarded}');
+
+    if (user != null) {
+      ref.read(onboardingProvider.notifier).loadFromUserData(user);
+    }
+
     if (!mounted) return;
 
     Navigator.pushReplacementNamed(

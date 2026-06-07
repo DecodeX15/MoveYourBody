@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/core/model/user_data.dart';
 import '../model/onboarding_state.dart';
 
 class OnboardingViewModel extends Notifier<OnboardingState> {
@@ -78,6 +79,23 @@ class OnboardingViewModel extends Notifier<OnboardingState> {
 
   void setHeight(double height) {
     state = state.copyWith(height: height);
+  }
+
+  void loadFromUserData(UserData user) {
+    state = state.copyWith(
+      username: user.username,
+      age: user.age,
+      height: user.height,
+      weight: user.weight,
+      goalTags: user.goalTags.toSet(),
+      customGoal: user.customGoal,
+      healthIssueTags: user.healthIssueTags.toSet(),
+      customHealthIssue: user.customHealthIssue,
+      difficulty: user.difficulty,
+      intensity: user.intensity,
+      targetbodyRegion: user.targetBodyRegion.toSet(),
+      equipments: user.equipments.toSet(),
+    );
   }
 }
 
