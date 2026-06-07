@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:template_flutter/core/widgets/app_scaffold.dart';
-import '../../../core/widgets/featurechip.dart';
+import 'package:go_router/go_router.dart';
+import 'package:move_your_body/core/widgets/app_scaffold.dart';
+import '../../../core/widgets/feature_chip.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -116,7 +117,7 @@ class WelcomeScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/onboarding/goals');
+                      context.push('/onboarding/goals');
                     },
                     child: const Text('Get Started'),
                   ),

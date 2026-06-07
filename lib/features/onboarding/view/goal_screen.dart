@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_flutter/features/onboarding/view_model/onboarding_view_model.dart';
+import 'package:move_your_body/features/onboarding/view_model/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
-import '../../../core/widgets/featurechip.dart';
-
+import '../../../core/widgets/feature_chip.dart';
+import 'package:go_router/go_router.dart';
 class GoalScreen extends ConsumerWidget {
   const GoalScreen({super.key});
   static const List<String> goals = [
@@ -25,9 +25,9 @@ class GoalScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedGoals = ref.watch(
-      onboardingProvider.select((state) => state.goalTags),
+      onboardingViewModelProvider.select((state) => state.goalTags),
     );
-    final onboardingNotifier = ref.read(onboardingProvider.notifier);
+    final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -40,7 +40,7 @@ class GoalScreen extends ConsumerWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
+                  onPressed: () => context.pop(),
                   icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   tooltip: 'Go back',
                 ),
@@ -117,7 +117,7 @@ class GoalScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/onboarding/health-issues');
+                  context.push('/onboarding/health-issues');
                 },
                 child: const Text('Continue'),
               ),
