@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/core/routing/app_routes.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -146,7 +147,7 @@ class UserdataScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  context.push('/onboarding/result');
+                  context.push(AppRoutes.result);
                 },
                 child: const Text('Continue'),
               ),
