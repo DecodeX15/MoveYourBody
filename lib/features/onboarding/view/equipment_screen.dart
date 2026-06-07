@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_flutter/core/widgets/button_card.dart';
+import 'package:move_your_body/core/widgets/button_card.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -14,10 +15,10 @@ class EquipmentScreen extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final selectedEquipments = ref.watch(
-      onboardingProvider.select((state) => state.equipments),
+      onboardingViewModelProvider.select((state) => state.equipments),
     );
 
-    final onboardingNotifier = ref.read(onboardingProvider.notifier);
+    final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
 
     return AppScaffold(
       child: Padding(
@@ -29,7 +30,7 @@ class EquipmentScreen extends ConsumerWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
+                    onPressed: () => context.pop(),
                     icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   ),
 
@@ -132,7 +133,7 @@ class EquipmentScreen extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/onboarding/userdata');
+                    context.push('/onboarding/userdata');
                   },
                   child: const Text('Continue'),
                 ),

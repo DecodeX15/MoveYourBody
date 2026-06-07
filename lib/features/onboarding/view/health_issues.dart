@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_flutter/features/onboarding/view_model/onboarding_view_model.dart';
+import 'package:go_router/go_router.dart';
+import 'package:move_your_body/features/onboarding/view_model/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
-import '../../../core/widgets/featurechip.dart';
+import '../../../core/widgets/feature_chip.dart';
 
 class HealthIssuesScreen extends ConsumerWidget {
   const HealthIssuesScreen({super.key});
@@ -23,9 +24,9 @@ class HealthIssuesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedHealthIssues = ref.watch(
-      onboardingProvider.select((state) => state.healthIssueTags),
+      onboardingViewModelProvider.select((state) => state.healthIssueTags),
     );
-    final onboardingNotifier = ref.read(onboardingProvider.notifier);
+    final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -38,7 +39,7 @@ class HealthIssuesScreen extends ConsumerWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
+                  onPressed: () => context.pop(),
                   icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   tooltip: 'Go back',
                 ),
@@ -87,7 +88,6 @@ class HealthIssuesScreen extends ConsumerWidget {
                 return FeatureChip(
                   text: issues,
                   selected: isSelected,
-                  minWidth: 50,
                   onTap: () {
                     onboardingNotifier.toggleHealthIssue(issues);
                   },
@@ -116,7 +116,7 @@ class HealthIssuesScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/onboarding/difficulty');
+                  context.push('/onboarding/difficulty');
                 },
                 child: const Text('Continue'),
               ),

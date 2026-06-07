@@ -12,7 +12,7 @@ class ResultScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(onboardingProvider);
+    final state = ref.watch(onboardingViewModelProvider);
 
     return AppScaffold(
       child: SingleChildScrollView(
@@ -86,7 +86,7 @@ class ResultScreen extends ConsumerWidget {
 
             _DataTile(
               title: 'Target Body Region',
-              value: state.targetbodyRegion.join(', '),
+              value: state.targetBodyRegion.join(', '),
             ),
 
             _DataTile(
