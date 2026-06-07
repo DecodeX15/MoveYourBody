@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_flutter/core/widgets/button_card.dart';
+import 'package:go_router/go_router.dart';
+import 'package:move_your_body/core/widgets/button_card.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -14,10 +15,10 @@ class BodyRegionScreen extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final selectedBodyRegions = ref.watch(
-      onboardingProvider.select((state) => state.targetbodyRegion),
+      onboardingViewModelProvider.select((state) => state.targetBodyRegion),
     );
 
-    final onboardingNotifier = ref.read(onboardingProvider.notifier);
+    final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
 
     return AppScaffold(
       child: SingleChildScrollView(
@@ -27,7 +28,7 @@ class BodyRegionScreen extends ConsumerWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
+                  onPressed: () => context.pop(),
                   icon: const Icon(Icons.arrow_back_ios_new_rounded),
                 ),
 
@@ -127,7 +128,7 @@ class BodyRegionScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/onboarding/equipments');
+                  context.push('/onboarding/equipments');
                 },
                 child: const Text('Continue'),
               ),

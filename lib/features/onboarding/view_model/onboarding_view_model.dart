@@ -1,10 +1,13 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/onboarding_state.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../model/onboarding_data.dart';
 
-class OnboardingViewModel extends Notifier<OnboardingState> {
+part 'onboarding_view_model.g.dart';
+
+@riverpod
+class OnboardingViewModel extends _$OnboardingViewModel {
   @override
-  OnboardingState build() {
-    return const OnboardingState();
+  OnboardingData build() {
+    return const OnboardingData();
   }
 
   void toggleGoal(String goal) {
@@ -45,13 +48,13 @@ class OnboardingViewModel extends Notifier<OnboardingState> {
   }
 
   void toggleTargetBodyRegion(String region) {
-    final updatedRegions = Set<String>.from(state.targetbodyRegion);
+    final updatedRegions = Set<String>.from(state.targetBodyRegion);
     if (updatedRegions.contains(region)) {
       updatedRegions.remove(region);
     } else {
       updatedRegions.add(region);
     }
-    state = state.copyWith(targetbodyRegion: updatedRegions);
+    state = state.copyWith(targetBodyRegion: updatedRegions);
   }
 
   void toggleEquipment(String equipment) {
@@ -81,7 +84,3 @@ class OnboardingViewModel extends Notifier<OnboardingState> {
   }
 }
 
-final onboardingProvider =
-    NotifierProvider<OnboardingViewModel, OnboardingState>(
-      OnboardingViewModel.new,
-    );
