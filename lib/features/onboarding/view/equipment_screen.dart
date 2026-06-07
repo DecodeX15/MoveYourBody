@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:move_your_body/core/routing/app_routes.dart';
 import 'package:move_your_body/core/widgets/button_card.dart';
 import 'package:go_router/go_router.dart';
 
@@ -133,7 +134,7 @@ class EquipmentScreen extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    context.push('/onboarding/userdata');
+                    context.push(AppRoutes.userData);
                   },
                   child: const Text('Continue'),
                 ),

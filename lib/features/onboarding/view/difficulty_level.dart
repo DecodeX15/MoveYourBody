@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:move_your_body/core/routing/app_routes.dart';
 import 'package:move_your_body/core/widgets/button_card.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/widgets/app_scaffold.dart';
@@ -106,7 +107,7 @@ class DifficultyScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  context.push('/onboarding/intensity');
+                  context.push(AppRoutes.intensity);
                 },
                 child: const Text('Continue'),
               ),

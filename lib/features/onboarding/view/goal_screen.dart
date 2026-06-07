@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:move_your_body/core/routing/app_routes.dart';
 import 'package:move_your_body/features/onboarding/view_model/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/feature_chip.dart';
 import 'package:go_router/go_router.dart';
+
 class GoalScreen extends ConsumerWidget {
   const GoalScreen({super.key});
   static const List<String> goals = [
@@ -117,7 +119,7 @@ class GoalScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
-                  context.push('/onboarding/health-issues');
+                  context.push(AppRoutes.healthIssues);
                 },
                 child: const Text('Continue'),
               ),
