@@ -6,6 +6,7 @@ import 'package:template_flutter/features/onboarding/view/goal_screen.dart';
 import 'package:template_flutter/features/onboarding/view/health_issues.dart';
 import 'package:template_flutter/features/onboarding/view/intensity_level.dart';
 import 'package:template_flutter/features/onboarding/view/resultscreen.dart';
+import 'package:template_flutter/features/onboarding/view/splash_screen.dart';
 import 'package:template_flutter/features/onboarding/view/user_details.dart';
 
 import 'core/theme/app_themes.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.darkTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomeScreen(),
+        '/': (context) => const SplashScreen(),
+        '/onboarding/welcome': (context) => const WelcomeScreen(),
         '/onboarding/goals': (context) => const GoalScreen(),
         '/onboarding/health-issues': (context) => const HealthIssuesScreen(),
         '/onboarding/difficulty': (context) => const DifficultyScreen(),

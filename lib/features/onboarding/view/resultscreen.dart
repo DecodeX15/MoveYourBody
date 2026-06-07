@@ -1,9 +1,9 @@
 // this file to just that what we are collection for onboarding and then we will use this data to show the result in the result screen
-// after mentor review this will be removed 
+// after mentor review this will be removed
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../repository/user_repository.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
 
@@ -25,10 +25,7 @@ class ResultScreen extends ConsumerWidget {
             const Center(
               child: Text(
                 'Collected Onboarding Data',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
             ),
 
@@ -39,30 +36,15 @@ class ResultScreen extends ConsumerWidget {
               value: state.username?.toString() ?? '',
             ),
 
-            _DataTile(
-              title: 'Age',
-              value: state.age?.toString() ?? '',
-            ),
+            _DataTile(title: 'Age', value: state.age?.toString() ?? ''),
 
-            _DataTile(
-              title: 'Height',
-              value: '${state.height ?? ''} cm',
-            ),
+            _DataTile(title: 'Height', value: '${state.height ?? ''} cm'),
 
-            _DataTile(
-              title: 'Weight',
-              value: '${state.weight ?? ''} kg',
-            ),
+            _DataTile(title: 'Weight', value: '${state.weight ?? ''} kg'),
 
-            _DataTile(
-              title: 'Goals',
-              value: state.goalTags.join(', '),
-            ),
+            _DataTile(title: 'Goals', value: state.goalTags.join(', ')),
 
-            _DataTile(
-              title: 'Custom Goal',
-              value: state.customGoal,
-            ),
+            _DataTile(title: 'Custom Goal', value: state.customGoal),
 
             _DataTile(
               title: 'Health Issues',
@@ -74,24 +56,23 @@ class ResultScreen extends ConsumerWidget {
               value: state.customHealthIssue,
             ),
 
-            _DataTile(
-              title: 'Difficulty',
-              value: state.difficulty ?? '',
-            ),
+            _DataTile(title: 'Difficulty', value: state.difficulty ?? ''),
 
-            _DataTile(
-              title: 'Intensity',
-              value: state.intensity ?? '',
-            ),
+            _DataTile(title: 'Intensity', value: state.intensity ?? ''),
 
             _DataTile(
               title: 'Target Body Region',
               value: state.targetbodyRegion.join(', '),
             ),
 
-            _DataTile(
-              title: 'Equipments',
-              value: state.equipments.join(', '),
+            _DataTile(title: 'Equipments', value: state.equipments.join(', ')),
+            ElevatedButton(
+              onPressed: () async {
+                await UserRepository().deleteUserData();
+
+                print('Deleted');
+              },
+              child: const Text('Delete User'),
             ),
           ],
         ),
@@ -101,10 +82,7 @@ class ResultScreen extends ConsumerWidget {
 }
 
 class _DataTile extends StatelessWidget {
-  const _DataTile({
-    required this.title,
-    required this.value,
-  });
+  const _DataTile({required this.title, required this.value});
 
   final String title;
   final String value;
@@ -118,12 +96,7 @@ class _DataTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
 
             const SizedBox(height: 6),
 

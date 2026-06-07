@@ -11,6 +11,7 @@ class OnboardingState {
   final double? height;
   final double? weight;
   final int? age;
+  final bool isOnboarded;
   const OnboardingState({
     this.goalTags = const {},
     this.customGoal = '',
@@ -24,6 +25,7 @@ class OnboardingState {
     this.height,
     this.weight,
     this.age,
+    this.isOnboarded = false,
   });
   OnboardingState copyWith({
     Set<String>? goalTags,
@@ -38,6 +40,7 @@ class OnboardingState {
     double? height,
     double? weight,
     int? age,
+    bool? isOnboarded,
   }) {
     return OnboardingState(
       goalTags: goalTags ?? this.goalTags,
@@ -52,6 +55,7 @@ class OnboardingState {
       height: height ?? this.height,
       weight: weight ?? this.weight,
       age: age ?? this.age,
+      isOnboarded: isOnboarded ?? this.isOnboarded,
     );
   }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:template_flutter/core/model/user_data.dart';
+import 'package:template_flutter/features/onboarding/repository/user_repository.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
 
 class UserdataScreen extends ConsumerWidget {
   const UserdataScreen({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final onboardingNotifier = ref.read(onboardingProvider.notifier);
-
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -122,9 +122,7 @@ class UserdataScreen extends ConsumerWidget {
 
             TextField(
               keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (value) {
                 final age = int.tryParse(value);
 
@@ -146,14 +144,23 @@ class UserdataScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/onboarding/result');
+                onPressed: () async {
+                  final state = ref.read(onboardingProvider);
+                  final user = state.toUserdata();
+                  await UserRepository().saveUser(user);
+                  await UserRepository().printUserData();
+                  if (context.mounted) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/onboarding/result',
+                      (route) => false,
+                    );
+                  }
                 },
                 child: const Text('Continue'),
               ),
             ),
             const SizedBox(height: 40),
-
           ],
         ),
       ),
