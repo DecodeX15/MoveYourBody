@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_flutter/core/service/seed_service.dart';
 import '../repository/user_repository.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
@@ -69,8 +68,8 @@ class ResultScreen extends ConsumerWidget {
             _DataTile(title: 'Equipments', value: state.equipments.join(', ')),
             ElevatedButton(
               onPressed: () async {
-                // await UserRepository().deleteUserData();
-                await SeedService().printExerciseCount();
+                await UserRepository().deleteUserData();
+
                 print('Deleted');
               },
               child: const Text('Delete User'),
