@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:template_flutter/core/database/user_table.dart';
+import 'package:template_flutter/core/database/tables/user_table.dart';
 
 class UserDatabaseService {
   static Future<void> createTable(Database db) async {

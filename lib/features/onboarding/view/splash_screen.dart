@@ -21,6 +21,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> _checkUser() async {
     final user = await UserRepository().getUserData();
+    print('USER: ${user?.isOnboarded}');
     await SeedService().seedExercises();
     print('USER: ${user?.isOnboarded}');
 

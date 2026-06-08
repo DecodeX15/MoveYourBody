@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../database/exercise_table.dart';
+import '../database/tables/exercise_table.dart';
 
 enum ExerciseType {
   bodyweight,
@@ -82,6 +82,12 @@ class Exercise {
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
+    print(
+      'Parsing: ${json['exercise_id']} '
+      'type=${json['type']} '
+      'difficulty=${json['difficulty']} '
+      'intensity=${json['intensity']}',
+    );
     return Exercise(
       exerciseId: json['exercise_id'],
       name: json['name'],
@@ -170,8 +176,12 @@ class Exercise {
     if (value == null || value.toString().trim().isEmpty) {
       return [];
     }
-
-    return value.toString().split(',').map((e) => e.trim()).toList();
+    return value
+        .toString()
+        .split(RegExp(r'[;,]'))
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
   }
 
   static List<BodyRegion> _parseBodyRegions(String value) {

@@ -1,6 +1,6 @@
 import 'package:template_flutter/features/onboarding/model/onboarding_state.dart';
 
-import '../database/user_table.dart';
+import '../database/tables/user_table.dart';
 
 class UserData {
   final String username;

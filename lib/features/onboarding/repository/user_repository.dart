@@ -1,12 +1,12 @@
-import 'package:template_flutter/core/database/user_table.dart';
+import 'package:template_flutter/core/database/tables/user_table.dart';
 import 'package:template_flutter/core/model/user_data.dart';
-import '../../../core/database/database_service.dart';
+import '../../../core/database/db_config.dart';
 
 class UserRepository {
-  Future<void> saveUser(UserData user) async {
-    final db = await DatabaseService.instance.database;
-    await db.insert('user_data', user.toMap());
-  }
+    Future<void> saveUser(UserData user) async {
+      final db = await DatabaseService.instance.database;
+      await db.insert('user_data', user.toMap());
+    }
 
   Future<UserData?> getUserData() async {
     final db = await DatabaseService.instance.database;
