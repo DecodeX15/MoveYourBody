@@ -148,7 +148,6 @@ class UserdataScreen extends ConsumerWidget {
                   final state = ref.read(onboardingProvider);
                   final user = state.toUserdata();
                   await UserRepository().saveUser(user);
-                  await UserRepository().printUserData();
                   if (context.mounted) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,

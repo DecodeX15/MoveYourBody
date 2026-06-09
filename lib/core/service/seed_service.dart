@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,31 +16,21 @@ class SeedService {
       final existingExercises = await db.rawQuery(
         'SELECT COUNT(*) as count FROM ${ExerciseTable.tableName}',
       );
-
       final count = existingExercises.first['count'] as int;
-
       if (count > 0) {
-        print('Exercises already seeded. Skipping seeding.');
+        debugPrint('Exercises already seeded. Skipping seeding.');
         return;
       }
-
-      print('Loading exercise json...');
-
       final jsonString = await rootBundle.loadString(
         'assets/exercises/exercises.json',
       );
-      print("hkl");
 
       final decodedJson = jsonDecode(jsonString) as Map<String, dynamic>;
-      print(decodedJson.runtimeType);
-      print(decodedJson);
       final exercisesJson = decodedJson['exercises'] as List<dynamic>;
-
       final exercises = exercisesJson
           .map((json) => Exercise.fromJson(json as Map<String, dynamic>))
           .toList();
       final Batch batch = db.batch();
-
       for (final exercise in exercises) {
         batch.insert(
           ExerciseTable.tableName,
@@ -49,21 +40,19 @@ class SeedService {
       }
 
       await batch.commit(noResult: true);
-
-      print('${exercises.length} exercises seeded successfully.');
+      debugPrint('${exercises.length} exercises seeded successfully.');
     } catch (e, stackTrace) {
-      print('Exercise seeding failed: $e');
-      print(stackTrace);
+      debugPrint('Exercise seeding failed: $e');
+      debugPrint(stackTrace.toString());
     }
   }
 
-  Future<void> printExerciseCount() async {
+  Future<void> debugPrintExercises() async {
     final db = await DatabaseService.instance.database;
-
-    final result = await db.rawQuery(
-      'SELECT COUNT(*) as count FROM ${ExerciseTable.tableName}',
-    );
-
-    print('Total exercises: ${result.first['count']}');
+    final result = await db.query(ExerciseTable.tableName);
+    debugPrint('Total exercises: ${result.length}');
+    for (final exercise in result) {
+      debugPrint(exercise.toString());
+    }
   }
 }

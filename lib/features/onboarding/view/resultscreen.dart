@@ -69,8 +69,7 @@ class ResultScreen extends ConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 await UserRepository().deleteUserData();
-
-                print('Deleted');
+                // await UserRepository().debugPrintUserData();
               },
               child: const Text('Delete User'),
             ),

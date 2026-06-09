@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import '../database/tables/exercise_table.dart';
 
 enum ExerciseType {
@@ -82,7 +84,7 @@ class Exercise {
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
-    print(
+    debugPrint(
       'Parsing: ${json['exercise_id']} '
       'type=${json['type']} '
       'difficulty=${json['difficulty']} '

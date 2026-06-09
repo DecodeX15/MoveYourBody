@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:template_flutter/core/database/tables/user_table.dart';
 import 'package:template_flutter/core/model/user_data.dart';
 import '../../../core/database/db_config.dart';
@@ -10,7 +11,7 @@ class UserRepository {
 
   Future<UserData?> getUserData() async {
     final db = await DatabaseService.instance.database;
-    print("Fetching user data from database...");
+    debugPrint("Fetching user data from database...");
     final result = await db.query(UserTable.tableName, limit: 1);
 
     if (result.isEmpty) {
@@ -24,7 +25,7 @@ class UserRepository {
     final user = await getUserData();
 
     if (user == null) {
-      print('No user data found to delete');
+      debugPrint('No user data found to delete');
       return;
     }
 
@@ -32,23 +33,23 @@ class UserRepository {
 
     await db.delete(UserTable.tableName);
 
-    print('User data deleted successfully');
+    debugPrint('User data deleted successfully');
   }
 
-  Future<void> printUserData() async {
+  Future<void> debugPrintUserData() async {
     final user = await getUserData();
-    print('===================');
-    print(user?.username);
-    print(user?.age);
-    print(user?.height);
-    print(user?.weight);
-    print(user?.goalTags);
-    print(user?.healthIssueTags);
-    print(user?.difficulty);
-    print(user?.intensity);
-    print(user?.targetBodyRegion);
-    print(user?.equipments);
-    print(user?.isOnboarded);
-    print('===================');
+    debugPrint('===================');
+    debugPrint(user?.username.toString());
+    debugPrint(user?.age.toString());
+    debugPrint(user?.height.toString());
+    debugPrint(user?.weight.toString());
+    debugPrint(user?.goalTags.toString());
+    debugPrint(user?.healthIssueTags.toString());
+    debugPrint(user?.difficulty.toString());
+    debugPrint(user?.intensity.toString());
+    debugPrint(user?.targetBodyRegion.toString());
+    debugPrint(user?.equipments.toString());
+    debugPrint(user?.isOnboarded.toString());
+    debugPrint('===================');
   }
 }
