@@ -25,10 +25,7 @@ class ResultScreen extends ConsumerWidget {
             const Center(
               child: Text(
                 'Collected Onboarding Data',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
             ),
 
@@ -39,30 +36,15 @@ class ResultScreen extends ConsumerWidget {
               value: state.username?.toString() ?? '',
             ),
 
-            _DataTile(
-              title: 'Age',
-              value: state.age?.toString() ?? '',
-            ),
+            _DataTile(title: 'Age', value: state.age?.toString() ?? ''),
 
-            _DataTile(
-              title: 'Height',
-              value: '${state.height ?? ''} cm',
-            ),
+            _DataTile(title: 'Height', value: '${state.height ?? ''} cm'),
 
-            _DataTile(
-              title: 'Weight',
-              value: '${state.weight ?? ''} kg',
-            ),
+            _DataTile(title: 'Weight', value: '${state.weight ?? ''} kg'),
 
-            _DataTile(
-              title: 'Goals',
-              value: state.goalTags.join(', '),
-            ),
+            _DataTile(title: 'Goals', value: state.goalTags.join(', ')),
 
-            _DataTile(
-              title: 'Custom Goal',
-              value: state.customGoal,
-            ),
+            _DataTile(title: 'Custom Goal', value: state.customGoal),
 
             _DataTile(
               title: 'Health Issues',
@@ -101,10 +83,7 @@ class ResultScreen extends ConsumerWidget {
 }
 
 class _DataTile extends StatelessWidget {
-  const _DataTile({
-    required this.title,
-    required this.value,
-  });
+  const _DataTile({required this.title, required this.value});
 
   final String title;
   final String value;
@@ -118,12 +97,7 @@ class _DataTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
 
             const SizedBox(height: 6),
 
