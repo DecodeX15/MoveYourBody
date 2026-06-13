@@ -346,4 +346,4 @@ build/
 # Flutter generated
 .flutter-plugins
 .flutter-plugins-dependencies
-.lib/generated/
+lib/generated/
