@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/onboarding_data.dart';
 
-part 'onboarding_view_model.g.dart';
+part 'generated/onboarding_view_model.g.dart';
 
 @riverpod
 class OnboardingViewModel extends _$OnboardingViewModel {

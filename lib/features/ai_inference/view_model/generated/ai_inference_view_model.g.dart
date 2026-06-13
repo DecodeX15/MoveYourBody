@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ai_inference_view_model.dart';
+part of '../ai_inference_view_model.dart';
 
 // **************************************************************************
 // RiverpodGenerator

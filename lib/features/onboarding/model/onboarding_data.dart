@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'onboarding_data.freezed.dart';
+part 'generated/onboarding_data.freezed.dart';
 
 @freezed
 abstract class OnboardingData with _$OnboardingData {

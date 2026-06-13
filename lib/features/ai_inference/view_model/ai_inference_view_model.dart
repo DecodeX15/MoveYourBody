@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../services/onnx_service.dart';
 import '../services/tokenizer_service.dart';
-import '../services/cosine_similairty.dart'; // Import exact file name check kar lena
+import '../services/cosine_similairty.dart'; 
 
-part 'ai_inference_view_model.g.dart';
+part 'generated/ai_inference_view_model.g.dart';
 
 class AiState {
   final bool isReady;
@@ -46,10 +46,9 @@ class AiInferenceViewModel extends _$AiInferenceViewModel {
     debugPrint("AI Engine: Status is READY");
   }
 
-  /// Process user query against a dynamic database map passed at runtime
   Future<void> processUserQuery({
     required String query,
-    required Map<String, List<double>> targetEmbeddingsDb, // Future real injections
+    required Map<String, List<double>> targetEmbeddingsDb,
   }) async {
     if (!state.isReady) {
       debugPrint("AI Engine: Engine is not ready yet!");
@@ -71,7 +70,6 @@ class AiInferenceViewModel extends _$AiInferenceViewModel {
       String bestMatch = "No Match Found";
       double highestScore = -1.0;
 
-      // 🏆 Dynamic map vector comparison loop setup
       for (var entry in targetEmbeddingsDb.entries) {
         double score = SimilarityUtils.calculateCosineSimilarity(userEmbedding, entry.value);
         if (score > highestScore) {
