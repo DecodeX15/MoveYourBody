@@ -9,7 +9,6 @@ import '../view_model/onboarding_view_model.dart';
 
 class UserdataScreen extends ConsumerWidget {
   const UserdataScreen({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
@@ -146,8 +145,13 @@ class UserdataScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  context.push(AppRoutes.result);
+                onPressed: () async {
+                  await ref
+                      .read(onboardingViewModelProvider.notifier)
+                      .saveAndCompleteOnboarding();
+                  if (context.mounted) {
+                    context.go(AppRoutes.result);
+                  }
                 },
                 child: const Text('Continue'),
               ),

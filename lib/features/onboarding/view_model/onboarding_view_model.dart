@@ -1,9 +1,11 @@
+import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/onboarding_data.dart';
+import "../../../core/model/user_data.dart";
 
 part 'generated/onboarding_view_model.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class OnboardingViewModel extends _$OnboardingViewModel {
   @override
   OnboardingData build() {
@@ -82,5 +84,26 @@ class OnboardingViewModel extends _$OnboardingViewModel {
   void setHeight(double height) {
     state = state.copyWith(height: height);
   }
-}
 
+  void loadFromUserData(UserData user) {
+    state = state.copyWith(
+      username: user.username,
+      age: user.age,
+      height: user.height,
+      weight: user.weight,
+      goalTags: user.goalTags.toSet(),
+      customGoal: user.customGoal,
+      healthIssueTags: user.healthIssueTags.toSet(),
+      customHealthIssue: user.customHealthIssue,
+      difficulty: user.difficulty,
+      intensity: user.intensity,
+      targetBodyRegion: user.targetBodyRegion.toSet(),
+      equipments: user.equipments.toSet(),
+    );
+  }
+
+  Future<void> saveAndCompleteOnboarding() async {
+    final userData = state.toUserdata();
+    await ref.read(userRepositoryProvider).saveUser(userData);
+  }
+}
