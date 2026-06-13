@@ -1,5 +1,6 @@
 class AppRoutes {
-  static const String welcome = '/';
+  static const String splash = '/';
+  static const String welcome = '/onboarding/welcome';
   static const String goals = '/onboarding/goals';
   static const String healthIssues = '/onboarding/health-issues';
   static const String difficulty = '/onboarding/difficulty';

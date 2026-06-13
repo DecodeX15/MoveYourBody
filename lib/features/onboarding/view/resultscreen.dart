@@ -1,9 +1,9 @@
 // this file to just that what we are collection for onboarding and then we will use this data to show the result in the result screen
-// after mentor review this will be removed 
+// after mentor review this will be removed
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../repository/user_repository.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
 
@@ -56,24 +56,22 @@ class ResultScreen extends ConsumerWidget {
               value: state.customHealthIssue,
             ),
 
-            _DataTile(
-              title: 'Difficulty',
-              value: state.difficulty ?? '',
-            ),
+            _DataTile(title: 'Difficulty', value: state.difficulty ?? ''),
 
-            _DataTile(
-              title: 'Intensity',
-              value: state.intensity ?? '',
-            ),
+            _DataTile(title: 'Intensity', value: state.intensity ?? ''),
 
             _DataTile(
               title: 'Target Body Region',
               value: state.targetBodyRegion.join(', '),
             ),
 
-            _DataTile(
-              title: 'Equipments',
-              value: state.equipments.join(', '),
+            _DataTile(title: 'Equipments', value: state.equipments.join(', ')),
+            ElevatedButton(
+              onPressed: () async {
+                await ref.read(userRepositoryProvider).deleteUserData();
+                // await UserRepository().debugPrintUserData();
+              },
+              child: const Text('Delete User'),
             ),
           ],
         ),

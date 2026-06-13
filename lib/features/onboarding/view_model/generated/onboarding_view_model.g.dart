@@ -20,7 +20,7 @@ final class OnboardingViewModelProvider
         argument: null,
         retry: null,
         name: r'onboardingViewModelProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -42,7 +42,7 @@ final class OnboardingViewModelProvider
 }
 
 String _$onboardingViewModelHash() =>
-    r'7d60e7a2e613c53e30ffa6112b2206232acd6c89';
+    r'5fdbbee7dd670dae9a71a037c4f39f4f890ea4e7';
 
 abstract class _$OnboardingViewModel extends $Notifier<OnboardingData> {
   OnboardingData build();
