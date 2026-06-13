@@ -41,6 +41,9 @@ dependencies:
   riverpod_annotation: ^4.0.2
   flutter_onnxruntime: ^1.8.0
   dart_wordpiece: ^1.2.0
+  sqflite: ^2.4.3
+  path: ^1.9.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -77,6 +80,7 @@ flutter:
     - assets/images/
     - assets/models/vocab.txt
     - assets/models/model_quantized.onnx
+    - assets/exercises/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

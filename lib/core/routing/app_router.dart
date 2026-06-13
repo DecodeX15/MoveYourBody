@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/features/onboarding/view/splash_screen.dart';
 import './app_routes.dart';
 import '../../features/onboarding/view/body_region_screen.dart';
 import '../../features/onboarding/view/difficulty_level.dart';
@@ -11,8 +12,12 @@ import '../../features/onboarding/view/user_details.dart';
 import '../../features/onboarding/view/welcome_screen.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.welcome,
+  initialLocation: AppRoutes.splash,
   routes: [
+    GoRoute(
+      path: AppRoutes.splash,
+      builder: (context, state) => const SplashScreen(),
+    ),
     GoRoute(
       path: AppRoutes.welcome,
       builder: (context, state) => const WelcomeScreen(),
@@ -23,8 +28,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.healthIssues,
-      builder: (context, state) =>
-          const HealthIssuesScreen(),
+      builder: (context, state) => const HealthIssuesScreen(),
     ),
     GoRoute(
       path: AppRoutes.difficulty,
@@ -44,8 +48,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.userData,
-      builder: (context, state) =>
-          const UserdataScreen(),
+      builder: (context, state) => const UserdataScreen(),
     ),
     GoRoute(
       path: AppRoutes.result,
