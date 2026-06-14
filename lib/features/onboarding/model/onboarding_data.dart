@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/onboarding_data.freezed.dart';
@@ -17,5 +19,7 @@ abstract class OnboardingData with _$OnboardingData {
     double? height,
     double? weight,
     int? age,
+    Uint8List? goalEmbeddings,
+    Uint8List? healthIssueEmbeddings,
   }) = _OnboardingData;
 }

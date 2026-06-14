@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_onnxruntime/flutter_onnxruntime.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final onnxServiceProvider = Provider((ref) => OnnxService());
 
 class OnnxService {
   OrtSession? _session;
@@ -28,16 +31,22 @@ class OnnxService {
 
       final inputs = {
         'input_ids': await OrtValue.fromList(inputIds, [1, inputIds.length]),
-        'attention_mask': await OrtValue.fromList(attentionMask, [1, attentionMask.length]),
-        'token_type_ids': await OrtValue.fromList(tokenTypeIds, [1, tokenTypeIds.length]),
+        'attention_mask': await OrtValue.fromList(attentionMask, [
+          1,
+          attentionMask.length,
+        ]),
+        'token_type_ids': await OrtValue.fromList(tokenTypeIds, [
+          1,
+          tokenTypeIds.length,
+        ]),
       };
 
       final outputs = await _session!.run(inputs);
-      
+
       final outputValue = outputs.values.first;
       final List<dynamic> rawList = await outputValue.asList();
       final List<double> clsEmbedding = (rawList[0][0] as List).cast<double>();
-      
+
       return clsEmbedding;
     } catch (e) {
       debugPrint("AIService: Inference Error: $e");
