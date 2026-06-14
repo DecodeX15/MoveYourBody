@@ -18,7 +18,9 @@ class UserDatabaseService {
         ${UserTable.intensity} TEXT,
         ${UserTable.targetBodyRegion} TEXT,
         ${UserTable.equipments} TEXT,
-        ${UserTable.isOnboarded} INTEGER NOT NULL
+        ${UserTable.isOnboarded} INTEGER NOT NULL,
+        ${UserTable.goalEmbeddings} BLOB,
+        ${UserTable.healthIssueEmbeddings} BLOB
       )
     ''');
   }

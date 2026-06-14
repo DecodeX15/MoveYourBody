@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import '../../features/onboarding/model/onboarding_data.dart';
 
 import '../database/tables/user_table.dart';
@@ -20,6 +22,8 @@ class UserData {
   final List<String> targetBodyRegion;
   final List<String> equipments;
   final bool isOnboarded;
+  final Uint8List? goalEmbeddings;
+  final Uint8List? healthIssueEmbeddings;
   const UserData({
     required this.username,
     required this.height,
@@ -34,6 +38,8 @@ class UserData {
     required this.targetBodyRegion,
     required this.equipments,
     required this.isOnboarded,
+    required this.goalEmbeddings,
+    required this.healthIssueEmbeddings,
   });
 
   Map<String, dynamic> toMap() {
@@ -55,6 +61,8 @@ class UserData {
       UserTable.targetBodyRegion: targetBodyRegion.join(','),
       UserTable.equipments: equipments.join(','),
       UserTable.isOnboarded: isOnboarded ? 1 : 0,
+      UserTable.goalEmbeddings: goalEmbeddings,
+      UserTable.healthIssueEmbeddings: healthIssueEmbeddings,
     };
   }
 
@@ -82,6 +90,8 @@ class UserData {
       equipments: (map[UserTable.equipments] as String).split(','),
 
       isOnboarded: map[UserTable.isOnboarded] == 1,
+      goalEmbeddings: map[UserTable.goalEmbeddings],
+      healthIssueEmbeddings: map[UserTable.healthIssueEmbeddings],
     );
   }
 }
@@ -102,6 +112,8 @@ extension UserDataMapper on OnboardingData {
       targetBodyRegion: targetBodyRegion.toList(),
       equipments: equipments.toList(),
       isOnboarded: true,
+      goalEmbeddings: goalEmbeddings,
+      healthIssueEmbeddings: healthIssueEmbeddings,
     );
   }
 }

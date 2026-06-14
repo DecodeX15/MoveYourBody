@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/onboarding_data.dart';
@@ -102,7 +103,14 @@ class OnboardingViewModel extends _$OnboardingViewModel {
     );
   }
 
-  Future<void> saveAndCompleteOnboarding() async {
+  Future<void> saveAndCompleteOnboarding({
+    required Uint8List? goalEmbed,
+    required Uint8List? healthEmbed,
+  }) async {
+    state = state.copyWith(
+      goalEmbeddings: goalEmbed,
+      healthIssueEmbeddings: healthEmbed,
+    );
     final userData = state.toUserdata();
     await ref.read(userRepositoryProvider).saveUser(userData);
   }

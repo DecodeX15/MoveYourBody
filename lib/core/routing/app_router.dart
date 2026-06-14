@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/core/widgets/loading_screen.dart';
 import 'package:move_your_body/features/onboarding/view/splash_screen.dart';
 import './app_routes.dart';
 import '../../features/onboarding/view/body_region_screen.dart';
@@ -53,6 +54,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.result,
       builder: (context, state) => const ResultScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.loading,
+      builder: (context, state) => const LoadingScreen(),
     ),
   ],
 );

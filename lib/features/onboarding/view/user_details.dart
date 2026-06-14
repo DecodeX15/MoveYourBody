@@ -146,11 +146,8 @@ class UserdataScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  await ref
-                      .read(onboardingViewModelProvider.notifier)
-                      .saveAndCompleteOnboarding();
                   if (context.mounted) {
-                    context.go(AppRoutes.result);
+                    context.go(AppRoutes.loading);
                   }
                 },
                 child: const Text('Continue'),

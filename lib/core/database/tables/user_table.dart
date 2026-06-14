@@ -19,4 +19,6 @@ class UserTable {
   static const targetBodyRegion = 'target_body_region';
   static const equipments = 'equipments';
   static const isOnboarded = 'is_onboarded';
+  static const goalEmbeddings = 'goal_embeddings';
+  static const healthIssueEmbeddings = 'health_issue_embeddings';
 }
