@@ -9,4 +9,5 @@ class AppRoutes {
   static const String equipments = '/onboarding/equipments';
   static const String userData = '/onboarding/userdata';
   static const String result = '/onboarding/result';
+  static const String loading = '/loading';
 }
