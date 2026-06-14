@@ -87,7 +87,7 @@ class TagSetupRepository {
       print("Total Tags Found in Database: ${maps.length}");
 
       if (maps.isEmpty) {
-        print("❌ Database me koi tag nahi mila! Pipeline check karo.");
+        print("❌ No tags found in the database.");
         print("=====================================================");
         return;
       }
