@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
-import '../view_model/onboarding_view_model.dart';
+import '../view_models/onboarding_view_model.dart';
 
 class ResultScreen extends ConsumerWidget {
   const ResultScreen({super.key});

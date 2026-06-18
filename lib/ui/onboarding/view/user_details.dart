@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:move_your_body/core/routing/app_routes.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
-import '../view_model/onboarding_view_model.dart';
+import '../view_models/onboarding_view_model.dart';
 
 class UserdataScreen extends ConsumerWidget {
   const UserdataScreen({super.key});

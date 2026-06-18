@@ -5,7 +5,7 @@ import 'package:move_your_body/core/routing/app_routes.dart';
 import 'package:move_your_body/core/widgets/button_card.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
-import '../view_model/onboarding_view_model.dart';
+import '../view_models/onboarding_view_model.dart';
 
 class IntensityScreen extends ConsumerWidget {
   const IntensityScreen({super.key});

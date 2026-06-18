@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../model/onboarding_data.dart';
+import '../../../domain/onboarding/model/onboarding_data.dart';
 
 part 'generated/onboarding_view_model.g.dart';
 

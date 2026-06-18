@@ -1,14 +1,14 @@
 import 'package:go_router/go_router.dart';
 import './app_routes.dart';
-import '../../features/onboarding/view/body_region_screen.dart';
-import '../../features/onboarding/view/difficulty_level.dart';
-import '../../features/onboarding/view/equipment_screen.dart';
-import '../../features/onboarding/view/goal_screen.dart';
-import '../../features/onboarding/view/health_issues.dart';
-import '../../features/onboarding/view/intensity_level.dart';
-import '../../features/onboarding/view/resultscreen.dart';
-import '../../features/onboarding/view/user_details.dart';
-import '../../features/onboarding/view/welcome_screen.dart';
+import '../../ui/onboarding/view/body_region_screen.dart';
+import '../../ui/onboarding/view/difficulty_level.dart';
+import '../../ui/onboarding/view/equipment_screen.dart';
+import '../../ui/onboarding/view/goal_screen.dart';
+import '../../ui/onboarding/view/health_issues.dart';
+import '../../ui/onboarding/view/intensity_level.dart';
+import '../../ui/onboarding/view/resultscreen.dart';
+import '../../ui/onboarding/view/user_details.dart';
+import '../../ui/onboarding/view/welcome_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.welcome,

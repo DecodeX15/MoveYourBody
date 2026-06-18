@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:move_your_body/core/routing/app_routes.dart';
-import 'package:move_your_body/features/onboarding/view_model/onboarding_view_model.dart';
+import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/feature_chip.dart';
+import 'package:go_router/go_router.dart';
 
-class HealthIssuesScreen extends ConsumerWidget {
-  const HealthIssuesScreen({super.key});
-  static const List<String> healthIssues = [
-    'Lower Back Pain',
-    'Ankle Pain',
-    'Poor Cardiovascular Endurance',
-    'Neck Stiffness',
-    'Hip Joint',
-    'Hamstring Tightness',
-    'Knee Pain',
-    'Low Flexibility',
-    'Tight Muscles',
-    'Shortness of Breath During Light Activity',
-    'Stress-Related Body Tension',
+class GoalScreen extends ConsumerWidget {
+  const GoalScreen({super.key});
+  static const List<String> goals = [
+    'Burn Fat',
+    'Increase Mobility',
+    'Tone Body',
+    'Build Muscle',
+    'Lose Weight',
+    'Daily Movement',
+    'Sleep Better',
+    'Cardio Fitness',
+    'Better Posture',
+    'Reduce Stress',
+    'Core Strength',
+    'Bodyweight Only',
+    'Improve Stamina and Strength',
   ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedHealthIssues = ref.watch(
-      onboardingViewModelProvider.select((state) => state.healthIssueTags),
+    final selectedGoals = ref.watch(
+      onboardingViewModelProvider.select((state) => state.goalTags),
     );
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
@@ -70,7 +72,7 @@ class HealthIssuesScreen extends ConsumerWidget {
             const SizedBox(height: 10),
 
             Text(
-              'Choose Your Health Issues',
+              'Choose Your Goals',
               textAlign: TextAlign.center,
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w700,
@@ -82,15 +84,15 @@ class HealthIssuesScreen extends ConsumerWidget {
             /// GOAL CHIPS
             Wrap(
               alignment: WrapAlignment.center,
-              spacing: 10,
+              spacing: 12,
               runSpacing: 12,
-              children: healthIssues.map((issues) {
-                final isSelected = selectedHealthIssues.contains(issues);
+              children: goals.map((goal) {
+                final isSelected = selectedGoals.contains(goal);
                 return FeatureChip(
-                  text: issues,
+                  text: goal,
                   selected: isSelected,
                   onTap: () {
-                    onboardingNotifier.toggleHealthIssue(issues);
+                    onboardingNotifier.toggleGoal(goal);
                   },
                 );
               }).toList(),
@@ -100,11 +102,11 @@ class HealthIssuesScreen extends ConsumerWidget {
 
             TextField(
               onChanged: (value) {
-                onboardingNotifier.updateCustomHealthIssue(value);
+                onboardingNotifier.updateCustomGoal(value);
               },
               maxLines: 1,
               decoration: InputDecoration(
-                hintText: 'Any custom health issues',
+                hintText: 'Any custom fitness goals',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -117,7 +119,7 @@ class HealthIssuesScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
-                  context.push(AppRoutes.difficulty);
+                  context.push(AppRoutes.healthIssues);
                 },
                 child: const Text('Continue'),
               ),

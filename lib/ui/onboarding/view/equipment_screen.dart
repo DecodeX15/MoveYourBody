@@ -5,7 +5,7 @@ import 'package:move_your_body/core/widgets/button_card.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
-import '../view_model/onboarding_view_model.dart';
+import '../view_models/onboarding_view_model.dart';
 
 class EquipmentScreen extends ConsumerWidget {
   const EquipmentScreen({super.key});
