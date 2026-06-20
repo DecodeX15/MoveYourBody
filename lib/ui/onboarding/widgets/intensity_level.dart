@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:move_your_body/core/routing/app_routes.dart';
-import 'package:move_your_body/core/widgets/button_card.dart';
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/routing/app_routes.dart';
+import 'package:move_your_body/core/widgets/button_card.dart';
+
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_models/onboarding_view_model.dart';
 
-class DifficultyScreen extends ConsumerWidget {
-  const DifficultyScreen({super.key});
+class IntensityScreen extends ConsumerWidget {
+  const IntensityScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final selectedDifficulty = ref.watch(
-      onboardingViewModelProvider.select((state) => state.difficulty),
+    final selectedIntensity = ref.watch(
+      onboardingViewModelProvider.select((state) => state.intensity),
     );
 
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
@@ -58,7 +59,7 @@ class DifficultyScreen extends ConsumerWidget {
             const SizedBox(height: 10),
 
             Text(
-              'Choose your Difficulty Level',
+              'Choose your Intensity Level',
               textAlign: TextAlign.center,
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -68,46 +69,45 @@ class DifficultyScreen extends ConsumerWidget {
             const SizedBox(height: 20),
 
             ButtonCard(
-              title: 'Beginner',
+              title: 'Light',
               subtitle:
-                  'New to fitness, rarely exercise or returning after a long break.',
-              selected: selectedDifficulty == 'Beginner',
+                  'Easy-paced workouts focused on mobility, consistency, and recovery.',
+              selected: selectedIntensity == 'Light',
               onTap: () {
-                onboardingNotifier.setDifficulty('Beginner');
+                onboardingNotifier.setIntensity('Light');
               },
             ),
 
             const SizedBox(height: 20),
 
             ButtonCard(
-              title: 'Intermediate',
+              title: 'Moderate',
               subtitle:
-                  'Exercise regularly and have a basic fitness foundation.',
-              selected: selectedDifficulty == 'Intermediate',
+                  'Balanced challenge to improve endurance, fitness and strength.',
+              selected: selectedIntensity == 'Moderate',
               onTap: () {
-                onboardingNotifier.setDifficulty('Intermediate');
+                onboardingNotifier.setIntensity('Moderate');
               },
             ),
 
             const SizedBox(height: 20),
 
             ButtonCard(
-              title: 'Advanced',
+              title: 'High',
               subtitle:
-                  'Train consistently with strong endurance and strength.',
-              selected: selectedDifficulty == 'Advanced',
+                  'Demanding sessions designed to maximize performance and results.',
+              selected: selectedIntensity == 'High',
               onTap: () {
-                onboardingNotifier.setDifficulty('Advanced');
+                onboardingNotifier.setIntensity('High');
               },
             ),
 
             const Spacer(),
-
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  context.push(AppRoutes.intensity);
+                  context.push(AppRoutes.targetBodyRegion);
                 },
                 child: const Text('Continue'),
               ),

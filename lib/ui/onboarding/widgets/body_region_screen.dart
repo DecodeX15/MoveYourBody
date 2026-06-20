@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:move_your_body/core/routing/app_routes.dart';
+import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/core/widgets/button_card.dart';
 
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_models/onboarding_view_model.dart';
 
-class IntensityScreen extends ConsumerWidget {
-  const IntensityScreen({super.key});
+class BodyRegionScreen extends ConsumerWidget {
+  const BodyRegionScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final selectedIntensity = ref.watch(
-      onboardingViewModelProvider.select((state) => state.intensity),
+    final selectedBodyRegions = ref.watch(
+      onboardingViewModelProvider.select((state) => state.targetBodyRegion),
     );
 
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
 
     return AppScaffold(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            /// Progress
             Row(
               children: [
                 IconButton(
@@ -59,7 +58,7 @@ class IntensityScreen extends ConsumerWidget {
             const SizedBox(height: 10),
 
             Text(
-              'Choose your Intensity Level',
+              'What would you like to focus on most?',
               textAlign: TextAlign.center,
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -67,53 +66,76 @@ class IntensityScreen extends ConsumerWidget {
             ),
 
             const SizedBox(height: 20),
+            ButtonCard(
+              title: 'Cardio and Endurance',
+              selected: selectedBodyRegions.contains('Cardio and Endurance'),
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion(
+                  'Cardio and Endurance',
+                );
+              },
+            ),
+            const SizedBox(height: 20),
 
             ButtonCard(
-              title: 'Light',
-              subtitle:
-                  'Easy-paced workouts focused on mobility, consistency, and recovery.',
-              selected: selectedIntensity == 'Light',
+              title: 'Upper Body',
+              selected: selectedBodyRegions.contains('Upper Body'),
+              titleFontSize: 20,
               onTap: () {
-                onboardingNotifier.setIntensity('Light');
+                onboardingNotifier.toggleTargetBodyRegion('Upper Body');
               },
             ),
 
             const SizedBox(height: 20),
 
             ButtonCard(
-              title: 'Moderate',
-              subtitle:
-                  'Balanced challenge to improve endurance, fitness and strength.',
-              selected: selectedIntensity == 'Moderate',
+              title: 'Core Strength',
+              selected: selectedBodyRegions.contains('Core Strength'),
+              titleFontSize: 20,
               onTap: () {
-                onboardingNotifier.setIntensity('Moderate');
+                onboardingNotifier.toggleTargetBodyRegion('Core Strength');
               },
             ),
 
             const SizedBox(height: 20),
 
             ButtonCard(
-              title: 'High',
-              subtitle:
-                  'Demanding sessions designed to maximize performance and results.',
-              selected: selectedIntensity == 'High',
+              title: 'Lower Body',
+              selected: selectedBodyRegions.contains('Lower Body'),
+              titleFontSize: 20,
               onTap: () {
-                onboardingNotifier.setIntensity('High');
+                onboardingNotifier.toggleTargetBodyRegion('Lower Body');
               },
             ),
 
-            const Spacer(),
+            const SizedBox(height: 20),
+            ButtonCard(
+              title: 'Mobility and Flexibility',
+              selected: selectedBodyRegions.contains(
+                'Mobility and Flexibility',
+              ),
+              titleFontSize: 20,
+              onTap: () {
+                onboardingNotifier.toggleTargetBodyRegion(
+                  'Mobility and Flexibility',
+                );
+              },
+            ),
+
+            const SizedBox(height: 50),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  context.push(AppRoutes.targetBodyRegion);
+                  context.push(AppRoutes.equipments);
                 },
                 child: const Text('Continue'),
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
           ],
         ),
       ),
