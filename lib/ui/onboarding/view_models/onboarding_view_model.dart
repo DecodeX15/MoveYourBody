@@ -1,13 +1,13 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../domain/onboarding/models/onboarding_data.dart';
+import '../../../domain/models/user_data.dart';
 
 part 'generated/onboarding_view_model.g.dart';
 
 @riverpod
 class OnboardingViewModel extends _$OnboardingViewModel {
   @override
-  OnboardingData build() {
-    return const OnboardingData();
+  UserData build() {
+    return const UserData();
   }
 
   void toggleGoal(String goal) {

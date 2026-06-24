@@ -61,7 +61,7 @@ class ResultScreen extends ConsumerWidget {
 
             _DataTile(
               title: 'Custom Goal',
-              value: state.customGoal,
+              value: state.customGoal ?? '',
             ),
 
             _DataTile(
@@ -71,7 +71,7 @@ class ResultScreen extends ConsumerWidget {
 
             _DataTile(
               title: 'Custom Health Issue',
-              value: state.customHealthIssue,
+              value: state.customHealthIssue ?? '',
             ),
 
             _DataTile(

@@ -13,7 +13,7 @@ part of '../onboarding_view_model.dart';
 final onboardingViewModelProvider = OnboardingViewModelProvider._();
 
 final class OnboardingViewModelProvider
-    extends $NotifierProvider<OnboardingViewModel, OnboardingData> {
+    extends $NotifierProvider<OnboardingViewModel, UserData> {
   OnboardingViewModelProvider._()
     : super(
         from: null,
@@ -33,28 +33,28 @@ final class OnboardingViewModelProvider
   OnboardingViewModel create() => OnboardingViewModel();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(OnboardingData value) {
+  Override overrideWithValue(UserData value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<OnboardingData>(value),
+      providerOverride: $SyncValueProvider<UserData>(value),
     );
   }
 }
 
 String _$onboardingViewModelHash() =>
-    r'7d60e7a2e613c53e30ffa6112b2206232acd6c89';
+    r'43938bf03f5f9a831c818c1c6d54ed9af7af83f6';
 
-abstract class _$OnboardingViewModel extends $Notifier<OnboardingData> {
-  OnboardingData build();
+abstract class _$OnboardingViewModel extends $Notifier<UserData> {
+  UserData build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<OnboardingData, OnboardingData>;
+    final ref = this.ref as $Ref<UserData, UserData>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<OnboardingData, OnboardingData>,
-              OnboardingData,
+              AnyNotifier<UserData, UserData>,
+              UserData,
               Object?,
               Object?
             >;

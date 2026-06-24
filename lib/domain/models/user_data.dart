@@ -1,14 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'generated/onboarding_data.freezed.dart';
+part 'generated/user_data.freezed.dart';
 
 @freezed
-abstract class OnboardingData with _$OnboardingData {
-  const factory OnboardingData({
+abstract class UserData with _$UserData {
+  const factory UserData({
     @Default({}) Set<String> goalTags,
-    @Default('') String customGoal,
+    String? customGoal,
     @Default({}) Set<String> healthIssueTags,
-    @Default('') String customHealthIssue,
+    String? customHealthIssue,
     String? difficulty,
     String? intensity,
     @Default({}) Set<String> targetBodyRegion,
@@ -17,5 +17,5 @@ abstract class OnboardingData with _$OnboardingData {
     double? height,
     double? weight,
     int? age,
-  }) = _OnboardingData;
+  }) = _UserData;
 }
