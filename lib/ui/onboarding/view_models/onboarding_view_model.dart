@@ -1,4 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../data/repositories/user_repository.dart';
 import '../../../domain/models/user_data.dart';
 
 part 'generated/onboarding_view_model.g.dart';
@@ -7,7 +9,12 @@ part 'generated/onboarding_view_model.g.dart';
 class OnboardingViewModel extends _$OnboardingViewModel {
   @override
   UserData build() {
-    return const UserData();
+    return ref.watch(userRepositoryProvider).getUserData();
+  }
+
+  void _updateState(UserData userData) {
+    ref.read(userRepositoryProvider).updateUserData(userData);
+    state = userData;
   }
 
   void toggleGoal(String goal) {
@@ -18,11 +25,11 @@ class OnboardingViewModel extends _$OnboardingViewModel {
       updatedGoals.add(goal);
     }
 
-    state = state.copyWith(goalTags: updatedGoals);
+    _updateState(state.copyWith(goalTags: updatedGoals));
   }
 
   void updateCustomGoal(String goals) {
-    state = state.copyWith(customGoal: goals);
+    _updateState(state.copyWith(customGoal: goals));
   }
 
   void toggleHealthIssue(String issue) {
@@ -32,19 +39,19 @@ class OnboardingViewModel extends _$OnboardingViewModel {
     } else {
       updatedIssues.add(issue);
     }
-    state = state.copyWith(healthIssueTags: updatedIssues);
+    _updateState(state.copyWith(healthIssueTags: updatedIssues));
   }
 
   void updateCustomHealthIssue(String healthIssue) {
-    state = state.copyWith(customHealthIssue: healthIssue);
+    _updateState(state.copyWith(customHealthIssue: healthIssue));
   }
 
   void setDifficulty(String difficulty) {
-    state = state.copyWith(difficulty: difficulty);
+    _updateState(state.copyWith(difficulty: difficulty));
   }
 
   void setIntensity(String intensity) {
-    state = state.copyWith(intensity: intensity);
+    _updateState(state.copyWith(intensity: intensity));
   }
 
   void toggleTargetBodyRegion(String region) {
@@ -54,7 +61,7 @@ class OnboardingViewModel extends _$OnboardingViewModel {
     } else {
       updatedRegions.add(region);
     }
-    state = state.copyWith(targetBodyRegion: updatedRegions);
+    _updateState(state.copyWith(targetBodyRegion: updatedRegions));
   }
 
   void toggleEquipment(String equipment) {
@@ -64,23 +71,22 @@ class OnboardingViewModel extends _$OnboardingViewModel {
     } else {
       updatedEquipments.add(equipment);
     }
-    state = state.copyWith(equipments: updatedEquipments);
+    _updateState(state.copyWith(equipments: updatedEquipments));
   }
 
   void setUsername(String username) {
-    state = state.copyWith(username: username);
+    _updateState(state.copyWith(username: username));
   }
 
   void setAge(int age) {
-    state = state.copyWith(age: age);
+    _updateState(state.copyWith(age: age));
   }
 
   void setWeight(double weight) {
-    state = state.copyWith(weight: weight);
+    _updateState(state.copyWith(weight: weight));
   }
 
   void setHeight(double height) {
-    state = state.copyWith(height: height);
+    _updateState(state.copyWith(height: height));
   }
 }
-
