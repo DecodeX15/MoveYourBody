@@ -114,4 +114,16 @@ class OnboardingViewModel extends _$OnboardingViewModel {
     final userData = state.toUserdata();
     await ref.read(userRepositoryProvider).saveUser(userData);
   }
+
+  void updateResolvedTags({
+    required List<String> goals,
+    required List<String> healthIssues,
+  }) {
+    state = state.copyWith(
+      goalTags: goals.isNotEmpty ? goals.toSet() : state.goalTags,
+      healthIssueTags: healthIssues.isNotEmpty
+          ? healthIssues.toSet()
+          : state.healthIssueTags,
+    );
+  }
 }
