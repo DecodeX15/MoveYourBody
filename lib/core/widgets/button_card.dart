@@ -34,7 +34,9 @@ class ButtonCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: colorScheme.surface.withValues(alpha: 0.75),
+              color: selected
+                  ? colorScheme.primary.withValues(alpha: 0.15)
+                  : colorScheme.surface.withValues(alpha: 0.75),
               borderRadius: BorderRadius.circular(18),
               border: Border.all(
                 color: selected
