@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/features/ai_inference/repositories/tag_setup_repository.dart';
-import '../repository/user_repository.dart';
+import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../view_model/onboarding_view_model.dart';
 
@@ -69,11 +69,11 @@ class ResultScreen extends ConsumerWidget {
             _DataTile(title: 'Equipments', value: state.equipments.join(', ')),
             ElevatedButton(
               onPressed: () async {
-                await ref.read(userRepositoryProvider).deleteUserData();
+                // await ref.read(userRepositoryProvider).deleteUserData();
                 await ref
                     .read(tagSetupRepositoryProvider)
                     .debugPrintAllCachedTags(); 
-                // await UserRepository().debugPrintUserData();
+                await UserRepository().debugPrintUserData();
 
               },
               child: const Text('Get Tags details from DB'),
