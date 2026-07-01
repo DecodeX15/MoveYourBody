@@ -8,6 +8,10 @@ class AppRoutes {
   static const String targetBodyRegion = '/onboarding/target-body-region';
   static const String equipments = '/onboarding/equipments';
   static const String userData = '/onboarding/userdata';
-  static const String result = '/onboarding/result';
   static const String loading = '/loading';
+  static const String home = '/home';
+  static const String explore = '/explore';
+  static const String add = '/add';
+  static const String stats = '/stats';
+  static const String profile = '/profile';
 }
