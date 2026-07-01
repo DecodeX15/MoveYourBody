@@ -64,9 +64,14 @@ final GoRouter appRouter = GoRouter(
         return Scaffold(
           extendBody: true,
           backgroundColor: Colors.transparent,
-          body: navigationShell,
-          bottomNavigationBar: CustomBottomNavBar(
-            navigationShell: navigationShell,
+          body: Stack(
+            children: [
+              Positioned.fill(child: navigationShell),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomBottomNavBar(navigationShell: navigationShell),
+              ),
+            ],
           ),
         );
       },

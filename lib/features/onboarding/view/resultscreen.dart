@@ -14,12 +14,19 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(onboardingViewModelProvider);
+    final bottomInset = MediaQuery.of(context).padding.bottom;
     // final colorScheme = Theme.of(context).colorScheme;
     // final textTheme = Theme.of(context).textTheme;
 
     return AppScaffold(
+
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 16,
+          bottom: 70 + bottomInset,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
