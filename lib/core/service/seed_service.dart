@@ -3,15 +3,23 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../database/db_config.dart';
 import '../database/tables/exercise_table.dart';
 import '../model/exercise_data.dart';
 
+final seedServiceProvider = Provider<SeedService>((ref) {
+  return SeedService(ref);
+});
+
 class SeedService {
+  final Ref _ref;
+  SeedService(this._ref);
+
   Future<void> seedExercises() async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = _ref.read(databaseProvider);
 
       final existingExercises = await db.rawQuery(
         'SELECT COUNT(*) as count FROM ${ExerciseTable.tableName}',
@@ -48,7 +56,7 @@ class SeedService {
   }
 
   Future<void> debugPrintExercises() async {
-    final db = await DatabaseService.instance.database;
+    final db = _ref.read(databaseProvider);
     final result = await db.query(ExerciseTable.tableName);
     debugPrint('Total exercises: ${result.length}');
     for (final exercise in result) {

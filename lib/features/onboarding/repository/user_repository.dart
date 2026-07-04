@@ -5,17 +5,20 @@ import 'package:move_your_body/core/model/user_data.dart';
 import '../../../core/database/db_config.dart';
 
 final userRepositoryProvider = Provider<UserRepository>((ref) {
-  return UserRepository();
+  return UserRepository(ref);
 });
 
 class UserRepository {
+  final Ref _ref;
+  UserRepository(this._ref);
+
   Future<void> saveUser(UserData user) async {
-    final db = await DatabaseService.instance.database;
+    final db = _ref.read(databaseProvider);
     await db.insert('user_data', user.toMap());
   }
 
   Future<UserData?> getUserData() async {
-    final db = await DatabaseService.instance.database;
+    final db = _ref.read(databaseProvider);
     debugPrint("Fetching user data from database...");
     final result = await db.query(UserTable.tableName, limit: 1);
 
@@ -34,7 +37,7 @@ class UserRepository {
       return;
     }
 
-    final db = await DatabaseService.instance.database;
+    final db = _ref.read(databaseProvider);
 
     await db.delete(UserTable.tableName);
 

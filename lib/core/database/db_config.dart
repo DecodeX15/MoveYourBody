@@ -5,6 +5,12 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/foundation.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final databaseProvider = Provider<Database>((ref) {
+  throw UnimplementedError('databaseProvider not initialized');
+});
+
 class DatabaseService {
   static final DatabaseService instance = DatabaseService._internal();
 

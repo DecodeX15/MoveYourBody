@@ -3,10 +3,17 @@ import 'package:move_your_body/core/routing/app_router.dart';
 
 import 'core/theme/app_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/database/db_config.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp()));
+  final database = await DatabaseService.instance.database;
+  runApp(ProviderScope(
+    overrides: [
+      databaseProvider.overrideWithValue(database),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
