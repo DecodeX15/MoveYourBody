@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:move_your_body/core/routing/app_routes.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../view_model/home_view_model.dart';
@@ -196,7 +198,11 @@ class TodaySessionCard extends ConsumerWidget {
             width: double.infinity,
             height: 52 * scale,
             child: ElevatedButton.icon(
-              onPressed: exercises.isEmpty ? null : () {},
+              onPressed: exercises.isEmpty
+                  ? null
+                  : () {
+                      context.push(AppRoutes.sessiondetails);
+                    },
               icon: Icon(Icons.play_arrow_rounded, size: 22 * scale),
               label: Text(
                 "Start Session",
