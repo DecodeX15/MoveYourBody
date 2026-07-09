@@ -14,4 +14,5 @@ class AppRoutes {
   static const String add = '/add';
   static const String stats = '/stats';
   static const String profile = '/profile';
+  static const String sessiondetails = '/session-details';
 }
