@@ -13,15 +13,16 @@ class GoalScreen extends ConsumerWidget {
     'Increase Mobility',
     'Tone Body',
     'Build Muscle',
-    'Lose Weight',
-    'Daily Movement',
-    'Sleep Better',
+    'Improve Endurance',
     'Cardio Fitness',
     'Better Posture',
     'Reduce Stress',
     'Core Strength',
     'Bodyweight Only',
-    'Improve Stamina and Strength',
+    'Improve Balance',
+    'Warm Up',
+    'Improve Strength',
+    'Rehabilitation',
   ];
 
   @override
