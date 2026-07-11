@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:move_your_body/core/routing/app_routes.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../view_model/home_view_model.dart';
+import 'package:move_your_body/core/theme/app_colors.dart';
+import 'package:move_your_body/features/home/view_model/home_view_model.dart';
 
 class TodaySessionCard extends ConsumerWidget {
   const TodaySessionCard({super.key});
@@ -200,12 +200,16 @@ class TodaySessionCard extends ConsumerWidget {
             child: ElevatedButton.icon(
               onPressed: exercises.isEmpty
                   ? null
-                  : () {
-                      context.push(AppRoutes.sessiondetails);
+                  : () async {
+                      final viewModel = ref.read(homeViewModelProvider.notifier);
+                      final session = await viewModel.createSession();
+                      if (session != null && context.mounted) {
+                        context.push(AppRoutes.sessionDetailsPath(session.id!));
+                      }
                     },
               icon: Icon(Icons.play_arrow_rounded, size: 22 * scale),
               label: Text(
-                "Start Session",
+                homeState.hasIncompleteSession ? "Resume Session" : "Start Session",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16 * scale,

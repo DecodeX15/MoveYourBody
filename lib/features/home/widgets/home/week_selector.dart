@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../view_model/home_view_model.dart';
+import 'package:move_your_body/core/theme/app_colors.dart';
+import 'package:move_your_body/features/home/view_model/home_view_model.dart';
 
 class WeekSelector extends ConsumerWidget {
   const WeekSelector({super.key});
@@ -26,7 +26,7 @@ class WeekSelector extends ConsumerWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: days.length,
-        separatorBuilder: (_, __) => SizedBox(width: 12 * scale),
+        separatorBuilder: (_, _) => SizedBox(width: 12 * scale),
         itemBuilder: (_, index) {
           final dayDate = days[index];
           final dayLabel = DateFormat('E').format(dayDate)[0];

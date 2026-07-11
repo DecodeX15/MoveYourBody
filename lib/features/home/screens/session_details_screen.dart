@@ -1,17 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/routing/app_routes.dart';
 import '../../../core/widgets/app_scaffold.dart';
-import '../widgets/session_summary_card.dart';
-import '../widgets/exercise_tile.dart';
-import '../widgets/instructions_card.dart';
+import '../view_model/session_details_view_model.dart';
+import '../widgets/session_details/exercise_tile.dart';
+import '../widgets/session_details/instructions_card.dart';
+import '../widgets/session_details/timing_settings_card.dart';
 
-class SessionDetailsScreen extends StatelessWidget {
-  const SessionDetailsScreen({super.key});
+class SessionDetailsScreen extends ConsumerWidget {
+  final int sessionId;
+
+  const SessionDetailsScreen({super.key, required this.sessionId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(sessionDetailsViewModelProvider(sessionId));
+    final viewModel = ref.read(
+      sessionDetailsViewModelProvider(sessionId).notifier,
+    );
     final bottomInset = MediaQuery.of(context).padding.bottom;
+
+    if (state.isLoading) {
+      return const AppScaffold(
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (state.errorMessage != null) {
+      return AppScaffold(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              state.errorMessage!,
+              style: TextStyle(color: Colors.red.shade300, fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
+
+    final exercises = state.exercises;
 
     return AppScaffold(
       child: SingleChildScrollView(
@@ -47,18 +79,28 @@ class SessionDetailsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 24),
+
             const Text(
               "Personalized workout Training",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.w800,
                 height: 1.2,
               ),
             ),
-            const SizedBox(height: 24),
-            const SessionSummaryCard(time: "5 min 25 sec", burn: "25 kcal"),
-            const SizedBox(height: 32),
+            const SizedBox(height: 8),
+            Text(
+              "Set your preferred duration for each exercise",
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+
+            const SizedBox(height: 28),
+
             const Text(
               "Exercises",
               style: TextStyle(
@@ -68,37 +110,39 @@ class SessionDetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const ExerciseTile(
-              title: "Squat Kicks",
-              duration: "90 seconds",
-              imagePath: "assets/images/squat_kicks.png",
-            ),
-            const ExerciseTile(
-              title: "Push ups",
-              duration: "90 seconds",
-              imagePath: "assets/images/push_ups.png",
-            ),
-            const ExerciseTile(
-              title: "Single leg squat",
-              duration: "90 seconds",
-              imagePath: "assets/images/single_leg_squat.png",
-            ),
-            const SizedBox(height: 24),
-            const Center(
-              child: Text(
-                "Preparation time : 5sec\nRest time : 20sec",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  height: 1.4,
-                ),
+            ...exercises.map(
+              (exercise) => ExerciseTile(
+                title: exercise.name,
+                durationSeconds:
+                    state.exerciseDurations[exercise.exerciseId] ?? 30,
+                onDurationChanged: (seconds) {
+                  viewModel.updateExerciseDuration(
+                    exercise.exerciseId,
+                    seconds,
+                  );
+                },
+                onInfoTap: () {
+                  context.push(
+                    AppRoutes.exerciseInfoPath(exercise.exerciseId),
+                  );
+                },
               ),
             ),
+
             const SizedBox(height: 24),
+
+            TimingSettingsCard(
+              preparationTime: state.preparationTime,
+              restTime: state.restTime,
+              onPreparationTimeChanged: viewModel.updatePreparationTime,
+              onRestTimeChanged: viewModel.updateRestTime,
+            ),
+
+            const SizedBox(height: 24),
+
             const InstructionsCard(),
             const SizedBox(height: 40),
+
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -116,7 +160,10 @@ class SessionDetailsScreen extends StatelessWidget {
                   SizedBox(width: 8),
                   Text(
                     "Let's start",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
