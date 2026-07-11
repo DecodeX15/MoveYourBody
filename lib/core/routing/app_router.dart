@@ -4,6 +4,7 @@ import 'package:move_your_body/core/widgets/custom_bottom_navbar.dart';
 import 'package:move_your_body/core/widgets/loading_screen.dart';
 import 'package:move_your_body/features/home/screens/home_screen.dart';
 import 'package:move_your_body/features/home/screens/session_details_screen.dart';
+import 'package:move_your_body/features/home/screens/exercise_info_screen.dart';
 import 'package:move_your_body/features/onboarding/view/splash_screen.dart';
 import './app_routes.dart';
 import '../../features/onboarding/view/body_region_screen.dart';
@@ -124,14 +125,25 @@ final GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: AppRoutes.sessiondetails,
-            builder: (context, state) => const SessionDetailsScreen(),
-          ),
-        ])
       ],
+    ),
+    
+    GoRoute(
+      path: AppRoutes.sessiondetails,
+      builder: (context, state) {
+        final sessionId = int.parse(
+          state.pathParameters['sessionId']!,
+        );
+        return SessionDetailsScreen(sessionId: sessionId);
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.exerciseInfo,
+      builder: (context, state) {
+        final exerciseId = state.pathParameters['exerciseId']!;
+        return ExerciseInfoScreen(exerciseId: exerciseId);
+      },
     ),
   ],
 );

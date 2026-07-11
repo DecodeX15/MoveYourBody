@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:move_your_body/features/home/widgets/home_app_bar.dart';
-import 'package:move_your_body/features/home/widgets/quick_plan_card.dart';
-import 'package:move_your_body/features/home/widgets/search_bar.dart';
-import 'package:move_your_body/features/home/widgets/today_session_card.dart';
-import 'package:move_your_body/features/home/widgets/week_selector.dart';
-import 'package:move_your_body/features/home/widgets/weekly_stats_card.dart';
+import 'package:move_your_body/features/home/widgets/home/home_app_bar.dart';
+import 'package:move_your_body/features/home/widgets/home/quick_plan_card.dart';
+import 'package:move_your_body/features/home/widgets/home/search_bar.dart';
+import 'package:move_your_body/features/home/widgets/home/today_session_card.dart';
+import 'package:move_your_body/features/home/widgets/home/week_selector.dart';
+import 'package:move_your_body/features/home/widgets/home/weekly_stats_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
-                separatorBuilder: (_, __) => const SizedBox(width: 16),
+                separatorBuilder: (_, _) => const SizedBox(width: 16),
                 itemBuilder: (_, index) {
                   final plans = [
                     {
