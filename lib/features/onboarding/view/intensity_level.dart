@@ -23,7 +23,7 @@ class IntensityScreen extends ConsumerWidget {
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
 
     return AppScaffold(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
@@ -103,7 +103,7 @@ class IntensityScreen extends ConsumerWidget {
               },
             ),
 
-            const Spacer(),
+            const SizedBox(height: 40),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
