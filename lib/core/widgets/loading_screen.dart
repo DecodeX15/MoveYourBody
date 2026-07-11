@@ -71,19 +71,16 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
         limit: 3,
         threshold: 0.60,
       );
+      ref
+          .read(onboardingViewModelProvider.notifier)
+          .updateResolvedTags(goals: goalMatches, healthIssues: healthMatches);
+
       await ref
           .read(onboardingViewModelProvider.notifier)
           .saveAndCompleteOnboarding(
             goalEmbed: customGoalBytes,
             healthEmbed: customHealthBytes,
           );
-
-      await ref
-          .read(tagSetupRepositoryProvider)
-          .updateResolvedTags(goals: goalMatches, injuries: healthMatches);
-      ref
-          .read(onboardingViewModelProvider.notifier)
-          .updateResolvedTags(goals: goalMatches, healthIssues: healthMatches);
       await ref.read(userRepositoryProvider).debugPrintUserData();
       print(
         "💾 Pipeline Phase 5: Saving complete profile to UserTable and extracting top tags.",
@@ -109,6 +106,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: Padding(

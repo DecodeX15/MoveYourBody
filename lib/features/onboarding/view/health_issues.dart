@@ -10,16 +10,19 @@ class HealthIssuesScreen extends ConsumerWidget {
   const HealthIssuesScreen({super.key});
   static const List<String> healthIssues = [
     'Lower Back Pain',
-    'Ankle Pain',
-    'Poor Cardiovascular Endurance',
-    'Neck Stiffness',
-    'Hip Joint',
-    'Hamstring Tightness',
     'Knee Pain',
-    'Low Flexibility',
-    'Tight Muscles',
-    'Shortness of Breath During Light Activity',
-    'Stress-Related Body Tension',
+    'Hip Pain',
+    'Shoulder Injury',
+    'Wrist Injury',
+    'Neck Injury',
+    'Ankle Injury',
+    'Pregnancy',
+    'Elbow Injury',
+    'Rotator Cuff Injury',
+    'Herniated Disc',
+    'Osteoporosis',
+    'High Blood Pressure',
+    'Post-Abdominal Surgery',
   ];
 
   @override
