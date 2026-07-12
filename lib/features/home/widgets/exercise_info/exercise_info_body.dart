@@ -61,7 +61,6 @@ class ExerciseInfoBody extends StatelessWidget {
           child: Text(
             exercise.name,
             textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
