@@ -310,10 +310,10 @@
       "benefits": "Strengthens and tones abdominal muscles; improves core stability and posture; trims waistline; enhances balance and stability",
       "contraindications": "lower_back_injury;neck_injury;osteoporosis;post_abdominal_surgery",
       "instructions": "Lie on your back, knees bent, feet flat on the floor, hands on chest or behind head.\nContract your abs and lift your shoulders off the floor, curling toward your knees.\nHold briefly at the top, then slowly lower back down and repeat.",
-      "is_lottie": true,
+      "is_lottie": false,
       "third_party": false,
       "equipments": "",
-      "animation_link": "https://lottiefiles.com/free-animation/abs-crunches-kqvZGz4NGQ"
+      "animation_link": "https://res.cloudinary.com/dyvolu8tc/video/upload/v1784020936/Abdominal_crunches_najeqv.mp4"
     },
     {
       "exercise_id": "Ex16",

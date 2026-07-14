@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:move_your_body/core/routing/app_routes.dart';
+import 'package:move_your_body/core/model/exercise_data.dart';
 import 'package:move_your_body/core/theme/app_colors.dart';
 import 'package:move_your_body/core/widgets/app_scaffold.dart';
 import 'package:move_your_body/features/home/models/session_execution_state.dart';
@@ -18,6 +21,12 @@ class SessionExecutionScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(sessionExecutionViewModelProvider(sessionId), (previous, next) {
+      if (next.currentPhase == ExecutionPhase.finished) {
+        context.go(AppRoutes.home);
+      }
+    });
+
     final state = ref.watch(sessionExecutionViewModelProvider(sessionId));
     final bottomInset = MediaQuery.of(context).padding.bottom;
 
@@ -84,6 +93,15 @@ class SessionExecutionScreen extends ConsumerWidget {
       nextExerciseName = state.exercises[state.currentExerciseIndex + 1].name;
     }
 
+    Exercise? nextAnimExercise;
+    if (state.currentPhase == ExecutionPhase.preparation) {
+      nextAnimExercise = currentExercise;
+    } else if (state.currentPhase == ExecutionPhase.rest) {
+      if (state.currentExerciseIndex + 1 < state.exercises.length) {
+        nextAnimExercise = state.exercises[state.currentExerciseIndex + 1];
+      }
+    }
+
     return AppScaffold(
       child: SafeArea(
         child: Padding(
@@ -109,9 +127,7 @@ class SessionExecutionScreen extends ConsumerWidget {
                 child: ExecutionAnimationBox(
                   exercise: currentExercise,
                   isResting: isResting || state.currentPhase == ExecutionPhase.preparation,
-                  nextExercise: state.currentExerciseIndex + 1 < state.exercises.length
-                      ? state.exercises[state.currentExerciseIndex + 1]
-                      : null,
+                  nextExercise: nextAnimExercise,
                 ),
               ),
 
