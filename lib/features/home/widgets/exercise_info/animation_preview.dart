@@ -30,6 +30,23 @@ class _AnimationPreviewState extends ConsumerState<AnimationPreview> {
     }
   }
 
+  @override
+  void didUpdateWidget(AnimationPreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.exercise.exerciseId != widget.exercise.exerciseId) {
+      final oldController = _videoController;
+      _videoController = null;
+      _animationFile = null;
+      _hasError = false;
+      
+      oldController?.dispose();
+
+      if (!widget.exercise.isLottie && widget.exercise.animationLink.isNotEmpty) {
+        _loadAnimation();
+      }
+    }
+  }
+
   Future<void> _loadAnimation() async {
     try {
       final file = await ref.read(
