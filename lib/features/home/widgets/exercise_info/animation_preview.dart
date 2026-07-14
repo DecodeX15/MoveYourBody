@@ -9,8 +9,9 @@ import 'package:video_player/video_player.dart';
 
 class AnimationPreview extends ConsumerStatefulWidget {
   final Exercise exercise;
+  final double? height;
 
-  const AnimationPreview({super.key, required this.exercise});
+  const AnimationPreview({super.key, required this.exercise, this.height = 280});
 
   @override
   ConsumerState<AnimationPreview> createState() => _AnimationPreviewState();
@@ -70,7 +71,7 @@ class _AnimationPreviewState extends ConsumerState<AnimationPreview> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 280,
+      height: widget.height, 
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(24),
