@@ -2,8 +2,6 @@ name: Generate Exercises Database
 
 on:
   push:
-    branches:
-      - main
     paths:
       - "assets/exercises/exercises.json"
       - "scripts/generate_exercise_db.py"
