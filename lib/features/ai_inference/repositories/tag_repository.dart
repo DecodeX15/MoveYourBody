@@ -1,16 +1,14 @@
-import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:move_your_body/core/database/tables/exercise_table.dart';
 import 'package:move_your_body/core/database/tables/user_table.dart';
-import 'package:move_your_body/features/ai_inference/repositories/ai_repository.dart';
-import 'package:sqflite/sqflite.dart';
 import '../../../../core/database/db_config.dart';
 import '../../../../core/database/tables/tags_table.dart';
 import '../../../core/model/tag_data.dart';
 import '../services/cosine_similairty.dart';
 
-final tagSetupRepositoryProvider = Provider((ref) => TagSetupRepository(ref));
+final tagRepositoryProvider = Provider((ref) => TagRepository());
 
 class TagMatch {
   final Tag tag;
@@ -19,78 +17,13 @@ class TagMatch {
   const TagMatch({required this.tag, required this.score});
 }
 
-class TagSetupRepository {
-  final Ref _ref;
-  TagSetupRepository(this._ref);
-
+class TagRepository {
   static const double defaultSimilarityThreshold = 0.60;
   static const int defaultTopMatchLimit = 5;
 
-  Future<void> processAndSeedTags() async {
-    final db = await DatabaseService.instance.database;
-
-    final String jsonString = await rootBundle.loadString(
-      'assets/exercises/exercises.json',
-    );
-    final Map<String, dynamic> jsonData = json.decode(jsonString);
-    final List<dynamic> exercises = jsonData['exercises'] ?? [];
-
-    final Set<String> uniqueGoals = {};
-    final Set<String> uniqueInjuries = {};
-
-    for (var ex in exercises) {
-      final String goalStr = ex['goal_tags'] ?? '';
-      if (goalStr.isNotEmpty) {
-        uniqueGoals.addAll(goalStr.split(';').map((e) => e.trim()));
-      }
-
-      final String contraStr = ex['contraindications'] ?? '';
-      if (contraStr.isNotEmpty) {
-        uniqueInjuries.addAll(contraStr.split(';').map((e) => e.trim()));
-      }
-    }
-    print(uniqueGoals.length);
-    print(uniqueInjuries.length);
-    await _processSet(db, uniqueGoals, TagType.goal);
-    await _processSet(db, uniqueInjuries, TagType.injury);
-  }
-
-  Future<void> _processSet(Database db, Set<String> tags, TagType type) async {
-    final aiRepo = _ref.read(aiModelRepositoryProvider);
-
-    for (String tagName in tags) {
-      if (tagName.isEmpty) continue;
-      final List<Map<String, dynamic>> existing = await db.query(
-        TagsTable.tableName,
-        where: '${TagsTable.tagName} = ? AND ${TagsTable.tagType} = ?',
-        whereArgs: [tagName, type.name],
-      );
-      if (existing.isEmpty) {
-        final Uint8List? embeddingBytes = await aiRepo.generateEmbedding(
-          tagName,
-        );
-
-        if (embeddingBytes != null) {
-          final newTag = Tag(
-            tagName: tagName,
-            tagType: type,
-            embedding: embeddingBytes,
-          );
-
-          await db.insert(TagsTable.tableName, newTag.toMap());
-          print("Local Inference Complete & Cached: [$type] $tagName");
-        }
-      } else {
-        print(
-          "Entry found in Cache, skipping model inference: [$type] $tagName",
-        );
-      }
-    }
-  }
-
   Future<void> debugPrintAllCachedTags() async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.exercisesDatabase;
 
       final List<Map<String, dynamic>> maps = await db.query(
         TagsTable.tableName,
@@ -120,6 +53,15 @@ class TagSetupRepository {
     }
   }
 
+  Future<void> debugPrintExercises() async {
+    final db = await DatabaseService.instance.exercisesDatabase;
+    final result = await db.query(ExerciseTable.tableName);
+    debugPrint('Total exercises: ${result.length}');
+    for (final exercise in result) {
+      debugPrint(exercise.toString());
+    }
+  }
+
   Future<List<String>> findTopMatches({
     required TagType type,
     required Uint8List? userEmbedding,
@@ -131,7 +73,7 @@ class TagSetupRepository {
         return [];
       }
 
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.exercisesDatabase;
       final userVector = _bytesToFloatVector(userEmbedding);
 
       if (userVector.isEmpty) {
@@ -189,7 +131,7 @@ class TagSetupRepository {
     required List<String> goals,
     required List<String> injuries,
   }) async {
-    final db = await DatabaseService.instance.database;
+    final db = await DatabaseService.instance.userDatabase;
     await db.update(
       UserTable.tableName,
       {
