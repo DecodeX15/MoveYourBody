@@ -35,7 +35,7 @@ class SessionRepository {
       final recommendedExercises = await _recommendationService
           .recommendExercises(userData);
 
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
 
       return await db.transaction<Session?>((txn) async {
         final now = DateTime.now();
@@ -104,7 +104,7 @@ class SessionRepository {
 
   Future<Session?> getLatestIncompleteSession() async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
 
       final sessionResult = await db.query(
         SessionScheduleTable.tableName,
@@ -141,7 +141,7 @@ class SessionRepository {
 
   Future<Session?> getSessionById(int sessionId) async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
 
       final sessionResult = await db.query(
         SessionScheduleTable.tableName,
@@ -177,7 +177,7 @@ class SessionRepository {
 
   Future<Session?> createSessionFromExercises(List<Exercise> exercises) async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
 
       return await db.transaction<Session?>((txn) async {
         final now = DateTime.now();
@@ -246,7 +246,7 @@ class SessionRepository {
 
   Future<void> updateSessionStatus(int sessionId, SessionStatus status) async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
       await db.update(
         SessionScheduleTable.tableName,
         {SessionScheduleTable.sessionStatus: status.name},
@@ -264,7 +264,7 @@ class SessionRepository {
     required int performedDuration,
   }) async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
       await db.update(
         SessionExercisesTable.tableName,
         {
@@ -288,7 +288,7 @@ class SessionRepository {
     String? intensityFeedback,
   }) async {
     try {
-      final db = await DatabaseService.instance.database;
+      final db = await DatabaseService.instance.userDatabase;
       await db.update(
         SessionScheduleTable.tableName,
         {
