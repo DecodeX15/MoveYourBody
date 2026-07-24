@@ -305,4 +305,57 @@ class SessionRepository {
       debugPrint('Error completing session: $e');
     }
   }
+
+  Future<List<Session>> getLastThreeCompletedSessions() async {
+    try {
+      final db = await DatabaseService.instance.userDatabase;
+      
+      final sessionResult = await db.query(
+        SessionScheduleTable.tableName,
+        where: '${SessionScheduleTable.sessionStatus} = ?',
+        whereArgs: [SessionStatus.completed.name],
+        orderBy: '${SessionScheduleTable.createdAt} DESC',
+        limit: 3,
+      );
+
+      return sessionResult.map((e) => Session.fromMap(e)).toList();
+    } catch (e, stackTrace) {
+      debugPrint('Error fetching last 3 completed sessions: $e');
+      debugPrint('$stackTrace');
+      return [];
+    }
+  }
+
+  Future<List<Session>> getAllSessions() async {
+    try {
+      final db = await DatabaseService.instance.userDatabase;
+      final sessionResult = await db.query(SessionScheduleTable.tableName);
+      return sessionResult.map((e) => Session.fromMap(e)).toList();
+    } catch (e) {
+      debugPrint('Error getting all sessions: $e');
+      return [];
+    }
+  }
+
+  Future<void> debugPrintAllSessions() async {
+    try {
+      final db = await DatabaseService.instance.userDatabase;
+      
+      final sessionResult = await db.query(SessionScheduleTable.tableName);
+
+      debugPrint('=== ALL SESSIONS IN DATABASE ===');
+      for (var sessionMap in sessionResult) {
+        final session = Session.fromMap(sessionMap);
+        debugPrint('Session ID: ${session.id} | Status: ${session.sessionStatus.name}');
+        debugPrint('Duration: ${session.sessionDuration}s | Calories: ${session.caloriesBurned}');
+        debugPrint('Difficulty Feedback: ${session.difficultyFeedback}');
+        debugPrint('Intensity Feedback: ${session.intensityFeedback}');
+        debugPrint('----------------------------------');
+      }
+      debugPrint('================================');
+    } catch (e, stackTrace) {
+      debugPrint('Error printing sessions: $e');
+      debugPrint('$stackTrace');
+    }
+  }
 }
