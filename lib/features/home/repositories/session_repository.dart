@@ -6,6 +6,7 @@ import 'package:move_your_body/core/database/tables/session_schedule_table.dart'
 import 'package:move_your_body/core/model/exercise_data.dart';
 import 'package:move_your_body/core/model/session_data.dart';
 import 'package:move_your_body/features/home/services/recommendation_service.dart';
+import 'package:move_your_body/features/home/services/safety_filter_service.dart';
 import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
 
 final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
@@ -32,8 +33,9 @@ class SessionRepository {
         return null;
       }
 
+      final recentExerciseIds = await getRecentExerciseIds(SafetyFilterService.sessionsToSkip);
       final recommendedExercises = await _recommendationService
-          .recommendExercises(userData);
+          .recommendExercises(userData, recentExerciseIds);
 
       final db = await DatabaseService.instance.userDatabase;
 
@@ -303,6 +305,38 @@ class SessionRepository {
       );
     } catch (e) {
       debugPrint('Error completing session: $e');
+    }
+  }
+
+  Future<List<String>> getRecentExerciseIds(int sessionCount) async {
+    try {
+      final db = await DatabaseService.instance.userDatabase;
+      
+      final sessionResult = await db.query(
+        SessionScheduleTable.tableName,
+        columns: [SessionScheduleTable.id],
+        where: '${SessionScheduleTable.sessionStatus} = ?',
+        whereArgs: [SessionStatus.completed.name],
+        orderBy: '${SessionScheduleTable.createdAt} DESC',
+        limit: sessionCount,
+      );
+      
+      if (sessionResult.isEmpty) return [];
+      
+      final sessionIds = sessionResult.map((e) => e[SessionScheduleTable.id] as int).toList();
+      
+      final exerciseResult = await db.query(
+        SessionExercisesTable.tableName,
+        columns: [SessionExercisesTable.exerciseId],
+        where: '${SessionExercisesTable.sessionId} IN (${List.filled(sessionIds.length, '?').join(', ')})',
+        whereArgs: sessionIds,
+      );
+      
+      return exerciseResult.map((e) => e[SessionExercisesTable.exerciseId] as String).toSet().toList();
+    } catch (e, stackTrace) {
+      debugPrint('Error getting recent exercise IDs: $e');
+      debugPrint('$stackTrace');
+      return [];
     }
   }
 
