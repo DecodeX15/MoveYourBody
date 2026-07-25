@@ -7,20 +7,35 @@ final safetyFilterServiceProvider = Provider<SafetyFilterService>((ref) {
 });
 
 class SafetyFilterService {
+  static const int sessionsToSkip = 6;
   List<Exercise> filterExercises({
     required List<Exercise> exercises,
     required UserData user,
+    required List<String> recentExerciseIds,
   }) {
-    if (user.healthIssueTags.isEmpty) {
-      return exercises;
+    // 1. Health & Safety Filter
+    List<Exercise> safeExercises = exercises;
+    
+    if (user.healthIssueTags.isNotEmpty) {
+      safeExercises = exercises.where((exercise) {
+        return !_hasContraindications(
+          exercise.contraindications,
+          user.healthIssueTags,
+        );
+      }).toList();
     }
 
-    return exercises.where((exercise) {
-      return !_hasContraindications(
-        exercise.contraindications,
-        user.healthIssueTags,
-      );
-    }).toList();
+    // 2. Anti-Boredom Filter
+    if (recentExerciseIds.isEmpty) {
+      return safeExercises;
+    }
+
+    final freshExercises = safeExercises.where((ex) => !recentExerciseIds.contains(ex.exerciseId)).toList();
+    if (freshExercises.length < 3) {
+      return safeExercises;
+    }
+
+    return freshExercises;
   }
 
   bool _hasContraindications(
