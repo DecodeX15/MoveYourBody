@@ -4,7 +4,7 @@
 <!-- Organization Logo -->
 <div align="center" style="display: flex; align-items: center; justify-content: center; gap: 16px;">
   <img alt="AOSSIE" src="public/aossie-logo.svg" width="175">
-  <img src="public/move-your-body-logo.svg" width="175" />
+  <img alt="Move Your Body Logo" src="public/move-your-body-logo.svg" width="175" />
 </div>
 
 &nbsp;
