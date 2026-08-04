@@ -24,7 +24,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final user = await ref.read(userRepositoryProvider).getUserData();
     await DatabaseService.instance.exercisesDatabase;
     if (user != null) {
-      print("-------------------");
+      debugPrint("-------------------");
       ref.read(onboardingViewModelProvider.notifier).loadFromUserData(user);
     }
 

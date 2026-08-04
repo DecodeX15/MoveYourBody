@@ -34,17 +34,17 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
       final tagSetupRepo = ref.read(tagRepositoryProvider);
       final onboardingData = ref.read(onboardingViewModelProvider);
 
-      print("🚀 Pipeline Phase 1: Initializing ONNX Engine...");
+      debugPrint("🚀 Pipeline Phase 1: Initializing ONNX Engine...");
       await aiModelRepo.initModel();
 
-      print("🚀 Pipeline Phase 2: Initializing static exercises DB...");
+      debugPrint("🚀 Pipeline Phase 2: Initializing static exercises DB...");
       await DatabaseService.instance.exercisesDatabase;
 
       Uint8List? customGoalBytes;
       Uint8List? customHealthBytes;
 
       if (onboardingData.customGoal.trim().isNotEmpty) {
-        print(
+        debugPrint(
           "🧠 Pipeline Phase 3: Generating embedding for Custom Goal: '${onboardingData.customGoal}'",
         );
         customGoalBytes = await aiModelRepo.generateEmbedding(
@@ -53,7 +53,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
       }
 
       if (onboardingData.customHealthIssue.trim().isNotEmpty) {
-        print(
+        debugPrint(
           "🧠 Pipeline Phase 4: Generating embedding for Custom Injury: '${onboardingData.customHealthIssue}'",
         );
         customHealthBytes = await aiModelRepo.generateEmbedding(
@@ -83,7 +83,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
             healthEmbed: customHealthBytes,
           );
       await ref.read(userRepositoryProvider).debugPrintUserData();
-      print(
+      debugPrint(
         "💾 Pipeline Phase 5: Saving complete profile to UserTable and extracting top tags.",
       );
 
@@ -91,12 +91,12 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
 
       if (!mounted) return;
 
-      print(
+      debugPrint(
         "🎯 Pipeline Perfect: All operations complete. Redirecting to Results.",
       );
       context.go(AppRoutes.profile);
     } catch (e) {
-      print("❌ Critical Pipeline Crash: $e");
+      debugPrint("❌ Critical Pipeline Crash: $e");
       if (mounted) context.go(AppRoutes.profile);
     }
   }
@@ -111,12 +111,12 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(32),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
                   decoration: BoxDecoration(
                     color: AppColors.surface,
                     borderRadius: BorderRadius.circular(24),
@@ -156,7 +156,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
                       const SizedBox(height: 16),
 
                       Text(
-                        'Our local AI model is executing secure mathematical vector inferences on your profile parameters to finalize custom exercise routines natively.',
+                        'We are analyzing your goals, fitness level, and preferences on your device to create a workout plan tailored just for you, just takes few seconds.',
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium?.copyWith(
                           color: AppColors.textSecondary,
