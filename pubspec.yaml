@@ -52,6 +52,7 @@ dependencies:
   table_calendar: ^3.2.0
   fl_chart: ^1.2.0
   sqflite_common_ffi: ^2.4.2
+  mocktail: ^1.0.5
   
 dev_dependencies:
   flutter_test:

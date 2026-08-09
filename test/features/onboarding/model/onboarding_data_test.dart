@@ -31,7 +31,7 @@ void main() {
         goalTags: {'fat_burn', 'muscle_building'},
       );
 
-      expect(updatedData.username, 'John');
+      expect(updatedData.username, 'Vaibhav');
       expect(updatedData.age, 25);
       expect(updatedData.goalTags, contains('fat_burn'));
       expect(updatedData.goalTags.length, 2);
