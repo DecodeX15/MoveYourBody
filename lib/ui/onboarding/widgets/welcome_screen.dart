@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/core/widgets/app_scaffold.dart';
 import '../../../core/widgets/feature_chip.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -45,11 +46,9 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: ClipOval(
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            fit: BoxFit.cover,
-                          ),
+                        child: SvgPicture.asset(
+                          'public/MoveYourBodyLogo.svg',
+                          fit: BoxFit.contain,
                         ),
                       ),
 
