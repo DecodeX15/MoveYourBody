@@ -48,18 +48,21 @@ void main() {
       expect(fetchedUser.goalTags, contains('fat_burn'));
     });
 
-    test('updateDifficultyAndIntensity should update values in database', () async {
-      await userRepository.saveUser(testUser);
+    test(
+      'updateDifficultyAndIntensity should update values in database',
+      () async {
+        await userRepository.saveUser(testUser);
 
-      await userRepository.updateDifficultyAndIntensity('Advanced', 'High');
+        await userRepository.updateDifficultyAndIntensity('Advanced', 'High');
 
-      final updatedUser = await userRepository.getUserData();
-      expect(updatedUser, isNotNull);
-      expect(updatedUser!.difficulty, 'Advanced');
-      expect(updatedUser.intensity, 'High');
-      
-      expect(updatedUser.username, 'Vaibhav');
-    });
+        final updatedUser = await userRepository.getUserData();
+        expect(updatedUser, isNotNull);
+        expect(updatedUser!.difficulty, 'Advanced');
+        expect(updatedUser.intensity, 'High');
+
+        expect(updatedUser.username, 'Vaibhav');
+      },
+    );
 
     test('deleteUserData should remove the user from database', () async {
       await userRepository.saveUser(testUser);

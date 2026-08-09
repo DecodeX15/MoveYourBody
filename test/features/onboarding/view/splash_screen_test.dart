@@ -11,20 +11,18 @@ void main() {
   });
 
   Widget createWidgetUnderTest() {
-    return const ProviderScope(
-      child: MaterialApp(
-        home: SplashScreen(),
-      ),
-    );
+    return const ProviderScope(child: MaterialApp(home: SplashScreen()));
   }
 
   group('SplashScreen Widget Tests', () {
-    testWidgets('renders loading indicator correctly', (WidgetTester tester) async {
+    testWidgets('renders loading indicator correctly', (
+      WidgetTester tester,
+    ) async {
       // Pump widget but do not pumpAndSettle because it has a timer/async router call
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(SplashScreen), findsOneWidget);
-      
+
       // The screen should display a CircularProgressIndicator
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });

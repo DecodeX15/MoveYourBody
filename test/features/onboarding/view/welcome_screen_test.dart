@@ -5,13 +5,13 @@ import 'package:move_your_body/core/widgets/feature_chip.dart';
 
 void main() {
   Widget createWidgetUnderTest() {
-    return const MaterialApp(
-      home: WelcomeScreen(),
-    );
+    return const MaterialApp(home: WelcomeScreen());
   }
 
   group('WelcomeScreen Widget Tests', () {
-    testWidgets('renders all UI components correctly', (WidgetTester tester) async {
+    testWidgets('renders all UI components correctly', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.textContaining('Fitness Mentor'), findsOneWidget);
