@@ -22,9 +22,7 @@ void main() {
     setUp(() {
       fakeRepository = FakeUserRepository();
       container = ProviderContainer(
-        overrides: [
-          userRepositoryProvider.overrideWithValue(fakeRepository),
-        ],
+        overrides: [userRepositoryProvider.overrideWithValue(fakeRepository)],
       );
     });
 
@@ -34,7 +32,7 @@ void main() {
 
     test('initial state should be empty OnboardingData', () {
       final state = container.read(onboardingViewModelProvider);
-      
+
       expect(state.username, isNull);
       expect(state.goalTags, isEmpty);
     });
@@ -43,30 +41,45 @@ void main() {
       final notifier = container.read(onboardingViewModelProvider.notifier);
 
       notifier.toggleGoal('fat_burn');
-      expect(container.read(onboardingViewModelProvider).goalTags, contains('fat_burn'));
+      expect(
+        container.read(onboardingViewModelProvider).goalTags,
+        contains('fat_burn'),
+      );
 
       notifier.toggleGoal('muscle_building');
-      expect(container.read(onboardingViewModelProvider).goalTags, containsAll(['fat_burn', 'muscle_building']));
+      expect(
+        container.read(onboardingViewModelProvider).goalTags,
+        containsAll(['fat_burn', 'muscle_building']),
+      );
 
       notifier.toggleGoal('fat_burn');
-      expect(container.read(onboardingViewModelProvider).goalTags, isNot(contains('fat_burn')));
-      expect(container.read(onboardingViewModelProvider).goalTags, contains('muscle_building'));
+      expect(
+        container.read(onboardingViewModelProvider).goalTags,
+        isNot(contains('fat_burn')),
+      );
+      expect(
+        container.read(onboardingViewModelProvider).goalTags,
+        contains('muscle_building'),
+      );
     });
 
-    test('set user details (username, age, weight, height) should update state', () {
-      final notifier = container.read(onboardingViewModelProvider.notifier);
+    test(
+      'set user details (username, age, weight, height) should update state',
+      () {
+        final notifier = container.read(onboardingViewModelProvider.notifier);
 
-      notifier.setUsername('Vaibhav');
-      notifier.setAge(28);
-      notifier.setWeight(75.5);
-      notifier.setHeight(180.0);
+        notifier.setUsername('Vaibhav');
+        notifier.setAge(28);
+        notifier.setWeight(75.5);
+        notifier.setHeight(180.0);
 
-      final state = container.read(onboardingViewModelProvider);
-      expect(state.username, 'Vaibhav');
-      expect(state.age, 28);
-      expect(state.weight, 75.5);
-      expect(state.height, 180.0);
-    });
+        final state = container.read(onboardingViewModelProvider);
+        expect(state.username, 'Vaibhav');
+        expect(state.age, 28);
+        expect(state.weight, 75.5);
+        expect(state.height, 180.0);
+      },
+    );
 
     test('setDifficulty and setIntensity should update state', () {
       final notifier = container.read(onboardingViewModelProvider.notifier);
@@ -111,12 +124,12 @@ void main() {
 
     test('saveAndCompleteOnboarding should call repository saveUser', () async {
       final notifier = container.read(onboardingViewModelProvider.notifier);
-      
+
       notifier.setUsername('Rahul');
-      
+
       await notifier.saveAndCompleteOnboarding(
-        goalEmbed: Uint8List.fromList([1, 2, 3]), 
-        healthEmbed: Uint8List.fromList([4, 5, 6])
+        goalEmbed: Uint8List.fromList([1, 2, 3]),
+        healthEmbed: Uint8List.fromList([4, 5, 6]),
       );
 
       expect(fakeRepository.savedUser, isNotNull);

@@ -21,28 +21,22 @@ void main() {
       initialLocation: '/goal',
       observers: [observer],
       routes: [
-        GoRoute(
-          path: '/goal',
-          builder: (context, state) => const GoalScreen(),
-        ),
+        GoRoute(path: '/goal', builder: (context, state) => const GoalScreen()),
         GoRoute(
           path: AppRoutes.healthIssues,
-          builder: (context, state) => const Scaffold(
-            body: Text('Health Issues Screen'),
-          ),
+          builder: (context, state) =>
+              const Scaffold(body: Text('Health Issues Screen')),
         ),
       ],
     );
 
-    return ProviderScope(
-      child: MaterialApp.router(
-        routerConfig: router,
-      ),
-    );
+    return ProviderScope(child: MaterialApp.router(routerConfig: router));
   }
 
   group('GoalScreen Widget Tests with Navigation (Level-2)', () {
-    testWidgets('renders all UI components correctly', (WidgetTester tester) async {
+    testWidgets('renders all UI components correctly', (
+      WidgetTester tester,
+    ) async {
       final mockObserver = MockNavigatorObserver();
       await tester.pumpWidget(createWidgetWithRouter(mockObserver));
       await tester.pumpAndSettle();
@@ -54,7 +48,9 @@ void main() {
       expect(find.byIcon(Icons.arrow_back_ios_new_rounded), findsOneWidget);
     });
 
-    testWidgets('can tap on a goal chip without crashing', (WidgetTester tester) async {
+    testWidgets('can tap on a goal chip without crashing', (
+      WidgetTester tester,
+    ) async {
       final mockObserver = MockNavigatorObserver();
       await tester.pumpWidget(createWidgetWithRouter(mockObserver));
       await tester.pumpAndSettle();
@@ -63,12 +59,14 @@ void main() {
       expect(fatBurnChip, findsOneWidget);
 
       await tester.tap(fatBurnChip);
-      await tester.pumpAndSettle(); 
+      await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('tapping Continue button navigates to HealthIssues screen', (WidgetTester tester) async {
+    testWidgets('tapping Continue button navigates to HealthIssues screen', (
+      WidgetTester tester,
+    ) async {
       final mockObserver = MockNavigatorObserver();
       await tester.pumpWidget(createWidgetWithRouter(mockObserver));
       await tester.pumpAndSettle();
@@ -77,13 +75,14 @@ void main() {
       expect(continueButton, findsOneWidget);
 
       await tester.tap(continueButton);
-      
+
       await tester.pumpAndSettle();
 
-      verify(() => mockObserver.didPush(any(), any())).called(greaterThanOrEqualTo(1));
+      verify(
+        () => mockObserver.didPush(any(), any()),
+      ).called(greaterThanOrEqualTo(1));
 
       expect(find.text('Health Issues Screen'), findsOneWidget);
     });
-    
   });
 }

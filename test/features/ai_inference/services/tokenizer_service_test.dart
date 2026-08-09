@@ -12,13 +12,13 @@ void main() {
 
     test('encode should return null if not initialized', () {
       final result = tokenizerService.encode('Hello Vaibhav');
-      
+
       expect(result, isNull);
     });
 
     test('init should successfully load vocab and encode text', () async {
       await tokenizerService.init();
-      
+
       final result = tokenizerService.encode('Test John');
       expect(result, isNotNull);
       expect(result!['input_ids'], isNotNull);

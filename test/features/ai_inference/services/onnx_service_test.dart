@@ -14,19 +14,26 @@ void main() {
       onnxService = OnnxService();
     });
 
-    test('runInference returns empty list if session is not initialized', () async {
-      final dummyInput = Int64List.fromList([1, 2]);
-      
-      final result = await onnxService.runInference(dummyInput, dummyInput, dummyInput);
-      
-      expect(result, isEmpty);
-    });
+    test(
+      'runInference returns empty list if session is not initialized',
+      () async {
+        final dummyInput = Int64List.fromList([1, 2]);
 
-    test('init should throw an error if model asset is missing or runtime is unavailable in test environment', () async {
-      expect(
-        () async => await onnxService.init(),
-        throwsA(isA<dynamic>()),
-      );
-    });
+        final result = await onnxService.runInference(
+          dummyInput,
+          dummyInput,
+          dummyInput,
+        );
+
+        expect(result, isEmpty);
+      },
+    );
+
+    test(
+      'init should throw an error if model asset is missing or runtime is unavailable in test environment',
+      () async {
+        expect(() async => await onnxService.init(), throwsA(isA<dynamic>()));
+      },
+    );
   });
 }

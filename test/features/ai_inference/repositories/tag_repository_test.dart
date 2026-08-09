@@ -18,25 +18,28 @@ void main() {
       repository = TagRepository();
     });
 
-    test('findTopMatches returns empty list when userEmbedding is null or empty', () async {
-      final matchesForNull = await repository.findTopMatches(
-        type: TagType.goal,
-        userEmbedding: null,
-      );
-      
-      expect(matchesForNull, isEmpty);
+    test(
+      'findTopMatches returns empty list when userEmbedding is null or empty',
+      () async {
+        final matchesForNull = await repository.findTopMatches(
+          type: TagType.goal,
+          userEmbedding: null,
+        );
 
-      final matchesForEmpty = await repository.findTopMatches(
-        type: TagType.goal,
-        userEmbedding: Uint8List(0),
-      );
-      
-      expect(matchesForEmpty, isEmpty);
-    });
+        expect(matchesForNull, isEmpty);
+
+        final matchesForEmpty = await repository.findTopMatches(
+          type: TagType.goal,
+          userEmbedding: Uint8List(0),
+        );
+
+        expect(matchesForEmpty, isEmpty);
+      },
+    );
 
     test('_bytesToFloatVector edge cases via findTopMatches', () async {
       final invalidEmbedding = Uint8List.fromList([1, 2, 3]);
-      
+
       final matches = await repository.findTopMatches(
         type: TagType.goal,
         userEmbedding: invalidEmbedding,
