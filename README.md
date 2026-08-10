@@ -4,7 +4,7 @@
 <!-- Organization Logo -->
 <div align="center" style="display: flex; align-items: center; justify-content: center; gap: 16px;">
   <img alt="AOSSIE" src="public/aossie-logo.svg" width="175">
-  <img alt="Move Your Body Logo" src="public/move-your-body-logo.svg" width="175" />
+  <img alt="Move Your Body Logo" src="public/MoveYourBodyLogo.svg" width="175" />
 </div>
 
 &nbsp;
@@ -163,12 +163,12 @@ graph TD
 
 ### 2. Custom Input to Tags Pipeline
 
-![Custom Input to Tags Pipeline](public/Custom_Input_to_Tags_Pipeline.png)
+![Custom Input to Tags Pipeline](public/custom_input_to_tags_pipeline.png)
 *(Illustrates how user input is processed and mapped to semantic tags)*
 
 ### 3. Recommendation Algorithm Overview
 
-![Recommendation Algorithm Overview](public/Recommendation_Algorithm_Overview.png)
+![Recommendation Algorithm Overview](public/recommendation_algorithm_overview.png)
 *(Overview of rule-based filtering, injury exclusion, and semantic matching)*
 
 ### 4. Voice Control Pipeline
@@ -244,7 +244,7 @@ flutter run
 ⭐ Don't forget to star this repository if you find it useful! ⭐
 
 Thank you for considering contributing to this project! Contributions are highly appreciated and welcomed. 
-*Note: Before opening a UI Pull Request, please ensure you read our [brand.md](./brand.md) file for styling guidelines.*
+*Note: Before opening a UI Pull Request, please ensure you read our [brand.md](./brand/brand.md) file for styling guidelines.*
 
 ---
 
