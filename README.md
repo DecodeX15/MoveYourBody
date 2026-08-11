@@ -11,8 +11,8 @@
 
 <!-- Organization Name -->
 <div align="center">
-  [![Static Badge](https://img.shields.io/badge/aossie.org/MoveYourBody-228B22?style=for-the-badge&labelColor=FFC517)](https://aossie.org/)
-  [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/AOSSIE-Org/MoveYourBody/badge)](https://securityscorecards.dev/viewer/?uri=github.com/AOSSIE-Org/MoveYourBody)
+  <a href="https://aossie.org/"><img src="https://img.shields.io/badge/aossie.org/MoveYourBody-228B22?style=for-the-badge&labelColor=FFC517" alt="Static Badge"></a>
+  <a href="https://securityscorecards.dev/viewer/?uri=github.com/AOSSIE-Org/MoveYourBody"><img src="https://api.securityscorecards.dev/projects/github.com/AOSSIE-Org/MoveYourBody/badge" alt="OpenSSF Scorecard"></a>
 </div>
 
 <!-- Organization/Project Social Handles -->
