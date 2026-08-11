@@ -10,8 +10,9 @@
 &nbsp;
 
 <!-- Organization Name -->
-<div align[![Static Badge](https://img.shields.io/badge/aossie.org/MoveYourBody-228B22?style=for-the-badge&labelColor=FFC517)](https://aossie.org/)
-
+<div align="center">
+  [![Static Badge](https://img.shields.io/badge/aossie.org/MoveYourBody-228B22?style=for-the-badge&labelColor=FFC517)](https://aossie.org/)
+  [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/AOSSIE-Org/MoveYourBody/badge)](https://securityscorecards.dev/viewer/?uri=github.com/AOSSIE-Org/MoveYourBody)
 </div>
 
 <!-- Organization/Project Social Handles -->
@@ -51,7 +52,7 @@
 
 ---
 
-## Features
+## 🚀 Features
 
 - **Micro-Workout Sessions**: Stay consistent with short, 5-7 minute micro-sessions. You'll receive 2-3 sessions per day, with each session consisting of 3 exercises, complete with built-in notifications.
 - **Personalized Exercise Selection**: Uses an on-device embedding pipeline to match exercises to your goals. It avoids recently performed exercises to prevent boredom, filters out unsafe movements based on your injuries, and adapts difficulty through post-workout feedback.
@@ -200,6 +201,12 @@ User receives notification when the next customized session is ready
 
 ## 🍀 Getting Started
 
+### Prerequisites
+
+- Flutter SDK
+- Dart SDK
+- Android Studio / Xcode (for emulation and building)
+
 ### Installation
 
 #### 1. Clone the Repository
@@ -236,6 +243,14 @@ Ensure you have a simulator running or a device connected.
 ```bash
 flutter run
 ```
+
+---
+
+## 📱 App Screenshots
+
+| | | |
+|:---:|:---:|:---:|
+| ![Screenshot 1](public/app_ss_1.png) | ![Screenshot 2](public/app_ss_2.png) | ![Screenshot 3](public/app_ss_3.png) |
 
 ---
 
