@@ -258,7 +258,8 @@ flutter run
 
 ⭐ Don't forget to star this repository if you find it useful! ⭐
 
-Thank you for considering contributing to this project! Contributions are highly appreciated and welcomed. 
+Thank you for considering contributing to this project! Contributions are highly appreciated and welcomed, read the [CONTRIBUTING.md](./CONTRIBUTING.md) for setting the project.
+
 *Note: Before opening a UI Pull Request, please ensure you read our [brand.md](./brand/brand.md) file for styling guidelines.*
 
 ---
