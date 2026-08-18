@@ -107,7 +107,7 @@ class SessionTile extends StatelessWidget {
                 if (session.caloriesBurned != null &&
                     session.caloriesBurned! > 0)
                   Text(
-                    '${session.caloriesBurned!.toInt()} kcal',
+                    '${session.caloriesBurned!.toStringAsFixed(1)} kcal',
                     style: const TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,
