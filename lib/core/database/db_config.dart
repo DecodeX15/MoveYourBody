@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:move_your_body/core/database/schema/exercise_schema.dart';
+import 'package:move_your_body/core/database/schema/quick_plan_schema.dart';
 import 'package:move_your_body/core/database/schema/session_exercises_schema.dart';
 import 'package:move_your_body/core/database/schema/session_schedule_schema.dart';
 import 'package:move_your_body/core/database/schema/tags_schema.dart';
@@ -38,13 +39,20 @@ class DatabaseService {
     debugPrint('DB PATH: $path');
     return openDatabase(
       path,
-      version: 4,
+      version: 7,
       onCreate: (db, version) async {
         await UserDatabaseService.createTable(db);
         await ExerciseDatabaseService.createTable(db);
         await TagsDatabaseService.createTable(db);
         await SessionScheduleDatabaseService.createTable(db);
         await SessionExercisesDatabaseService.createTable(db);
+        await QuickPlanDatabaseService.createTables(db);
+        await db.execute(
+          'ALTER TABLE session_schedule ADD COLUMN is_quick_plan INTEGER NOT NULL DEFAULT 0',
+        );
+        await db.execute(
+          'ALTER TABLE session_schedule ADD COLUMN quick_plan_id INTEGER',
+        );
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
@@ -56,6 +64,22 @@ class DatabaseService {
         }
         if (oldVersion < 4) {
           await SessionExercisesDatabaseService.createTable(db);
+        }
+        if (oldVersion < 5) {
+          await QuickPlanDatabaseService.createTables(db);
+          await db.execute(
+            'ALTER TABLE session_schedule ADD COLUMN is_quick_plan INTEGER NOT NULL DEFAULT 0',
+          );
+        }
+        if (oldVersion < 6) {
+          await db.execute(
+            'ALTER TABLE session_schedule ADD COLUMN quick_plan_id INTEGER',
+          );
+        }
+        if (oldVersion < 7) {
+          await db.execute(
+            'ALTER TABLE quick_plans ADD COLUMN image_path TEXT',
+          );
         }
       },
     );
@@ -69,10 +93,7 @@ class DatabaseService {
 
     debugPrint('EXERCISES DB PATH: $dbPath');
 
-    return openDatabase(
-      dbPath,
-      readOnly: true,
-    );
+    return openDatabase(dbPath, readOnly: true);
   }
 
   Future<void> _copyExercisesDatabaseIfNeeded(String dbPath) async {
@@ -80,14 +101,12 @@ class DatabaseService {
     final packageInfo = await PackageInfo.fromPlatform();
 
     final currentAppVersion = packageInfo.version;
-    final copiedVersion =
-        prefs.getString('exercise_userdatabase_version');
+    final copiedVersion = prefs.getString('exercise_userdatabase_version');
 
     final dbFile = File(dbPath);
 
     final shouldCopy =
-        !await dbFile.exists() ||
-        copiedVersion != currentAppVersion;
+        !await dbFile.exists() || copiedVersion != currentAppVersion;
 
     if (!shouldCopy) {
       debugPrint('Exercises database already up to date.');
@@ -100,24 +119,14 @@ class DatabaseService {
       await dbFile.delete();
     }
 
-    final data = await rootBundle.load(
-      'assets/exercises.db',
-    );
+    final data = await rootBundle.load('assets/exercises.db');
 
     final bytes = data.buffer.asUint8List();
 
-    await dbFile.writeAsBytes(
-      bytes,
-      flush: true,
-    );
+    await dbFile.writeAsBytes(bytes, flush: true);
 
-    await prefs.setString(
-      'exercise_userdatabase_version',
-      currentAppVersion,
-    );
+    await prefs.setString('exercise_userdatabase_version', currentAppVersion);
 
-    debugPrint(
-      'Exercises database copied for app version $currentAppVersion',
-    );
+    debugPrint('Exercises database copied for app version $currentAppVersion');
   }
 }

@@ -73,9 +73,11 @@ class SessionTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Workout Session',
-                    style: TextStyle(
+                  Text(
+                    session.isQuickPlan && session.quickPlanName != null
+                        ? session.quickPlanName!
+                        : 'Workout Session',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

@@ -235,7 +235,7 @@ class _SessionFeedbackScreenState extends ConsumerState<SessionFeedbackScreen> w
             controller: _confettiController,
             onLoaded: (composition) {
               _confettiController
-                ..duration = composition.duration * 1
+                ..duration = composition.duration * 10
                 ..forward();
             },
             fit: BoxFit.cover,

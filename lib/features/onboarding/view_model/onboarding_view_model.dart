@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
+import 'package:move_your_body/features/home/repositories/quick_plan_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/onboarding_data.dart';
 import "../../../core/model/user_data.dart";
@@ -113,6 +114,7 @@ class OnboardingViewModel extends _$OnboardingViewModel {
     );
     final userData = state.toUserdata();
     await ref.read(userRepositoryProvider).saveUser(userData);
+    await ref.read(quickPlanRepositoryProvider).seedPlansIfNeeded(force: true);
   }
 
   void updateResolvedTags({

@@ -110,7 +110,7 @@ class SessionRepository {
 
       final sessionResult = await db.query(
         SessionScheduleTable.tableName,
-        where: '${SessionScheduleTable.sessionStatus} IN (?, ?)',
+        where: '${SessionScheduleTable.sessionStatus} IN (?, ?) AND ${SessionScheduleTable.isQuickPlan} = 0',
         whereArgs: [SessionStatus.created.name, SessionStatus.inProgress.name],
         orderBy: '${SessionScheduleTable.createdAt} DESC',
         limit: 1,
