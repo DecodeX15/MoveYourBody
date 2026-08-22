@@ -1,4 +1,4 @@
-package org.aossie.move_your_body
+package org.aossie.move
 
 import io.flutter.embedding.android.FlutterActivity
 
