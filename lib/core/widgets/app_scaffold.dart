@@ -15,6 +15,8 @@ class AppScaffold extends StatelessWidget {
       backgroundColor: Colors.transparent,
       bottomNavigationBar: bottomNavigationBar,
       body: Container(
+        height: double.infinity,
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

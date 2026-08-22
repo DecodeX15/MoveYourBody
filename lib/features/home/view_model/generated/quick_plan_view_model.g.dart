@@ -42,7 +42,7 @@ final class QuickPlanViewModelProvider
 }
 
 String _$quickPlanViewModelHash() =>
-    r'0d6907a685a6ba05f12452ce5f7aeb0024ee9ae9';
+    r'15494e98a40aef166151a7c0487c7472a3dfe8ee';
 
 abstract class _$QuickPlanViewModel extends $Notifier<QuickPlanState> {
   QuickPlanState build();

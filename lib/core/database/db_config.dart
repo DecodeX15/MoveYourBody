@@ -46,13 +46,7 @@ class DatabaseService {
         await TagsDatabaseService.createTable(db);
         await SessionScheduleDatabaseService.createTable(db);
         await SessionExercisesDatabaseService.createTable(db);
-        await QuickPlanDatabaseService.createTables(db);
-        await db.execute(
-          'ALTER TABLE session_schedule ADD COLUMN is_quick_plan INTEGER NOT NULL DEFAULT 0',
-        );
-        await db.execute(
-          'ALTER TABLE session_schedule ADD COLUMN quick_plan_id INTEGER',
-        );
+        await QuickPlanDatabaseService.createTables(db);        
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
