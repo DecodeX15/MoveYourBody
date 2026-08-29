@@ -48,7 +48,8 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   shared_preferences: ^2.5.3
   package_info_plus: ^8.3.0
-  fuzzy: ^0.5.1 
+  fuzzy: ^0.5.1
+  flutter_tts: ^4.2.0
   table_calendar: ^3.2.0
   fl_chart: ^1.2.0
   sqflite_common_ffi: ^2.4.2

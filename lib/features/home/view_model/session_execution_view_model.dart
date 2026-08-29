@@ -4,6 +4,7 @@ import 'package:move_your_body/core/model/session_data.dart';
 import 'package:move_your_body/core/model/exercise_data.dart';
 import 'package:move_your_body/features/home/repositories/session_repository.dart';
 import 'package:move_your_body/features/home/services/calorie_calculator_service.dart';
+import 'package:move_your_body/features/home/services/tts_service.dart';
 import 'package:move_your_body/features/home/view_model/session_details_view_model.dart';
 import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,11 +15,13 @@ part 'generated/session_execution_view_model.g.dart';
 @riverpod
 class SessionExecutionViewModel extends _$SessionExecutionViewModel {
   Timer? _timer;
+  final TtsService _ttsService = TtsService();
 
   @override
   SessionExecutionState build(int sessionId) {
     ref.onDispose(() {
       _timer?.cancel();
+      _ttsService.dispose();
     });
 
     Future.microtask(() => _init());
@@ -52,12 +55,14 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
 
     final sessionRepo = ref.read(sessionRepositoryProvider);
     await sessionRepo.updateSessionStatus(sessionId, SessionStatus.inProgress);
+    await _ttsService.init();
 
     _startPhase(ExecutionPhase.preparation);
   }
 
   void _startPhase(ExecutionPhase phase) {
     _timer?.cancel();
+    _ttsService.stop();
 
     int duration = 0;
     switch (phase) {
@@ -83,6 +88,21 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
     );
 
     _timer = Timer.periodic(const Duration(seconds: 1), _tick);
+
+    if (phase == ExecutionPhase.workout) {
+      _speakCurrentExerciseInstructions();
+    }
+  }
+  void _speakCurrentExerciseInstructions() {
+    final exercise = state.exercises[state.currentExerciseIndex];
+    final segments = exercise.instructions
+        .split('\n')
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .toList();
+
+    if (segments.isEmpty) return;
+    _ttsService.speakInstructions(segments);
   }
 
   void _tick(Timer timer) {
@@ -155,14 +175,19 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
   }
 
   void pauseTimer() {
+    _ttsService.stop();
     state = state.copyWith(isPaused: true);
   }
 
   void resumeTimer() {
     state = state.copyWith(isPaused: false);
+    if (state.currentPhase == ExecutionPhase.workout) {
+      _speakCurrentExerciseInstructions();
+    }
   }
 
   void skipToNext() {
+    _ttsService.stop();
     _advancePhase();
   }
 
@@ -173,6 +198,7 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
 
   Future<void> _finishSession() async {
     _timer?.cancel();
+    _ttsService.stop();
     state = state.copyWith(
       currentPhase: ExecutionPhase.finished,
       remainingSeconds: 0,
