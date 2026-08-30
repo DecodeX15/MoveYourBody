@@ -5,6 +5,7 @@ import 'package:move_your_body/core/model/exercise_data.dart';
 import 'package:move_your_body/features/home/repositories/session_repository.dart';
 import 'package:move_your_body/features/home/services/calorie_calculator_service.dart';
 import 'package:move_your_body/features/home/services/tts_service.dart';
+import 'package:move_your_body/features/home/services/voice_command_service.dart';
 import 'package:move_your_body/features/home/view_model/session_details_view_model.dart';
 import 'package:move_your_body/features/onboarding/repository/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,11 +17,15 @@ part 'generated/session_execution_view_model.g.dart';
 class SessionExecutionViewModel extends _$SessionExecutionViewModel {
   Timer? _timer;
   final TtsService _ttsService = TtsService();
+  late final VoiceCommandService _voiceService;
 
   @override
   SessionExecutionState build(int sessionId) {
+    _voiceService = VoiceCommandService(ttsService: _ttsService);
+
     ref.onDispose(() {
       _timer?.cancel();
+      _voiceService.dispose();
       _ttsService.dispose();
     });
 
@@ -56,8 +61,27 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
     final sessionRepo = ref.read(sessionRepositoryProvider);
     await sessionRepo.updateSessionStatus(sessionId, SessionStatus.inProgress);
     await _ttsService.init();
+    await _voiceService.init();
+    _voiceService.onCommandDetected = _handleVoiceCommand;
+    _voiceService.startListening();
 
     _startPhase(ExecutionPhase.preparation);
+  }
+
+  void _handleVoiceCommand(VoiceCommand command) {
+    debugPrint('Executing voice command: ${command.name}');
+
+    switch (command) {
+      case VoiceCommand.resume:
+        resumeTimer();
+        break;
+      case VoiceCommand.pause:
+        pauseTimer();
+        break;
+      case VoiceCommand.skip:
+        skipToNext();
+        break;
+    }
   }
 
   void _startPhase(ExecutionPhase phase) {
@@ -180,6 +204,8 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
   }
 
   void resumeTimer() {
+    if (!state.isPaused) return;
+
     state = state.copyWith(isPaused: false);
     if (state.currentPhase == ExecutionPhase.workout) {
       _speakCurrentExerciseInstructions();
@@ -199,6 +225,8 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
   Future<void> _finishSession() async {
     _timer?.cancel();
     _ttsService.stop();
+    _voiceService.stopListening();
+
     state = state.copyWith(
       currentPhase: ExecutionPhase.finished,
       remainingSeconds: 0,

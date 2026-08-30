@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+typedef SpeakingStateCallback = void Function(bool isSpeaking);
+
 class TtsService {
   final FlutterTts _tts = FlutterTts();
   Timer? _gapTimer;
@@ -9,6 +11,8 @@ class TtsService {
   bool _isStopped = false;
 
   bool _isSpeaking = false;
+  bool get isSpeaking => _isSpeaking;
+  SpeakingStateCallback? onSpeakingChanged;
 
   Completer<void>? _speechCompleter;
 
@@ -18,13 +22,13 @@ class TtsService {
     await _tts.setPitch(1.0);
 
     _tts.setCompletionHandler(() {
-      _isSpeaking = false;
+      _setSpeaking(false);
       _speechCompleter?.complete();
     });
 
     _tts.setErrorHandler((error) {
       debugPrint('TTS Error: $error');
-      _isSpeaking = false;
+      _setSpeaking(false);
       _speechCompleter?.completeError(error);
     });
   }
@@ -50,6 +54,11 @@ class TtsService {
     }
   }
 
+  Future<void> speakConfirmation(String message) async {
+    _isStopped = false;
+    await _speak(message);
+  }
+
   Future<void> stop() async {
     _isStopped = true;
     _gapTimer?.cancel();
@@ -62,7 +71,7 @@ class TtsService {
 
     if (_isSpeaking) {
       await _tts.stop();
-      _isSpeaking = false;
+      _setSpeaking(false);
       if (_speechCompleter != null && !_speechCompleter!.isCompleted) {
         _speechCompleter!.complete();
       }
@@ -78,7 +87,7 @@ class TtsService {
     if (_isStopped) return;
 
     _speechCompleter = Completer<void>();
-    _isSpeaking = true;
+    _setSpeaking(true);
     await _tts.speak(text);
 
     await _speechCompleter!.future;
@@ -90,5 +99,11 @@ class TtsService {
       if (!_gapCompleter!.isCompleted) _gapCompleter!.complete();
     });
     return _gapCompleter!.future;
+  }
+
+  void _setSpeaking(bool value) {
+    if (_isSpeaking == value) return;
+    _isSpeaking = value;
+    onSpeakingChanged?.call(value);
   }
 }
