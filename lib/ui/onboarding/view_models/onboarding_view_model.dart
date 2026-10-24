@@ -31,10 +31,20 @@ class OnboardingViewModel extends _$OnboardingViewModel {
 
   void toggleHealthIssue(String issue) {
     final updatedIssues = Set<String>.from(state.healthIssueTags);
-    if (updatedIssues.contains(issue)) {
-      updatedIssues.remove(issue);
+    if (issue == 'none') {
+      if (updatedIssues.contains('none')) {
+        updatedIssues.remove('none');
+      } else {
+        updatedIssues.clear();
+        updatedIssues.add('none');
+      }
     } else {
-      updatedIssues.add(issue);
+      updatedIssues.remove('none');
+      if (updatedIssues.contains(issue)) {
+        updatedIssues.remove(issue);
+      } else {
+        updatedIssues.add(issue);
+      }
     }
     state = state.copyWith(healthIssueTags: updatedIssues);
   }

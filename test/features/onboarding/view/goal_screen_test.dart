@@ -71,6 +71,10 @@ void main() {
       await tester.pumpWidget(createWidgetWithRouter(mockObserver));
       await tester.pumpAndSettle();
 
+      final fatBurnChip = find.widgetWithText(FeatureChip, 'Burn Fat');
+      await tester.tap(fatBurnChip);
+      await tester.pumpAndSettle();
+
       final continueButton = find.text('Continue');
       expect(continueButton, findsOneWidget);
 

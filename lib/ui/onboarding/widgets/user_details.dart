@@ -7,6 +7,7 @@ import 'package:move_your_body/routing/app_routes.dart';
 
 import 'package:move_your_body/ui/common/app_scaffold.dart';
 import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
+import 'package:move_your_body/ui/common/app_toast.dart';
 
 class UserdataScreen extends ConsumerWidget {
   const UserdataScreen({super.key});
@@ -36,7 +37,7 @@ class UserdataScreen extends ConsumerWidget {
             const SizedBox(height: 30),
 
             TextField(
-              onChanged: onboardingNotifier.setUsername,
+              onChanged: (value) => onboardingNotifier.setUsername(value.trim()),
               decoration: InputDecoration(
                 hintText: 'Your name',
                 border: OutlineInputBorder(
@@ -54,14 +55,11 @@ class UserdataScreen extends ConsumerWidget {
               ],
               onChanged: (value) {
                 final weight = double.tryParse(value);
-
-                if (weight != null && weight > 0 && weight <= 500) {
-                  onboardingNotifier.setWeight(weight);
-                }
+                onboardingNotifier.setWeight(weight ?? 0);
               },
               decoration: InputDecoration(
                 hintText: 'Weight (kg)',
-                helperText: '1 - 500 kg',
+                helperText: '10 - 300 kg',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -77,10 +75,7 @@ class UserdataScreen extends ConsumerWidget {
               ],
               onChanged: (value) {
                 final height = double.tryParse(value);
-
-                if (height != null && height > 50 && height <= 250) {
-                  onboardingNotifier.setHeight(height);
-                }
+                onboardingNotifier.setHeight(height ?? 0);
               },
               decoration: InputDecoration(
                 hintText: 'Height (cm)',
@@ -98,14 +93,11 @@ class UserdataScreen extends ConsumerWidget {
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (value) {
                 final age = int.tryParse(value);
-
-                if (age != null && age > 0 && age <= 150) {
-                  onboardingNotifier.setAge(age);
-                }
+                onboardingNotifier.setAge(age ?? 0);
               },
               decoration: InputDecoration(
                 hintText: 'Age',
-                helperText: '1 - 150 years',
+                helperText: '10 - 100 years',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -118,6 +110,23 @@ class UserdataScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
+                  final state = ref.read(onboardingViewModelProvider);
+                  if (state.username == null || state.username!.trim().isEmpty) {
+                    AppToast.show(context, 'Please enter your name');
+                    return;
+                  }
+                  if (state.weight == null || state.weight! < 10 || state.weight! > 300) {
+                    AppToast.show(context, 'Please enter a valid weight (10 - 300 kg)');
+                    return;
+                  }
+                  if (state.height == null || state.height! < 50 || state.height! > 250) {
+                    AppToast.show(context, 'Please enter a valid height (50 - 250 cm)');
+                    return;
+                  }
+                  if (state.age == null || state.age! < 10 || state.age! > 100) {
+                    AppToast.show(context, 'Please enter a valid age (10 - 100 years)');
+                    return;
+                  }
                   if (context.mounted) {
                     context.go(AppRoutes.loading);
                   }

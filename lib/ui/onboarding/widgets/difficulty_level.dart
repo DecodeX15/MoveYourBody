@@ -5,6 +5,7 @@ import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/ui/common/button_card.dart';
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/ui/common/app_toast.dart';
 import 'package:move_your_body/ui/common/app_scaffold.dart';
 import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
 
@@ -81,6 +82,13 @@ class DifficultyScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
+                  if (selectedDifficulty == null || selectedDifficulty.isEmpty) {
+                    AppToast.show(
+                      context,
+                      'Please select a difficulty level',
+                    );
+                    return;
+                  }
                   context.push(AppRoutes.intensity);
                 },
                 child: const Text('Continue'),

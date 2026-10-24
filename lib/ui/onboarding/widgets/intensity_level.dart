@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:move_your_body/ui/common/onboarding_progress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/ui/common/app_toast.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/ui/common/button_card.dart';
@@ -81,6 +82,13 @@ class IntensityScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
+                  if (selectedIntensity == null || selectedIntensity.isEmpty) {
+                    AppToast.show(
+                      context,
+                      'Please select an intensity level',
+                    );
+                    return;
+                  }
                   context.push(AppRoutes.targetBodyRegion);
                 },
                 child: const Text('Continue'),

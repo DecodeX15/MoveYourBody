@@ -6,6 +6,7 @@ import 'package:move_your_body/ui/common/app_scaffold.dart';
 import 'package:move_your_body/ui/common/feature_chip.dart';
 import 'package:move_your_body/ui/common/onboarding_progress.dart';
 import 'package:go_router/go_router.dart';
+import 'package:move_your_body/ui/common/app_toast.dart';
 
 class GoalScreen extends ConsumerWidget {
   const GoalScreen({super.key});
@@ -30,6 +31,9 @@ class GoalScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedGoals = ref.watch(
       onboardingViewModelProvider.select((state) => state.goalTags),
+    );
+    final customGoal = ref.watch(
+      onboardingViewModelProvider.select((state) => state.customGoal),
     );
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
     final textTheme = Theme.of(context).textTheme;
@@ -94,6 +98,13 @@ class GoalScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
+                  if (selectedGoals.isEmpty && customGoal.trim().isEmpty) {
+                    AppToast.show(
+                      context,
+                      'Please select at least one goal or enter a custom goal',
+                    );
+                    return;
+                  }
                   context.push(AppRoutes.healthIssues);
                 },
                 child: const Text('Continue'),

@@ -19,7 +19,7 @@ void main() {
       expect(find.text('Continue'), findsOneWidget);
 
       // Expected 14 health issue chips
-      expect(find.byType(FeatureChip), findsNWidgets(14));
+      expect(find.byType(FeatureChip), findsNWidgets(15));
 
       // TextField for custom issues
       expect(find.byType(TextField), findsOneWidget);

@@ -105,7 +105,7 @@ extension UserDataMapper on OnboardingData {
       age: age ?? 0,
       goalTags: goalTags.toList(),
       customGoal: customGoal,
-      healthIssueTags: healthIssueTags.toList(),
+      healthIssueTags: healthIssueTags.where((t) => t != 'none').toList(),
       customHealthIssue: customHealthIssue,
       difficulty: difficulty ?? '',
       intensity: intensity ?? '',

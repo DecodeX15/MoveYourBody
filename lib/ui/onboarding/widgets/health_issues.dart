@@ -6,10 +6,12 @@ import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
 import 'package:move_your_body/ui/common/app_scaffold.dart';
 import 'package:move_your_body/ui/common/feature_chip.dart';
+import 'package:move_your_body/ui/common/app_toast.dart';
 
 class HealthIssuesScreen extends ConsumerWidget {
   const HealthIssuesScreen({super.key});
   static const Map<String, String> healthIssuesMap = {
+    'None': 'none',
     'Lower Back Pain': 'lower_back_pain',
     'Knee Pain': 'knee_pain',
     'Hip Pain': 'hip_pain',
@@ -30,6 +32,9 @@ class HealthIssuesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedHealthIssues = ref.watch(
       onboardingViewModelProvider.select((state) => state.healthIssueTags),
+    );
+    final customHealthIssue = ref.watch(
+      onboardingViewModelProvider.select((state) => state.customHealthIssue),
     );
     final onboardingNotifier = ref.read(onboardingViewModelProvider.notifier);
     final textTheme = Theme.of(context).textTheme;
@@ -94,6 +99,14 @@ class HealthIssuesScreen extends ConsumerWidget {
             SizedBox(
               child: ElevatedButton(
                 onPressed: () {
+                  if (selectedHealthIssues.isEmpty &&
+                      customHealthIssue.trim().isEmpty) {
+                    AppToast.show(
+                      context,
+                      'Please select an option or enter custom health issues',
+                    );
+                    return;
+                  }
                   context.push(AppRoutes.difficulty);
                 },
                 child: const Text('Continue'),
