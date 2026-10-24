@@ -82,11 +82,9 @@ class DifficultyScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (selectedDifficulty == null || selectedDifficulty.isEmpty) {
-                    AppToast.show(
-                      context,
-                      'Please select a difficulty level',
-                    );
+                  if (selectedDifficulty == null ||
+                      selectedDifficulty.isEmpty) {
+                    AppToast.show(context, 'Please select a difficulty level');
                     return;
                   }
                   context.push(AppRoutes.intensity);

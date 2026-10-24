@@ -37,7 +37,8 @@ class UserdataScreen extends ConsumerWidget {
             const SizedBox(height: 30),
 
             TextField(
-              onChanged: (value) => onboardingNotifier.setUsername(value.trim()),
+              onChanged: (value) =>
+                  onboardingNotifier.setUsername(value.trim()),
               decoration: InputDecoration(
                 hintText: 'Your name',
                 border: OutlineInputBorder(
@@ -111,20 +112,36 @@ class UserdataScreen extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   final state = ref.read(onboardingViewModelProvider);
-                  if (state.username == null || state.username!.trim().isEmpty) {
+                  if (state.username == null ||
+                      state.username!.trim().isEmpty) {
                     AppToast.show(context, 'Please enter your name');
                     return;
                   }
-                  if (state.weight == null || state.weight! < 10 || state.weight! > 300) {
-                    AppToast.show(context, 'Please enter a valid weight (10 - 300 kg)');
+                  if (state.weight == null ||
+                      state.weight! < 10 ||
+                      state.weight! > 300) {
+                    AppToast.show(
+                      context,
+                      'Please enter a valid weight (10 - 300 kg)',
+                    );
                     return;
                   }
-                  if (state.height == null || state.height! < 50 || state.height! > 250) {
-                    AppToast.show(context, 'Please enter a valid height (50 - 250 cm)');
+                  if (state.height == null ||
+                      state.height! < 50 ||
+                      state.height! > 250) {
+                    AppToast.show(
+                      context,
+                      'Please enter a valid height (50 - 250 cm)',
+                    );
                     return;
                   }
-                  if (state.age == null || state.age! < 10 || state.age! > 100) {
-                    AppToast.show(context, 'Please enter a valid age (10 - 100 years)');
+                  if (state.age == null ||
+                      state.age! < 10 ||
+                      state.age! > 100) {
+                    AppToast.show(
+                      context,
+                      'Please enter a valid age (10 - 100 years)',
+                    );
                     return;
                   }
                   if (context.mounted) {

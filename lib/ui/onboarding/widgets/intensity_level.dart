@@ -83,10 +83,7 @@ class IntensityScreen extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (selectedIntensity == null || selectedIntensity.isEmpty) {
-                    AppToast.show(
-                      context,
-                      'Please select an intensity level',
-                    );
+                    AppToast.show(context, 'Please select an intensity level');
                     return;
                   }
                   context.push(AppRoutes.targetBodyRegion);
