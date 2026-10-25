@@ -1,4 +1,4 @@
-package com.example.template_flutter
+package org.aossie.move
 
 import io.flutter.embedding.android.FlutterActivity
 
