@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_onnxruntime/flutter_onnxruntime.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 final onnxServiceProvider = Provider((ref) => OnnxService());
 
@@ -12,7 +13,7 @@ class OnnxService {
     try {
       debugPrint("AIService: Initializing ONNX Runtime...");
       _session = await _ort.createSessionFromAsset(
-        'assets/models/model_quantized.onnx',
+        AppAssets.modelQuantized,
       );
       debugPrint("AIService: Model loaded successfully.");
     } catch (e) {

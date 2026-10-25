@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:dart_wordpiece/dart_wordpiece.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 final tokenizerServiceProvider = Provider((ref) => TokenizerService());
 
@@ -12,14 +13,15 @@ class TokenizerService {
   Future<void> init() async {
     try {
       debugPrint("Tokenizer: Loading vocab...");
-      final vocabContent = await rootBundle.loadString(
-        'assets/models/vocab.txt',
-      );
+      final vocabContent = await rootBundle.loadString(AppAssets.vocabTxt);
       final vocab = VocabLoader.fromString(vocabContent);
 
       _tokenizer = WordPieceTokenizer(
         vocab: vocab,
-        config: TokenizerConfig(maxLength: 128, normalizeText: true),
+        config: const TokenizerConfig(
+          maxLength: AiConstants.maxSequenceLength,
+          normalizeText: true,
+        ),
       );
 
       _isInitialized = true;

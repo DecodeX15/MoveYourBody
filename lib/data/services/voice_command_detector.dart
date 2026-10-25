@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:record/record.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 enum VoiceCommand { resume, pause, skip }
 
@@ -36,16 +37,16 @@ class VoiceCommandDetector {
 
   DateTime? _lastDetection;
 
-  static const int sampleRate = 16000;
-  static const int channels = 1;
+  static const int sampleRate = AudioConstants.sampleRate;
+  static const int channels = AudioConstants.channels;
 
-  static const int bufferSamples = sampleRate * 2;
+  static const int bufferSamples = AudioConstants.bufferSamples;
 
-  static const int processingIntervalMs = 250;
+  static const int processingIntervalMs = AudioConstants.processingIntervalMs;
 
-  static const double defaultThreshold = 2.5;
+  static const double defaultThreshold = AudioConstants.defaultThreshold;
 
-  static const Duration cooldown = Duration(milliseconds: 1200);
+  static const Duration cooldown = AudioConstants.cooldown;
 
   Timer? _processingTimer;
 
@@ -140,7 +141,7 @@ class VoiceCommandDetector {
         value -= 0x10000;
       }
 
-      samples[i] = value / 32768.0;
+      samples[i] = value / AudioConstants.pcmNormalizationFactor;
     }
 
     _pendingBytes.removeRange(0, sampleCount * 2);

@@ -1,31 +1,32 @@
 import 'package:move_your_body/domain/models/exercise_data.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 class CalorieCalculator {
   static double _getBaseMetForType(ExerciseType type) {
     switch (type) {
       case ExerciseType.cardio:
-        return 7.0;
+        return CalorieConstants.metCardio;
       case ExerciseType.strength:
-        return 4.0;
+        return CalorieConstants.metStrength;
       case ExerciseType.dumbbell:
-        return 4.0;
+        return CalorieConstants.metDumbbell;
       case ExerciseType.bodyweight:
-        return 3.5;
+        return CalorieConstants.metBodyweight;
       case ExerciseType.stabilityBall:
-        return 3.0;
+        return CalorieConstants.metStabilityBall;
       case ExerciseType.yoga:
-        return 3.0;
+        return CalorieConstants.metYoga;
     }
   }
 
   static double _getIntensityMultiplier(Intensity intensity) {
     switch (intensity) {
       case Intensity.low:
-        return 0.8;
+        return CalorieConstants.intensityMultiplierLow;
       case Intensity.moderate:
-        return 1.0;
+        return CalorieConstants.intensityMultiplierModerate;
       case Intensity.high:
-        return 1.2;
+        return CalorieConstants.intensityMultiplierHigh;
     }
   }
 
@@ -42,7 +43,8 @@ class CalorieCalculator {
     final intensityMultiplier = _getIntensityMultiplier(exercise.intensity);
 
     final finalMet = baseMet * intensityMultiplier;
-    final durationInHours = durationInSeconds / 3600.0;
+    final durationInHours =
+        durationInSeconds / CalorieConstants.secondsPerHour;
 
     return finalMet * userWeightKg * durationInHours;
   }

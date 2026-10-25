@@ -3,6 +3,7 @@ import 'package:move_your_body/data/repositories/exercise_repository.dart';
 import 'package:move_your_body/data/repositories/session_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:move_your_body/domain/models/session_details_state.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 part 'generated/session_details_view_model.g.dart';
 
@@ -33,7 +34,7 @@ class SessionDetailsViewModel extends _$SessionDetailsViewModel {
       final exercises = await exerciseRepo.getExercisesByIds(exerciseIds);
 
       final defaultDurations = <String, int>{
-        for (final exercise in exercises) exercise.exerciseId: 30,
+        for (final exercise in exercises) exercise.exerciseId: AppConstants.defaultExerciseDurationSeconds,
       };
 
       state = state.copyWith(

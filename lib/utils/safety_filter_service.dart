@@ -1,13 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/domain/models/user_data.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 final safetyFilterProvider = Provider<SafetyFilter>((ref) {
   return SafetyFilter();
 });
 
 class SafetyFilter {
-  static const int sessionsToSkip = 6;
+  static const int sessionsToSkip = SafetyFilterConstants.sessionsToSkip;
+
   List<Exercise> filterExercises({
     required List<Exercise> exercises,
     required UserData user,
@@ -33,7 +35,8 @@ class SafetyFilter {
     final freshExercises = safeExercises
         .where((ex) => !recentExerciseIds.contains(ex.exerciseId))
         .toList();
-    if (freshExercises.length < 3) {
+    if (freshExercises.length <
+        SafetyFilterConstants.minFreshExercisesThreshold) {
       return safeExercises;
     }
 

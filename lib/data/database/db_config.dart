@@ -13,6 +13,7 @@ import 'package:move_your_body/data/database/tables/user_table.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 final databaseServiceProvider = Provider<DatabaseService>((ref) {
   return DatabaseService();
@@ -202,7 +203,7 @@ class DatabaseService {
   }
 
   Future<Database> _initDatabase() async {
-    final path = join(await getDatabasesPath(), 'move_your_body.db');
+    final path = join(await getDatabasesPath(), AppAssets.userDbName);
     debugPrint('DB PATH: $path');
     return openDatabase(
       path,
@@ -253,7 +254,7 @@ class DatabaseService {
 
   Future<Database> _initExercisesDatabase() async {
     final dbDirectory = await getDatabasesPath();
-    final dbPath = join(dbDirectory, 'exercises.db');
+    final dbPath = join(dbDirectory, AppAssets.exercisesDbName);
 
     await _copyExercisesDatabaseIfNeeded(dbPath);
 
@@ -265,7 +266,7 @@ class DatabaseService {
   Future<void> _copyExercisesDatabaseIfNeeded(String dbPath) async {
     final prefs = await SharedPreferences.getInstance();
 
-    final copiedVersion = prefs.getInt('copied_exercises_db_version') ?? 0;
+    final copiedVersion = prefs.getInt(DbPreferencesKeys.copiedExercisesDbVersion) ?? 0;
 
     final dbFile = File(dbPath);
 
@@ -285,13 +286,13 @@ class DatabaseService {
       await dbFile.delete();
     }
 
-    final data = await rootBundle.load('assets/exercises.db');
+    final data = await rootBundle.load(AppAssets.exercisesDb);
 
     final bytes = data.buffer.asUint8List();
 
     await dbFile.writeAsBytes(bytes, flush: true);
 
-    await prefs.setInt('copied_exercises_db_version', exercisesDbVersion);
+    await prefs.setInt(DbPreferencesKeys.copiedExercisesDbVersion, exercisesDbVersion);
 
     debugPrint('Exercises database copied at version $exercisesDbVersion');
   }

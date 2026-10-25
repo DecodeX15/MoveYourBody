@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 class DisclaimerDialog extends StatefulWidget {
   const DisclaimerDialog({super.key});
 
   static Future<void> showIfNeeded(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    final accepted = prefs.getBool('disclaimer_accepted') ?? false;
+    final accepted = prefs.getBool(DbPreferencesKeys.disclaimerAccepted) ?? false;
     if (!accepted && context.mounted) {
       await showDialog(
         context: context,
@@ -125,7 +126,7 @@ class _DisclaimerDialogState extends State<DisclaimerDialog> {
                 onPressed: _isChecked
                     ? () async {
                         final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('disclaimer_accepted', true);
+                        await prefs.setBool(DbPreferencesKeys.disclaimerAccepted, true);
                         if (context.mounted) {
                           Navigator.of(context).pop();
                         }

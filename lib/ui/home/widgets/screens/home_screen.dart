@@ -9,7 +9,6 @@ import 'package:move_your_body/ui/home/widgets/home/quick_plan_card.dart';
 import 'package:move_your_body/ui/home/widgets/home/search_bar.dart';
 import 'package:move_your_body/ui/home/widgets/home/today_session_card.dart';
 import 'package:move_your_body/ui/home/widgets/home/week_selector.dart';
-// import 'package:move_your_body/ui/home/widgets/home/weekly_stats_card.dart';
 import 'package:move_your_body/ui/home/widgets/home/disclaimer_dialog.dart';
 import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
 import 'package:move_your_body/ui/common/app_scaffold.dart';
@@ -112,8 +111,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
             ),
             const SizedBox(height: 24),
-
-            // const WeeklyStatsCard(),
           ],
         ),
       ),

@@ -354,3 +354,6 @@ assets/exercises.db
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Security review reports (unremediated)
+unremediated-security-reviews/

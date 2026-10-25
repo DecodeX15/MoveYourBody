@@ -1,15 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 class AnimationCacheService {
   AnimationCacheService._();
 
   static final CacheManager _cacheManager = CacheManager(
     Config(
-      'exerciseAnimationCache',
-      stalePeriod: const Duration(days: 3650),
-      maxNrOfCacheObjects: 1000,
+      CacheConstants.exerciseAnimationCacheKey,
+      stalePeriod: CacheConstants.cacheStalePeriod,
+      maxNrOfCacheObjects: CacheConstants.maxCacheObjects,
     ),
   );
 
