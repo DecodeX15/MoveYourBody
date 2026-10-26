@@ -8,7 +8,8 @@ class DisclaimerDialog extends StatefulWidget {
 
   static Future<void> showIfNeeded(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    final accepted = prefs.getBool(DbPreferencesKeys.disclaimerAccepted) ?? false;
+    final accepted =
+        prefs.getBool(DbPreferencesKeys.disclaimerAccepted) ?? false;
     if (!accepted && context.mounted) {
       await showDialog(
         context: context,
@@ -126,7 +127,10 @@ class _DisclaimerDialogState extends State<DisclaimerDialog> {
                 onPressed: _isChecked
                     ? () async {
                         final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool(DbPreferencesKeys.disclaimerAccepted, true);
+                        await prefs.setBool(
+                          DbPreferencesKeys.disclaimerAccepted,
+                          true,
+                        );
                         if (context.mounted) {
                           Navigator.of(context).pop();
                         }

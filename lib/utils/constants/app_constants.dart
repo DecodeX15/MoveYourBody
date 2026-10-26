@@ -5,6 +5,7 @@ class AppConstants {
   static const Duration splashDuration = Duration(milliseconds: 1200);
   static const Duration splashFadeDuration = Duration(milliseconds: 700);
 }
+
 class AppAssets {
   AppAssets._();
   static const String appLogo = 'assets/images/move_your_body_logo.png';
@@ -15,10 +16,12 @@ class AppAssets {
   static const String exercisesDbName = 'exercises.db';
   static const String userDbName = 'move_your_body.db';
 }
+
 class AiConstants {
   AiConstants._();
   static const int maxSequenceLength = 128;
 }
+
 class CalorieConstants {
   CalorieConstants._();
   static const double secondsPerHour = 3600.0;
@@ -32,6 +35,7 @@ class CalorieConstants {
   static const double intensityMultiplierModerate = 1.0;
   static const double intensityMultiplierHigh = 1.2;
 }
+
 class AudioConstants {
   AudioConstants._();
   static const int sampleRate = 16000;
@@ -42,17 +46,20 @@ class AudioConstants {
   static const Duration cooldown = Duration(milliseconds: 1200);
   static const double pcmNormalizationFactor = 32768.0;
 }
+
 class CacheConstants {
   CacheConstants._();
   static const String exerciseAnimationCacheKey = 'exerciseAnimationCache';
   static const Duration cacheStalePeriod = Duration(days: 3650);
   static const int maxCacheObjects = 1000;
 }
+
 class SafetyFilterConstants {
   SafetyFilterConstants._();
   static const int sessionsToSkip = 6;
   static const int minFreshExercisesThreshold = 3;
 }
+
 class DbPreferencesKeys {
   DbPreferencesKeys._();
   static const String copiedExercisesDbVersion = 'copied_exercises_db_version';

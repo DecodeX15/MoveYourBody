@@ -34,7 +34,8 @@ class SessionDetailsViewModel extends _$SessionDetailsViewModel {
       final exercises = await exerciseRepo.getExercisesByIds(exerciseIds);
 
       final defaultDurations = <String, int>{
-        for (final exercise in exercises) exercise.exerciseId: AppConstants.defaultExerciseDurationSeconds,
+        for (final exercise in exercises)
+          exercise.exerciseId: AppConstants.defaultExerciseDurationSeconds,
       };
 
       state = state.copyWith(

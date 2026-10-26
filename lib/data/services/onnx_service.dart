@@ -12,9 +12,7 @@ class OnnxService {
   Future<void> init() async {
     try {
       debugPrint("AIService: Initializing ONNX Runtime...");
-      _session = await _ort.createSessionFromAsset(
-        AppAssets.modelQuantized,
-      );
+      _session = await _ort.createSessionFromAsset(AppAssets.modelQuantized);
       debugPrint("AIService: Model loaded successfully.");
     } catch (e) {
       debugPrint("AIService: Initialization Error: $e");

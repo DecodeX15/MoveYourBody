@@ -43,8 +43,7 @@ class CalorieCalculator {
     final intensityMultiplier = _getIntensityMultiplier(exercise.intensity);
 
     final finalMet = baseMet * intensityMultiplier;
-    final durationInHours =
-        durationInSeconds / CalorieConstants.secondsPerHour;
+    final durationInHours = durationInSeconds / CalorieConstants.secondsPerHour;
 
     return finalMet * userWeightKg * durationInHours;
   }

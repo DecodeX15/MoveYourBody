@@ -129,10 +129,7 @@ class _LogoBox extends StatelessWidget {
     return SizedBox(
       height: 100,
       width: 100,
-      child: Image.asset(
-        assetPath,
-        fit: BoxFit.contain,
-      ),
+      child: Image.asset(assetPath, fit: BoxFit.contain),
     );
   }
 }
@@ -145,11 +142,7 @@ class _BrandDivider extends StatelessWidget {
     return const SizedBox(
       height: 70,
       width: 16,
-      child: VerticalDivider(
-        width: 16,
-        thickness: 1.2,
-        color: Colors.grey,
-      ),
+      child: VerticalDivider(width: 16, thickness: 1.2, color: Colors.grey),
     );
   }
 }

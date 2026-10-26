@@ -21,9 +21,18 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(SplashScreen), findsOneWidget);
-      expect(find.byType(FadeTransition), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(SplashScreen),
+          matching: find.byType(FadeTransition),
+        ),
+        findsOneWidget,
+      );
       expect(find.byType(Image), findsNWidgets(2));
       expect(find.byType(VerticalDivider), findsOneWidget);
+
+      // Fast-forward fake timer to complete initialization and clear pending timers
+      await tester.pump(const Duration(milliseconds: 1300));
     });
   });
 }

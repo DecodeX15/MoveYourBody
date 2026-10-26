@@ -266,7 +266,8 @@ class DatabaseService {
   Future<void> _copyExercisesDatabaseIfNeeded(String dbPath) async {
     final prefs = await SharedPreferences.getInstance();
 
-    final copiedVersion = prefs.getInt(DbPreferencesKeys.copiedExercisesDbVersion) ?? 0;
+    final copiedVersion =
+        prefs.getInt(DbPreferencesKeys.copiedExercisesDbVersion) ?? 0;
 
     final dbFile = File(dbPath);
 
@@ -292,7 +293,10 @@ class DatabaseService {
 
     await dbFile.writeAsBytes(bytes, flush: true);
 
-    await prefs.setInt(DbPreferencesKeys.copiedExercisesDbVersion, exercisesDbVersion);
+    await prefs.setInt(
+      DbPreferencesKeys.copiedExercisesDbVersion,
+      exercisesDbVersion,
+    );
 
     debugPrint('Exercises database copied at version $exercisesDbVersion');
   }
