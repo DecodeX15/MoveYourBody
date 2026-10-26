@@ -15,16 +15,15 @@ void main() {
   }
 
   group('SplashScreen Widget Tests', () {
-    testWidgets('renders loading indicator correctly', (
+    testWidgets('renders splash screen and branding logos correctly', (
       WidgetTester tester,
     ) async {
-      // Pump widget but do not pumpAndSettle because it has a timer/async router call
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(SplashScreen), findsOneWidget);
-
-      // The screen should display a CircularProgressIndicator
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(FadeTransition), findsOneWidget);
+      expect(find.byType(Image), findsNWidgets(2));
+      expect(find.byType(VerticalDivider), findsOneWidget);
     });
   });
 }

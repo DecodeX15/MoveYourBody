@@ -2,9 +2,13 @@ class AppConstants {
   AppConstants._();
   static const double bottomNavBarSpacing = 100.0;
   static const int defaultExerciseDurationSeconds = 30;
+  static const Duration splashDuration = Duration(milliseconds: 1200);
+  static const Duration splashFadeDuration = Duration(milliseconds: 700);
 }
 class AppAssets {
   AppAssets._();
+  static const String appLogo = 'assets/images/move_your_body_logo.png';
+  static const String aossieLogo = 'assets/images/aossie_logo.png';
   static const String modelQuantized = 'assets/models/model_quantized.onnx';
   static const String vocabTxt = 'assets/models/vocab.txt';
   static const String exercisesDb = 'assets/exercises.db';
