@@ -46,6 +46,9 @@
 <div align="center">
 <h1>MoveYourBody</h1>
 <a href="https://play.google.com/store/apps/details?id=org.aossie.move"><img src="https://img.shields.io/badge/Google_Play-Get_It_On-green?style=for-the-badge&logo=google-play&logoColor=white" alt="Google Play"></a>
+<br/>
+<br/>
+<a href="https://securityscorecards.dev/viewer/?url=github.com/AOSSIE-Org/MoveYourBody"><img src="https://api.securityscorecards.dev/projects/github.com/AOSSIE-Org/MoveYourBody/badge" alt="OpenSSF Scorecard"></a>
 </div>
 
 **MoveYourBody** is a privacy-first, on-device fitness application designed to help you stay consistent with your goals. It provides personalized, short micro-workout sessions (5–7 minutes) that adapt based on your feedback and health conditions. By running completely offline, MoveYourBody combines rule-based filtering and lightweight semantic matching to ensure your workout data stays entirely private while delivering safe, relevant, and engaging exercises.
