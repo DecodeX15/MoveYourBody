@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 import 'package:move_your_body/ui/home/view_models/search_view_model.dart';
 import 'package:move_your_body/ui/home/view_models/create_custom_plan_view_model.dart';
 import 'package:move_your_body/ui/home/view_models/custom_plans_view_model.dart';

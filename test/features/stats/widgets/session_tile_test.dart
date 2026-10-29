@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:move_your_body/ui/stats/widgets/session_tile.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/routing/app_routes.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class MockGoRouter extends Mock implements GoRouter {}
 

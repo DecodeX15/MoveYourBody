@@ -1,12 +1,16 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:move_your_body/data/database/tables/session_schedule_table.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
-final statsRepositoryProvider = Provider<StatsRepository>((ref) {
+part 'generated/stats_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+StatsRepository statsRepository(Ref ref) {
   final dbService = ref.read(databaseServiceProvider);
   return StatsRepository(dbService);
-});
+}
 
 class StatsRepository {
   final DatabaseService _dbService;

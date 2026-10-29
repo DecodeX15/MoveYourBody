@@ -3,6 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:move_your_body/utils/equipment_filter.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/domain/models/user_data.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
 
 class MockExercise extends Mock implements Exercise {}
 

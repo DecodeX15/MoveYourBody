@@ -8,6 +8,7 @@ import 'package:move_your_body/ui/home/view_models/home_view_model.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/domain/models/user_data.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 
@@ -38,8 +39,8 @@ void main() {
       container = ProviderContainer(
         overrides: [
           sessionRepositoryProvider.overrideWithValue(mockSessionRepo),
-          exerciseRepositoryProvider.overrideWithValue(mockExerciseRepo),
-          userRepositoryProvider.overrideWithValue(mockUserRepo),
+          exerciseRepositoryProvider.overrideWith(() => mockExerciseRepo),
+          userRepositoryProvider.overrideWith(() => mockUserRepo),
         ],
       );
     });
@@ -63,17 +64,9 @@ void main() {
         () => mockExerciseRepo.getAllExercises(),
       ).thenAnswer((_) async => []);
 
-      container.listen(homeViewModelProvider, (_, _) {});
-      final state = container.read(homeViewModelProvider);
-
+      final state = await container.read(homeViewModelProvider.future);
       expect(state.currentWeekDays.length, 7);
-      expect(state.isLoading, isFalse);
-
-      await Future.delayed(const Duration(milliseconds: 50));
-
-      final nextState = container.read(homeViewModelProvider);
-      expect(nextState.isLoading, isFalse);
-      expect(nextState.hasIncompleteSession, isFalse);
+      expect(state.hasIncompleteSession, isFalse);
     });
 
     test('loads incomplete session if exists', () async {
@@ -91,11 +84,7 @@ void main() {
         () => mockExerciseRepo.getExercisesByIds([]),
       ).thenAnswer((_) async => []);
 
-      container.listen(homeViewModelProvider, (_, _) {});
-      container.read(homeViewModelProvider);
-      await Future.delayed(const Duration(milliseconds: 50));
-
-      final state = container.read(homeViewModelProvider);
+      final state = await container.read(homeViewModelProvider.future);
       expect(state.hasIncompleteSession, isTrue);
       expect(state.currentSession, session);
     });

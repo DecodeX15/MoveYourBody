@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:move_your_body/utils/constants/app_constants.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/ui/stats/widgets/activity_calendar.dart';

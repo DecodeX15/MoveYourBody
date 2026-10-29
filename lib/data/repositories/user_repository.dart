@@ -1,33 +1,58 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/data/database/tables/user_table.dart';
 import 'package:move_your_body/domain/models/user_data.dart';
 import 'package:move_your_body/data/database/db_config.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final userRepositoryProvider = Provider<UserRepository>((ref) {
-  final dbService = ref.read(databaseServiceProvider);
-  return UserRepository(dbService);
-});
+part 'generated/user_repository.g.dart';
 
-class UserRepository {
-  final DatabaseService _dbService;
+@Riverpod(keepAlive: true)
+class UserRepository extends _$UserRepository {
+  final DatabaseService? _customDbService;
 
-  UserRepository(this._dbService);
+  UserRepository([this._customDbService]);
+
+  DatabaseService get _dbService =>
+      _customDbService ?? ref.read(databaseServiceProvider);
+
+  @override
+  Future<UserData?> build() async {
+    return _fetchFromDb();
+  }
+
+  Future<UserData?> _fetchFromDb() async {
+    final result = await _dbService.queryUserDb(UserTable.tableName);
+    if (result.isEmpty) return null;
+    return UserData.fromMap(result.first);
+  }
 
   Future<void> saveUser(UserData user) async {
-    await _dbService.deleteUserDb(UserTable.tableName);
-    await _dbService.insertUserRecord(user.toMap());
+    final existing = await _dbService.queryUserDb(UserTable.tableName, limit: 1);
+    if (existing.isNotEmpty) {
+      final id = existing.first[UserTable.id];
+      await _dbService.updateUserDb(
+        UserTable.tableName,
+        user.toMap(),
+        where: '${UserTable.id} = ?',
+        whereArgs: [id],
+      );
+    } else {
+      await _dbService.insertUserDb(
+        UserTable.tableName,
+        {...user.toMap(), UserTable.id: 1},
+      );
+    }
+    try {
+      state = AsyncData(user);
+    } catch (_) {}
   }
 
   Future<UserData?> getUserData() async {
-    debugPrint("Fetching user data from database...");
-    final result = await _dbService.getUserRecords();
-
-    if (result.isEmpty) {
-      return null;
-    }
-
-    return UserData.fromMap(result.first);
+    try {
+      final current = state.asData?.value;
+      if (current != null) return current;
+    } catch (_) {}
+    return await _fetchFromDb();
   }
 
   Future<void> updateDifficultyAndIntensity(
@@ -38,18 +63,36 @@ class UserRepository {
       UserTable.difficulty: newDifficulty,
       UserTable.intensity: newIntensity,
     });
+    try {
+      final current = state.asData?.value;
+      if (current != null) {
+        state = AsyncData(
+          current.copyWith(
+            difficulty: newDifficulty,
+            intensity: newIntensity,
+          ),
+        );
+      }
+    } catch (_) {}
   }
 
   Future<void> deleteUserData() async {
-    final user = await getUserData();
-
-    if (user == null) {
-      debugPrint('No user data found to delete');
-      return;
+    String? username;
+    try {
+      username = state.asData?.value?.username;
+    } catch (_) {}
+    if (username != null) {
+      await _dbService.deleteUserDb(
+        UserTable.tableName,
+        where: '${UserTable.username} = ?',
+        whereArgs: [username],
+      );
+    } else {
+      await _dbService.deleteUserDb(UserTable.tableName);
     }
-
-    await _dbService.deleteUserRecord(user.username);
-
+    try {
+      state = const AsyncData(null);
+    } catch (_) {}
     debugPrint('User data deleted successfully');
   }
 }

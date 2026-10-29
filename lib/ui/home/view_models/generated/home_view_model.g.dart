@@ -13,7 +13,7 @@ part of '../home_view_model.dart';
 final homeViewModelProvider = HomeViewModelProvider._();
 
 final class HomeViewModelProvider
-    extends $NotifierProvider<HomeViewModel, HomeState> {
+    extends $AsyncNotifierProvider<HomeViewModel, HomeState> {
   HomeViewModelProvider._()
     : super(
         from: null,
@@ -31,29 +31,21 @@ final class HomeViewModelProvider
   @$internal
   @override
   HomeViewModel create() => HomeViewModel();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(HomeState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<HomeState>(value),
-    );
-  }
 }
 
-String _$homeViewModelHash() => r'c7477a7f071765dffb18c3152cb03044cd7b47a4';
+String _$homeViewModelHash() => r'b9e1d4684157c688b1bd2ce5d0d1d46d3ee4fac4';
 
-abstract class _$HomeViewModel extends $Notifier<HomeState> {
-  HomeState build();
+abstract class _$HomeViewModel extends $AsyncNotifier<HomeState> {
+  FutureOr<HomeState> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<HomeState, HomeState>;
+    final ref = this.ref as $Ref<AsyncValue<HomeState>, HomeState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<HomeState, HomeState>,
-              HomeState,
+              AnyNotifier<AsyncValue<HomeState>, HomeState>,
+              AsyncValue<HomeState>,
               Object?,
               Object?
             >;

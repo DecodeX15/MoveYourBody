@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:move_your_body/data/database/tables/tags_table.dart';
+import 'enums/tag_enums.dart';
 
-enum TagType { goal, injury }
 
 class Tag {
   final int? id;

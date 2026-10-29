@@ -3,6 +3,7 @@ import 'package:move_your_body/data/repositories/session_repository.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:move_your_body/data/database/db_config.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 void main() {
   setUpAll(() {

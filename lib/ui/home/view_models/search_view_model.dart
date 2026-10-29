@@ -44,7 +44,7 @@ class SearchViewModel extends _$SearchViewModel {
   }
 
   Future<void> _init() async {
-    final repository = ref.read(exerciseRepositoryProvider);
+    final repository = ref.read(exerciseRepositoryProvider.notifier);
     final exercises = await repository.getAllExercises();
     exercises.sort((a, b) => a.name.compareTo(b.name));
 

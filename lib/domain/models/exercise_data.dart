@@ -3,30 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:move_your_body/data/database/tables/exercise_table.dart';
+import 'enums/exercise_enums.dart';
 
-enum ExerciseType {
-  bodyweight,
-  stabilityBall,
-  cardio,
-  dumbbell,
-  yoga,
-  strength,
-}
-
-enum BodyRegion {
-  lowerBody,
-  core,
-  fullBody,
-  upperBody,
-  cardioAndEndurance,
-  mobilityAndFlexibility,
-}
-
-enum Difficulty { beginner, intermediate, advanced }
-
-enum Intensity { low, moderate, high }
-
-enum Equipment { stabilityBall, bench, dumbbells, yogaMat, jumpRope, pullUpBar }
 
 class Exercise {
   final String exerciseId;

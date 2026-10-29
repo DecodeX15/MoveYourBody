@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:move_your_body/data/database/tables/session_exercises_table.dart';
 import 'package:move_your_body/data/database/tables/session_schedule_table.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
-final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
+part 'generated/session_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+SessionRepository sessionRepository(Ref ref) {
   return SessionRepository(dbService: ref.read(databaseServiceProvider));
-});
+}
 
 class SessionRepository {
   final DatabaseService _dbService;
@@ -206,8 +210,8 @@ class SessionRepository {
           SessionScheduleTable.sessionStatus: SessionStatus.completed.name,
           SessionScheduleTable.sessionDuration: totalDuration,
           SessionScheduleTable.caloriesBurned: caloriesBurned,
-          SessionScheduleTable.difficultyFeedback: ?difficultyFeedback,
-          SessionScheduleTable.intensityFeedback: ?intensityFeedback,
+          SessionScheduleTable.difficultyFeedback: difficultyFeedback,
+          SessionScheduleTable.intensityFeedback: intensityFeedback,
         },
         where: '${SessionScheduleTable.id} = ?',
         whereArgs: [sessionId],

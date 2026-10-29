@@ -10,13 +10,14 @@ class WeekSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeState = ref.watch(homeViewModelProvider);
+    final homeAsync = ref.watch(homeViewModelProvider);
+    final homeState = homeAsync.asData?.value;
 
-    final days = homeState.currentWeekDays;
-
-    if (days.isEmpty) {
+    if (homeState == null || homeState.currentWeekDays.isEmpty) {
       return const SizedBox.shrink();
     }
+
+    final days = homeState.currentWeekDays;
 
     final size = MediaQuery.of(context).size;
     final scale = (size.width / 390).clamp(0.85, 1.25);

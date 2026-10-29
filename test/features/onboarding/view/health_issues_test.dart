@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/ui/onboarding/widgets/health_issues.dart';
-import 'package:move_your_body/ui/common/feature_chip.dart';
+import 'package:move_your_body/ui/core/feature_chip.dart';
 
 void main() {
   Widget createWidgetUnderTest() {

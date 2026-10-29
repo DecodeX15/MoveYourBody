@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class SessionTile extends StatelessWidget {
   final Session session;

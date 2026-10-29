@@ -123,7 +123,7 @@ class OnboardingViewModel extends _$OnboardingViewModel {
       healthIssueEmbeddings: healthEmbed,
     );
     final userData = state.toUserdata();
-    await ref.read(userRepositoryProvider).saveUser(userData);
+    await ref.read(userRepositoryProvider.notifier).saveUser(userData);
     await ref.read(quickPlanRepositoryProvider).seedPlansIfNeeded(force: true);
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:move_your_body/utils/calorie_calculator.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
 
 class MockExercise extends Mock implements Exercise {}
 

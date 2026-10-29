@@ -5,7 +5,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import 'voice_command_detector.dart';
 
-export 'voice_command_detector.dart' show VoiceCommand;
+import 'package:move_your_body/domain/models/enums/voice_command_enums.dart';
 
 final ttsServiceProvider = Provider<TtsService>((ref) {
   final detector = ref.read(voiceCommandDetectorProvider);

@@ -64,7 +64,7 @@ final class ExerciseInfoViewModelProvider
 }
 
 String _$exerciseInfoViewModelHash() =>
-    r'5a26de5d17e11c12664da6ec73783c4ad631d907';
+    r'81614c8586bab61dd5ff9c536d92aac57a8e771f';
 
 final class ExerciseInfoViewModelFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Exercise?>, String> {

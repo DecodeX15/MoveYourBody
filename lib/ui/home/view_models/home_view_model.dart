@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:move_your_body/data/repositories/exercise_repository.dart';
 import 'package:move_your_body/data/repositories/session_repository.dart';
 import 'package:move_your_body/data/repositories/user_repository.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/domain/models/home_state.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
@@ -14,7 +16,11 @@ part 'generated/home_view_model.g.dart';
 @riverpod
 class HomeViewModel extends _$HomeViewModel {
   @override
-  HomeState build() {
+  Future<HomeState> build() async {
+    return _initialize();
+  }
+
+  Future<HomeState> _initialize() async {
     final now = DateTime.now();
     final currentWeekday = now.weekday;
     final firstDayOfWeek = now.subtract(Duration(days: currentWeekday % 7));
@@ -24,65 +30,51 @@ class HomeViewModel extends _$HomeViewModel {
       (index) => firstDayOfWeek.add(Duration(days: index)),
     );
 
-    Future.microtask(() => _initialize());
+    final sessionRepo = ref.read(sessionRepositoryProvider);
+    final incompleteSession = await sessionRepo.getLatestIncompleteSession();
 
-    return HomeState(selectedDate: now, currentWeekDays: days);
-  }
+    if (incompleteSession != null) {
+      final exerciseRepo = ref.read(exerciseRepositoryProvider.notifier);
+      final exerciseIds = incompleteSession.exercises
+          .map((e) => e.exerciseId)
+          .toList();
+      final exercises = await exerciseRepo.getExercisesByIds(exerciseIds);
 
-  Future<void> _initialize() async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
-    try {
-      final sessionRepo = ref.read(sessionRepositoryProvider);
-      final incompleteSession = await sessionRepo.getLatestIncompleteSession();
-
-      if (incompleteSession != null) {
-        final exerciseRepo = ref.read(exerciseRepositoryProvider);
-        final exerciseIds = incompleteSession.exercises
-            .map((e) => e.exerciseId)
-            .toList();
-        final exercises = await exerciseRepo.getExercisesByIds(exerciseIds);
-
-        state = state.copyWith(
-          recommendedExercises: exercises,
-          currentSession: incompleteSession,
-          hasIncompleteSession: true,
-          isLoading: false,
-        );
-        return;
-      }
-
-      final userRepo = ref.read(userRepositoryProvider);
-      final userData = await userRepo.getUserData();
-
-      if (userData == null) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: 'User onboarding data not found.',
-        );
-        return;
-      }
-
-      final localSessionRepo = ref.read(sessionRepositoryProvider);
-      final recentExerciseIds = await localSessionRepo.getRecentExerciseIds(
-        SafetyFilter.sessionsToSkip,
-      );
-      final exercises = await _recommendExercises(userData, recentExerciseIds);
-
-      state = state.copyWith(
+      return HomeState(
+        selectedDate: now,
+        currentWeekDays: days,
         recommendedExercises: exercises,
-        hasIncompleteSession: false,
-        isLoading: false,
+        currentSession: incompleteSession,
+        hasIncompleteSession: true,
       );
-    } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: e.toString());
     }
+
+    final userRepo = ref.read(userRepositoryProvider.notifier);
+    final userData = await userRepo.getUserData();
+
+    if (userData == null) {
+      throw Exception('User onboarding data not found.');
+    }
+
+    final localSessionRepo = ref.read(sessionRepositoryProvider);
+    final recentExerciseIds = await localSessionRepo.getRecentExerciseIds(
+      SafetyFilter.sessionsToSkip,
+    );
+    final exercises = await _recommendExercises(userData, recentExerciseIds);
+
+    return HomeState(
+      selectedDate: now,
+      currentWeekDays: days,
+      recommendedExercises: exercises,
+      hasIncompleteSession: false,
+    );
   }
 
   Future<List<Exercise>> _recommendExercises(
     UserData user,
     List<String> recentExerciseIds,
   ) async {
-    final exerciseRepo = ref.read(exerciseRepositoryProvider);
+    final exerciseRepo = ref.read(exerciseRepositoryProvider.notifier);
     final safetyFilterService = ref.read(safetyFilterProvider);
     final equipmentFilterService = ref.read(equipmentFilterProvider);
 
@@ -145,34 +137,40 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   Future<Session?> createSession() async {
-    if (state.hasIncompleteSession && state.currentSession != null) {
-      return state.currentSession;
+    final current = state.asData?.value;
+    if (current == null) return null;
+    if (current.hasIncompleteSession && current.currentSession != null) {
+      return current.currentSession;
     }
 
-    state = state.copyWith(isCreatingSession: true);
+    state = AsyncData(current.copyWith(isCreatingSession: true));
     try {
       final sessionRepo = ref.read(sessionRepositoryProvider);
       final session = await sessionRepo.createSessionFromExercises(
-        state.recommendedExercises,
+        current.recommendedExercises,
       );
 
       if (session != null) {
-        state = state.copyWith(
-          currentSession: session,
-          hasIncompleteSession: true,
-          isCreatingSession: false,
+        state = AsyncData(
+          current.copyWith(
+            currentSession: session,
+            hasIncompleteSession: true,
+            isCreatingSession: false,
+          ),
         );
       } else {
-        state = state.copyWith(
-          isCreatingSession: false,
-          errorMessage: 'Failed to create session.',
+        state = AsyncData(
+          current.copyWith(
+            isCreatingSession: false,
+          ),
         );
       }
       return session;
     } catch (e) {
-      state = state.copyWith(
-        isCreatingSession: false,
-        errorMessage: 'Failed to create session: $e',
+      state = AsyncData(
+        current.copyWith(
+          isCreatingSession: false,
+        ),
       );
       return null;
     }

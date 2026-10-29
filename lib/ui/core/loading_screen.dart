@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:move_your_body/domain/models/tag_data.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/data/repositories/ai_model_repository.dart';
 import 'package:move_your_body/data/repositories/tag_repository.dart';
@@ -10,6 +9,7 @@ import 'package:move_your_body/ui/ai_inference/view_models/ai_inference_view_mod
 import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
 import 'package:move_your_body/data/database/db_config.dart';
 import '../../utils/theme/app_themes.dart';
+import 'package:move_your_body/domain/models/enums/tag_enums.dart';
 
 class LoadingScreen extends ConsumerStatefulWidget {
   const LoadingScreen({super.key});
@@ -37,7 +37,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
       await aiModelRepo.initModel();
 
       debugPrint("🚀 Pipeline Phase 2: Initializing static exercises DB...");
-      await ref.read(databaseServiceProvider).exercisesDatabase;
+      ref.read(databaseServiceProvider);
 
       Uint8List? customGoalBytes;
       Uint8List? customHealthBytes;

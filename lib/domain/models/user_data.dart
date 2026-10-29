@@ -42,6 +42,43 @@ class UserData {
     required this.healthIssueEmbeddings,
   });
 
+  UserData copyWith({
+    String? username,
+    double? height,
+    double? weight,
+    int? age,
+    List<String>? goalTags,
+    String? customGoal,
+    List<String>? healthIssueTags,
+    String? customHealthIssue,
+    String? difficulty,
+    String? intensity,
+    List<String>? targetBodyRegion,
+    List<String>? equipments,
+    bool? isOnboarded,
+    Uint8List? goalEmbeddings,
+    Uint8List? healthIssueEmbeddings,
+  }) {
+    return UserData(
+      username: username ?? this.username,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      age: age ?? this.age,
+      goalTags: goalTags ?? this.goalTags,
+      customGoal: customGoal ?? this.customGoal,
+      healthIssueTags: healthIssueTags ?? this.healthIssueTags,
+      customHealthIssue: customHealthIssue ?? this.customHealthIssue,
+      difficulty: difficulty ?? this.difficulty,
+      intensity: intensity ?? this.intensity,
+      targetBodyRegion: targetBodyRegion ?? this.targetBodyRegion,
+      equipments: equipments ?? this.equipments,
+      isOnboarded: isOnboarded ?? this.isOnboarded,
+      goalEmbeddings: goalEmbeddings ?? this.goalEmbeddings,
+      healthIssueEmbeddings:
+          healthIssueEmbeddings ?? this.healthIssueEmbeddings,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       UserTable.username: username,

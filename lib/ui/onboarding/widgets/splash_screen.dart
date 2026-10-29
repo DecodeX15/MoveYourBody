@@ -21,10 +21,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Future<void> _checkUser() async {
-    final user = await ref.read(userRepositoryProvider).getUserData();
-    await ref.read(databaseServiceProvider).exercisesDatabase;
+    final user = await ref.read(userRepositoryProvider.notifier).getUserData();
+    ref.read(databaseServiceProvider);
     if (user != null) {
-      debugPrint("-------------------");
       ref.read(onboardingViewModelProvider.notifier).loadFromUserData(user);
     }
 

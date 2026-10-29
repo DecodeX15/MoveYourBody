@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 import 'package:move_your_body/ui/home/view_models/exercise_info_view_model.dart';
 import '../exercise_info/exercise_info_body.dart';
 

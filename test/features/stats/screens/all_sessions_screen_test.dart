@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:move_your_body/ui/stats/widgets/all_sessions_screen.dart';
 import 'package:move_your_body/data/repositories/session_repository.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 

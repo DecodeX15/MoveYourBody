@@ -6,6 +6,7 @@ import 'package:move_your_body/ui/home/view_models/quick_plan_view_model.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/domain/models/quick_plan_data.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class MockQuickPlanRepository extends Mock implements QuickPlanRepository {}
 

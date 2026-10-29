@@ -28,7 +28,7 @@ class SessionDetailsViewModel extends _$SessionDetailsViewModel {
         return;
       }
 
-      final exerciseRepo = ref.read(exerciseRepositoryProvider);
+      final exerciseRepo = ref.read(exerciseRepositoryProvider.notifier);
       final exerciseIds = session.exercises.map((e) => e.exerciseId).toList();
       final exercises = await exerciseRepo.getExercisesByIds(exerciseIds);
 
@@ -67,5 +67,5 @@ class SessionDetailsViewModel extends _$SessionDetailsViewModel {
 
 @riverpod
 Future<File> animationFile(Ref ref, String url) async {
-  return await ref.read(exerciseRepositoryProvider).getAnimationFile(url);
+  return await ref.read(exerciseRepositoryProvider.notifier).getAnimationFile(url);
 }

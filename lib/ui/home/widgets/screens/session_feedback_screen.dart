@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
-import 'package:move_your_body/ui/common/feature_chip.dart';
-import 'package:move_your_body/domain/models/session_execution_state.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
+import 'package:move_your_body/ui/core/feature_chip.dart';
 import 'package:move_your_body/ui/home/view_models/session_execution_view_model.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class SessionFeedbackScreen extends ConsumerStatefulWidget {
   final int sessionId;

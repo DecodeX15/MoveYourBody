@@ -5,8 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:record/record.dart';
-
-enum VoiceCommand { resume, pause, skip }
+import 'package:move_your_body/domain/models/enums/voice_command_enums.dart';
 
 final voiceCommandDetectorProvider = Provider<VoiceCommandDetector>((ref) {
   final detector = VoiceCommandDetector();

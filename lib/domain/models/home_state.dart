@@ -10,10 +10,8 @@ abstract class HomeState with _$HomeState {
     required DateTime selectedDate,
     required List<DateTime> currentWeekDays,
     @Default([]) List<Exercise> recommendedExercises,
-    @Default(false) bool isLoading,
     @Default(false) bool isCreatingSession,
     Session? currentSession,
     @Default(false) bool hasIncompleteSession,
-    String? errorMessage,
   }) = _HomeState;
 }

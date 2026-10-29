@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
-import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/data/repositories/session_repository.dart';
 import 'package:move_your_body/utils/calorie_calculator.dart';
 import 'package:move_your_body/data/services/tts_service.dart';
@@ -9,6 +8,9 @@ import 'package:move_your_body/ui/home/view_models/session_details_view_model.da
 import 'package:move_your_body/data/repositories/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:move_your_body/domain/models/session_execution_state.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
+import 'package:move_your_body/domain/models/enums/voice_command_enums.dart';
 
 part 'generated/session_execution_view_model.g.dart';
 
@@ -261,7 +263,7 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
     }
 
     final sessionRepo = ref.read(sessionRepositoryProvider);
-    final userRepo = ref.read(userRepositoryProvider);
+    final userRepo = ref.read(userRepositoryProvider.notifier);
 
     final caloriesBurned = await _calculateEstimatedCalories();
 
@@ -336,7 +338,7 @@ class SessionExecutionViewModel extends _$SessionExecutionViewModel {
   }
 
   Future<double> _calculateEstimatedCalories() async {
-    final userRepo = ref.read(userRepositoryProvider);
+    final userRepo = ref.read(userRepositoryProvider.notifier);
     final userData = await userRepo.getUserData();
     if (userData == null) return 0.0;
 

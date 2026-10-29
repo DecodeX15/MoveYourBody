@@ -1,16 +1,20 @@
 import 'dart:typed_data';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/data/database/tables/user_table.dart';
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:move_your_body/data/database/tables/tags_table.dart';
 import 'package:move_your_body/domain/models/tag_data.dart';
 import 'package:move_your_body/utils/cosine_similairty.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:move_your_body/domain/models/enums/tag_enums.dart';
 
-final tagRepositoryProvider = Provider<TagRepository>((ref) {
+part 'generated/tag_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+TagRepository tagRepository(Ref ref) {
   final dbService = ref.read(databaseServiceProvider);
   return TagRepository(dbService);
-});
+}
 
 class TagRepository {
   final DatabaseService _dbService;

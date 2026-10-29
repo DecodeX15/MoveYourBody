@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/ui/home/view_models/search_view_model.dart';
 import 'package:move_your_body/ui/home/widgets/search/search_exercise_tile.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});

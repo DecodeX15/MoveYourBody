@@ -1,9 +1,7 @@
 import 'package:move_your_body/data/database/tables/session_exercises_table.dart';
 import 'package:move_your_body/data/database/tables/session_schedule_table.dart';
+import 'enums/session_enums.dart';
 
-enum SessionStatus { created, inProgress, completed }
-
-enum ExerciseStatus { notStarted, completed, skipped }
 
 class SessionExercise {
   final int? id;

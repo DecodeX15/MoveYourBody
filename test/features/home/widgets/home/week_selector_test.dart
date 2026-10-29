@@ -12,7 +12,7 @@ class FakeHomeViewModel extends HomeViewModel {
   FakeHomeViewModel(this.initialState);
 
   @override
-  HomeState build() => initialState;
+  Future<HomeState> build() async => initialState;
 }
 
 void main() {

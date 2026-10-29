@@ -1,14 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
+import 'enums/session_enums.dart';
+
 
 part 'generated/session_execution_state.freezed.dart';
-
-enum ExecutionPhase { preparation, workout, rest, finished }
-
-enum DifficultyFeedback { easy, medium, hard }
-
-enum IntensityFeedback { light, medium, high }
 
 @freezed
 abstract class SessionExecutionState with _$SessionExecutionState {

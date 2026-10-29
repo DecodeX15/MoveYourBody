@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 import 'animation_preview.dart';
 import 'info_badges.dart';
 import 'section_card.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
 
 class ExerciseInfoBody extends StatelessWidget {
   final Exercise exercise;

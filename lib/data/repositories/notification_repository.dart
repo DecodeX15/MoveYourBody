@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final notificationRepositoryProvider = Provider<NotificationRepository>((ref) {
+part 'generated/notification_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+NotificationRepository notificationRepository(Ref ref) {
   return NotificationRepository();
-});
+}
 
 class NotificationRepository {
   static const String _keyNotificationTimes = 'notification_times';

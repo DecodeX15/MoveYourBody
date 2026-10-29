@@ -4,6 +4,7 @@ import 'package:move_your_body/data/repositories/stats_repository.dart';
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:move_your_body/data/database/tables/session_schedule_table.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 void main() {
   setUpAll(() {

@@ -6,7 +6,7 @@ part 'generated/exercise_info_view_model.g.dart';
 
 @riverpod
 Future<Exercise?> exerciseInfoViewModel(Ref ref, String exerciseId) async {
-  final repo = ref.read(exerciseRepositoryProvider);
+  final repo = ref.read(exerciseRepositoryProvider.notifier);
   final exercises = await repo.getExercisesByIds([exerciseId]);
   return exercises.isNotEmpty ? exercises.first : null;
 }

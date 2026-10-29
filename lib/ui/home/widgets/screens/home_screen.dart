@@ -12,7 +12,7 @@ import 'package:move_your_body/ui/home/widgets/home/week_selector.dart';
 // import 'package:move_your_body/ui/home/widgets/home/weekly_stats_card.dart';
 import 'package:move_your_body/ui/home/widgets/home/disclaimer_dialog.dart';
 import 'package:move_your_body/ui/onboarding/view_models/onboarding_view_model.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:move_your_body/routing/app_routes.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
-import 'package:move_your_body/ui/common/feature_chip.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
+import 'package:move_your_body/ui/core/feature_chip.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

@@ -11,20 +11,17 @@ class TodaySessionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeState = ref.watch(homeViewModelProvider);
+    final homeAsync = ref.watch(homeViewModelProvider);
 
     final size = MediaQuery.of(context).size;
     final scale = (size.width / 390).clamp(0.85, 1.25);
 
-    if (homeState.isLoading) {
-      return SizedBox(
+    return homeAsync.when(
+      loading: () => SizedBox(
         height: 220 * scale,
         child: const Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    if (homeState.errorMessage != null) {
-      return Container(
+      ),
+      error: (error, _) => Container(
         width: double.infinity,
         padding: EdgeInsets.all(20 * scale),
         decoration: BoxDecoration(
@@ -36,10 +33,9 @@ class TodaySessionCard extends ConsumerWidget {
           "Error loading recommendations",
           style: TextStyle(color: Colors.red.shade300, fontSize: 15 * scale),
         ),
-      );
-    }
-
-    final exercises = homeState.recommendedExercises;
+      ),
+      data: (homeState) {
+        final exercises = homeState.recommendedExercises;
 
     return Container(
       width: double.infinity,
@@ -230,6 +226,8 @@ class TodaySessionCard extends ConsumerWidget {
           ),
         ],
       ),
+    );
+      },
     );
   }
 }

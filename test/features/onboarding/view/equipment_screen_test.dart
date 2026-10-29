@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/ui/onboarding/widgets/equipment_screen.dart';
-import 'package:move_your_body/ui/common/button_card.dart';
+import 'package:move_your_body/ui/core/button_card.dart';
 
 void main() {
   Widget createWidgetUnderTest() {

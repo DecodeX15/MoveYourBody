@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:move_your_body/ui/onboarding/widgets/goal_screen.dart';
-import 'package:move_your_body/ui/common/feature_chip.dart';
+import 'package:move_your_body/ui/core/feature_chip.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}

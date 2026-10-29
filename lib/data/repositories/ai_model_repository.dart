@@ -1,14 +1,17 @@
 import 'dart:typed_data';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../services/onnx_service.dart';
-import '../services/tokenizer_service.dart';
 import 'package:flutter/material.dart';
+import 'package:move_your_body/data/services/onnx_service.dart';
+import 'package:move_your_body/data/services/tokenizer_service.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final aiModelRepositoryProvider = Provider<AiModelRepository>((ref) {
+part 'generated/ai_model_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+AiModelRepository aiModelRepository(Ref ref) {
   final onnxService = ref.read(onnxServiceProvider);
   final tokenizerService = ref.read(tokenizerServiceProvider);
   return AiModelRepository(onnxService, tokenizerService);
-});
+}
 
 class AiModelRepository {
   final OnnxService _onnxService;

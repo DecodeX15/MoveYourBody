@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 import 'package:move_your_body/ui/stats/view_models/past_session_details_view_model.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class PastSessionDetailsScreen extends ConsumerWidget {
   final int sessionId;

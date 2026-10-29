@@ -4,8 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:move_your_body/routing/app_routes.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
-import 'package:move_your_body/ui/common/app_scaffold.dart';
-import 'package:move_your_body/domain/models/session_execution_state.dart';
+import 'package:move_your_body/ui/core/app_scaffold.dart';
 import 'package:move_your_body/ui/home/view_models/session_execution_view_model.dart';
 import 'package:move_your_body/ui/home/widgets/session_execution/execution_controls.dart';
 import 'package:move_your_body/ui/home/widgets/session_execution/execution_top_bar.dart';
@@ -13,6 +12,7 @@ import 'package:move_your_body/ui/home/widgets/session_execution/phase_indicator
 import 'package:move_your_body/ui/home/widgets/session_execution/exercise_name_display.dart';
 import 'package:move_your_body/ui/home/widgets/session_execution/execution_animation_box.dart';
 import 'package:move_your_body/ui/home/widgets/session_execution/execution_timer.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class SessionExecutionScreen extends ConsumerWidget {
   final int sessionId;

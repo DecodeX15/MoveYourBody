@@ -60,7 +60,7 @@ final class SessionDetailsViewModelProvider
 }
 
 String _$sessionDetailsViewModelHash() =>
-    r'2e92604d1f01987dc7283babca5cf65cd3e25bbe';
+    r'e4b2cbea1db6f699efb27c95a95f65961bd6244f';
 
 final class SessionDetailsViewModelFamily extends $Family
     with
@@ -158,7 +158,7 @@ final class AnimationFileProvider
   }
 }
 
-String _$animationFileHash() => r'b49aaa04a807a634bdb85ade7d6ced8af59f96b3';
+String _$animationFileHash() => r'd9027b4237c1b2265e0b21b1d9c2ef6e9f8ea5c2';
 
 final class AnimationFileFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<File>, String> {

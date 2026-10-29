@@ -7,6 +7,8 @@ import 'package:move_your_body/data/repositories/session_repository.dart';
 import 'package:move_your_body/data/repositories/exercise_repository.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 
@@ -25,7 +27,7 @@ void main() {
     return ProviderScope(
       overrides: [
         sessionRepositoryProvider.overrideWithValue(mockSessionRepo),
-        exerciseRepositoryProvider.overrideWithValue(mockExerciseRepo),
+        exerciseRepositoryProvider.overrideWith(() => mockExerciseRepo),
       ],
       child: MaterialApp(home: PastSessionDetailsScreen(sessionId: sessionId)),
     );

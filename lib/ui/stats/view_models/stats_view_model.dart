@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/data/repositories/session_repository.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 part 'generated/stats_view_model.g.dart';
 

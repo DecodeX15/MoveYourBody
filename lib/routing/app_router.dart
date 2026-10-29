@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:move_your_body/ui/common/custom_bottom_navbar.dart';
-import 'package:move_your_body/ui/common/loading_screen.dart';
+import 'package:move_your_body/ui/core/custom_bottom_navbar.dart';
+import 'package:move_your_body/ui/core/loading_screen.dart';
 import 'package:move_your_body/ui/home/widgets/screens/home_screen.dart';
 import 'package:move_your_body/ui/home/widgets/screens/session_details_screen.dart';
 import 'package:move_your_body/ui/home/widgets/screens/exercise_info_screen.dart';

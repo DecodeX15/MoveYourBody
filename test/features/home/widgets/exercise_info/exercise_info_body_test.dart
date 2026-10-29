@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:move_your_body/ui/home/widgets/exercise_info/exercise_info_body.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
+import 'package:move_your_body/domain/models/enums/exercise_enums.dart';
 
 class MockExercise extends Mock implements Exercise {}
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:move_your_body/utils/theme/app_themes.dart';
-import 'package:move_your_body/domain/models/session_execution_state.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class PhaseIndicator extends StatelessWidget {
   final ExecutionPhase phase;

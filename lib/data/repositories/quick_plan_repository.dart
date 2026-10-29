@@ -1,19 +1,23 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:move_your_body/data/database/tables/exercise_table.dart';
 import 'package:move_your_body/data/database/tables/quick_plan_table.dart';
 import 'package:move_your_body/data/database/tables/session_exercises_table.dart';
 import 'package:move_your_body/data/database/tables/session_schedule_table.dart';
+import 'package:move_your_body/data/database/tables/user_table.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'package:move_your_body/domain/models/quick_plan_data.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
-
 import 'package:move_your_body/domain/models/user_data.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
-final quickPlanRepositoryProvider = Provider<QuickPlanRepository>((ref) {
+part 'generated/quick_plan_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+QuickPlanRepository quickPlanRepository(Ref ref) {
   return QuickPlanRepository(dbService: ref.read(databaseServiceProvider));
-});
+}
 
 class QuickPlanRepository {
   final DatabaseService _dbService;
@@ -21,9 +25,9 @@ class QuickPlanRepository {
   QuickPlanRepository({required DatabaseService dbService})
     : _dbService = dbService;
 
-  static const int _exercisesPerPlan = 12;
+  final int _exercisesPerPlan = 12;
 
-  static const List<QuickPlanDefinition> plans = [
+  final List<QuickPlanDefinition> plans = const [
     QuickPlanDefinition(
       planId: 1,
       name: 'Fat Burn Blast',
@@ -119,7 +123,7 @@ class QuickPlanRepository {
         whereArgs: presetPlanIds,
       );
 
-      final userRecords = await _dbService.getUserRecords();
+      final userRecords = await _dbService.queryUserDb(UserTable.tableName);
       if (userRecords.isEmpty) return;
       final userData = UserData.fromMap(userRecords.first);
 
