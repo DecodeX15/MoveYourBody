@@ -1,3 +1,5 @@
+import 'package:move_your_body/domain/models/quick_plan_data.dart';
+
 class AppConstants {
   AppConstants._();
   static const double bottomNavBarSpacing = 100.0;
@@ -15,6 +17,11 @@ class AppAssets {
   static const String exercisesDb = 'assets/exercises.db';
   static const String exercisesDbName = 'exercises.db';
   static const String userDbName = 'move_your_body.db';
+  static const String quickPlanFatBurn = 'assets/images/fat_burn_blast.png';
+  static const String quickPlanCoreCrusher = 'assets/images/core_crusher.png';
+  static const String quickPlanUpperBody = 'assets/images/upper_body_power.png';
+  static const String quickPlanLowerBody = 'assets/images/lower_body_sculpt.png';
+  static const String quickPlanYogaStretch = 'assets/images/yoga_and_stretch.png';
 }
 
 class AiConstants {
@@ -64,4 +71,51 @@ class DbPreferencesKeys {
   DbPreferencesKeys._();
   static const String copiedExercisesDbVersion = 'copied_exercises_db_version';
   static const String disclaimerAccepted = 'disclaimer_accepted';
+}
+
+class QuickPlanConstants {
+  QuickPlanConstants._();
+  static const int exercisesPerPlan = 12;
+  static const List<QuickPlanDefinition> presetPlans = [
+    QuickPlanDefinition(
+      planId: 1,
+      name: 'Fat Burn Blast',
+      description: 'High-intensity cardio to torch calories fast',
+      imagePath: AppAssets.quickPlanFatBurn,
+      goalTagFilters: ['fat_burn', 'cardio', 'conditioning'],
+      bodyRegionFilters: ['cardio_and_endurance'],
+    ),
+    QuickPlanDefinition(
+      planId: 2,
+      name: 'Core Crusher',
+      description: 'Build a strong and stable core',
+      imagePath: AppAssets.quickPlanCoreCrusher,
+      goalTagFilters: ['core', 'core_strength', 'core_stability'],
+      bodyRegionFilters: ['core'],
+    ),
+    QuickPlanDefinition(
+      planId: 3,
+      name: 'Upper Body Power',
+      description: 'Strengthen your chest, arms & shoulders',
+      imagePath: AppAssets.quickPlanUpperBody,
+      goalTagFilters: ['upper_body', 'strength'],
+      bodyRegionFilters: ['upper_body'],
+    ),
+    QuickPlanDefinition(
+      planId: 4,
+      name: 'Lower Body Sculpt',
+      description: 'Build powerful legs and glutes',
+      imagePath: AppAssets.quickPlanLowerBody,
+      goalTagFilters: ['lower_body_strength', 'glutes', 'strength'],
+      bodyRegionFilters: ['lower_body'],
+    ),
+    QuickPlanDefinition(
+      planId: 5,
+      name: 'Yoga & Stretch',
+      description: 'Relax, restore and improve flexibility',
+      imagePath: AppAssets.quickPlanYogaStretch,
+      goalTagFilters: ['flexibility', 'stress_relief', 'mobility'],
+      bodyRegionFilters: ['mobility_and_flexibility'],
+    ),
+  ];
 }

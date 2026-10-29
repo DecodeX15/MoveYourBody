@@ -45,6 +45,7 @@ class AddWorkoutScreen extends ConsumerWidget {
                     return const Center(
                       child: Text(
                         "You haven't created any custom plans yet.",
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: AppColors.textSecondary),
                       ),
                     );
@@ -80,6 +81,7 @@ class AddWorkoutScreen extends ConsumerWidget {
                             ),
                           ),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(12),

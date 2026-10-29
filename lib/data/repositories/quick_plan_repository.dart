@@ -10,6 +10,7 @@ import 'package:move_your_body/domain/models/quick_plan_data.dart';
 import 'package:move_your_body/domain/models/session_data.dart';
 
 import 'package:move_your_body/domain/models/user_data.dart';
+import 'package:move_your_body/utils/constants/app_constants.dart';
 
 final quickPlanRepositoryProvider = Provider<QuickPlanRepository>((ref) {
   return QuickPlanRepository(dbService: ref.read(databaseServiceProvider));
@@ -21,50 +22,9 @@ class QuickPlanRepository {
   QuickPlanRepository({required DatabaseService dbService})
     : _dbService = dbService;
 
-  static const int _exercisesPerPlan = 12;
+  static const int _exercisesPerPlan = QuickPlanConstants.exercisesPerPlan;
 
-  static const List<QuickPlanDefinition> plans = [
-    QuickPlanDefinition(
-      planId: 1,
-      name: 'Fat Burn Blast',
-      description: 'High-intensity cardio to torch calories fast',
-      imagePath: 'assets/images/fat_burn_blast.png',
-      goalTagFilters: ['fat_burn', 'cardio', 'conditioning'],
-      bodyRegionFilters: ['cardio_and_endurance'],
-    ),
-    QuickPlanDefinition(
-      planId: 2,
-      name: 'Core Crusher',
-      description: 'Build a strong and stable core',
-      imagePath: 'assets/images/core_crusher.png',
-      goalTagFilters: ['core', 'core_strength', 'core_stability'],
-      bodyRegionFilters: ['core'],
-    ),
-    QuickPlanDefinition(
-      planId: 3,
-      name: 'Upper Body Power',
-      description: 'Strengthen your chest, arms & shoulders',
-      imagePath: 'assets/images/upper_body_power.png',
-      goalTagFilters: ['upper_body', 'strength'],
-      bodyRegionFilters: ['upper_body'],
-    ),
-    QuickPlanDefinition(
-      planId: 4,
-      name: 'Lower Body Sculpt',
-      description: 'Build powerful legs and glutes',
-      imagePath: 'assets/images/lower_body_sculpt.png',
-      goalTagFilters: ['lower_body_strength', 'glutes', 'strength'],
-      bodyRegionFilters: ['lower_body'],
-    ),
-    QuickPlanDefinition(
-      planId: 5,
-      name: 'Yoga & Stretch',
-      description: 'Relax, restore and improve flexibility',
-      imagePath: 'assets/images/yoga_and_stretch.png',
-      goalTagFilters: ['flexibility', 'stress_relief', 'mobility'],
-      bodyRegionFilters: ['mobility_and_flexibility'],
-    ),
-  ];
+  static const List<QuickPlanDefinition> plans = QuickPlanConstants.presetPlans;
 
   Future<List<QuickPlan>> fetchAllPlans() async {
     try {
