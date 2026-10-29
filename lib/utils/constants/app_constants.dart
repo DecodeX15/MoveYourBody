@@ -20,8 +20,10 @@ class AppAssets {
   static const String quickPlanFatBurn = 'assets/images/fat_burn_blast.png';
   static const String quickPlanCoreCrusher = 'assets/images/core_crusher.png';
   static const String quickPlanUpperBody = 'assets/images/upper_body_power.png';
-  static const String quickPlanLowerBody = 'assets/images/lower_body_sculpt.png';
-  static const String quickPlanYogaStretch = 'assets/images/yoga_and_stretch.png';
+  static const String quickPlanLowerBody =
+      'assets/images/lower_body_sculpt.png';
+  static const String quickPlanYogaStretch =
+      'assets/images/yoga_and_stretch.png';
 }
 
 class AiConstants {
