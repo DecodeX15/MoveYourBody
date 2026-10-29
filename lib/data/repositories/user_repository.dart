@@ -27,7 +27,10 @@ class UserRepository extends _$UserRepository {
   }
 
   Future<void> saveUser(UserData user) async {
-    final existing = await _dbService.queryUserDb(UserTable.tableName, limit: 1);
+    final existing = await _dbService.queryUserDb(
+      UserTable.tableName,
+      limit: 1,
+    );
     if (existing.isNotEmpty) {
       final id = existing.first[UserTable.id];
       await _dbService.updateUserDb(
@@ -37,10 +40,10 @@ class UserRepository extends _$UserRepository {
         whereArgs: [id],
       );
     } else {
-      await _dbService.insertUserDb(
-        UserTable.tableName,
-        {...user.toMap(), UserTable.id: 1},
-      );
+      await _dbService.insertUserDb(UserTable.tableName, {
+        ...user.toMap(),
+        UserTable.id: 1,
+      });
     }
     try {
       state = AsyncData(user);
@@ -67,10 +70,7 @@ class UserRepository extends _$UserRepository {
       final current = state.asData?.value;
       if (current != null) {
         state = AsyncData(
-          current.copyWith(
-            difficulty: newDifficulty,
-            intensity: newIntensity,
-          ),
+          current.copyWith(difficulty: newDifficulty, intensity: newIntensity),
         );
       }
     } catch (_) {}

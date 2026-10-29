@@ -1,6 +1,6 @@
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:move_your_body/data/repositories/quick_plan_repository.dart';
 import 'package:move_your_body/domain/models/quick_plan_data.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -10,6 +10,7 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
+    SharedPreferences.setMockInitialValues({});
   });
 
   group('QuickPlanRepository', () {

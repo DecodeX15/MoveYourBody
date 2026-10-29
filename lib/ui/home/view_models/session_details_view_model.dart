@@ -67,5 +67,7 @@ class SessionDetailsViewModel extends _$SessionDetailsViewModel {
 
 @riverpod
 Future<File> animationFile(Ref ref, String url) async {
-  return await ref.read(exerciseRepositoryProvider.notifier).getAnimationFile(url);
+  return await ref
+      .read(exerciseRepositoryProvider.notifier)
+      .getAnimationFile(url);
 }

@@ -34,8 +34,5 @@ Future<PastSessionDetailsData> pastSessionDetails(
 
   final exerciseMap = {for (var e in exercises) e.exerciseId: e};
 
-  return PastSessionDetailsData(
-    session: session,
-    exerciseDetails: exerciseMap,
-  );
+  return PastSessionDetailsData(session: session, exerciseDetails: exerciseMap);
 }

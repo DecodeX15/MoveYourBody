@@ -18,6 +18,10 @@ class FakeHomeViewModel extends HomeViewModel {
 
   @override
   Future<HomeState> build() async {
+    if (initialAsync is AsyncError) {
+      state = initialAsync;
+      return Completer<HomeState>().future;
+    }
     return initialAsync.when(
       data: (data) => data,
       error: (e, st) => throw e,
@@ -50,7 +54,10 @@ void main() {
     testWidgets('shows error message when there is an error', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(createTestWidget(AsyncError('Error', StackTrace.empty)));
+      await tester.pumpWidget(
+        createTestWidget(AsyncError('Error', StackTrace.current)),
+      );
+      await tester.pump();
 
       expect(find.text('Error loading recommendations'), findsOneWidget);
     });
@@ -65,6 +72,7 @@ void main() {
       );
 
       await tester.pumpWidget(createTestWidget(AsyncData(state)));
+      await tester.pump();
 
       expect(
         find.text("No exercises available for today's session."),
@@ -90,6 +98,7 @@ void main() {
       );
 
       await tester.pumpWidget(createTestWidget(AsyncData(state)));
+      await tester.pump();
 
       expect(find.text('Squats'), findsOneWidget);
       expect(find.text('INTERMEDIATE'), findsOneWidget);
@@ -114,6 +123,7 @@ void main() {
       );
 
       await tester.pumpWidget(createTestWidget(AsyncData(state)));
+      await tester.pump();
 
       expect(find.text('Pushups'), findsOneWidget);
       expect(find.text('Resume Session'), findsOneWidget);

@@ -1,5 +1,6 @@
 import 'package:move_your_body/data/database/db_config.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:move_your_body/data/repositories/user_repository.dart';
 import 'package:move_your_body/domain/models/user_data.dart';
@@ -8,8 +9,10 @@ void main() {
   late UserRepository userRepository;
 
   setUpAll(() {
+    TestWidgetsFlutterBinding.ensureInitialized();
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
+    SharedPreferences.setMockInitialValues({});
     userRepository = UserRepository(DatabaseService());
   });
 

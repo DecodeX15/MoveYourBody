@@ -159,19 +159,11 @@ class HomeViewModel extends _$HomeViewModel {
           ),
         );
       } else {
-        state = AsyncData(
-          current.copyWith(
-            isCreatingSession: false,
-          ),
-        );
+        state = AsyncData(current.copyWith(isCreatingSession: false));
       }
       return session;
     } catch (e) {
-      state = AsyncData(
-        current.copyWith(
-          isCreatingSession: false,
-        ),
-      );
+      state = AsyncData(current.copyWith(isCreatingSession: false));
       return null;
     }
   }

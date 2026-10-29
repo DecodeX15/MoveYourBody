@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:move_your_body/data/database/tables/exercise_table.dart';
 import 'enums/exercise_enums.dart';
 
-
 class Exercise {
   final String exerciseId;
   final String name;

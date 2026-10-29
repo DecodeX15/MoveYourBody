@@ -35,6 +35,7 @@ void main() {
       );
 
       await tester.pumpWidget(createTestWidget(state));
+      await tester.pump();
 
       expect(find.byType(ListView), findsNothing);
     });
@@ -51,6 +52,7 @@ void main() {
       final state = HomeState(selectedDate: now, currentWeekDays: weekDays);
 
       await tester.pumpWidget(createTestWidget(state));
+      await tester.pump();
 
       expect(find.byType(ListView), findsOneWidget);
       final dayLabel = DateFormat('E').format(now)[0];

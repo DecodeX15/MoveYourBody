@@ -11,7 +11,14 @@ import 'package:move_your_body/domain/models/enums/session_enums.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 
-class MockExerciseRepository extends Mock implements ExerciseRepository {}
+class MockExerciseRepository extends ExerciseRepository with Mock {
+  @override
+  Future<List<Exercise>> build() async => [];
+
+  @override
+  Future<List<Exercise>> getExercisesByIds(List<String> exerciseIds) =>
+      super.noSuchMethod(Invocation.method(#getExercisesByIds, [exerciseIds]));
+}
 
 void main() {
   late MockSessionRepository mockSessionRepo;

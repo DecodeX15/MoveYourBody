@@ -2,7 +2,6 @@ import 'package:move_your_body/data/database/tables/session_exercises_table.dart
 import 'package:move_your_body/data/database/tables/session_schedule_table.dart';
 import 'enums/session_enums.dart';
 
-
 class SessionExercise {
   final int? id;
   final int sessionId;

@@ -3,7 +3,6 @@ import 'package:move_your_body/domain/models/session_data.dart';
 import 'package:move_your_body/domain/models/exercise_data.dart';
 import 'enums/session_enums.dart';
 
-
 part 'generated/session_execution_state.freezed.dart';
 
 @freezed

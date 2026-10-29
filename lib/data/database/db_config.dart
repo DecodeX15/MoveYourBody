@@ -25,14 +25,14 @@ class DatabaseService {
   late final Future<Database> _exercisesDatabaseFuture;
 
   DatabaseService() {
-    _userDatabaseFuture = _initDatabase();
+    _userDatabaseFuture = _initUserDatabase();
     _exercisesDatabaseFuture = _initExercisesDatabase();
   }
 
   Future<Database> get userDatabase => _userDatabaseFuture;
   Future<Database> get exercisesDatabase => _exercisesDatabaseFuture;
 
-  Future<List<Map<String, dynamic>>> queryUserDb(
+  Future<List<Map<String, Object?>>> queryUserDb(
     String table, {
     bool? distinct,
     List<String>? columns,
@@ -44,8 +44,8 @@ class DatabaseService {
     int? limit,
     int? offset,
   }) async {
-    final db = await _userDatabaseFuture;
-    return await db.query(
+    final db = await userDatabase;
+    return db.query(
       table,
       distinct: distinct,
       columns: columns,
@@ -61,22 +61,28 @@ class DatabaseService {
 
   Future<int> insertUserDb(
     String table,
-    Map<String, dynamic> values, {
+    Map<String, Object?> values, {
+    String? nullColumnHack,
     ConflictAlgorithm? conflictAlgorithm,
   }) async {
-    final db = await _userDatabaseFuture;
-    return await db.insert(table, values, conflictAlgorithm: conflictAlgorithm);
+    final db = await userDatabase;
+    return db.insert(
+      table,
+      values,
+      nullColumnHack: nullColumnHack,
+      conflictAlgorithm: conflictAlgorithm,
+    );
   }
 
   Future<int> updateUserDb(
     String table,
-    Map<String, dynamic> values, {
+    Map<String, Object?> values, {
     String? where,
     List<Object?>? whereArgs,
     ConflictAlgorithm? conflictAlgorithm,
   }) async {
-    final db = await _userDatabaseFuture;
-    return await db.update(
+    final db = await userDatabase;
+    return db.update(
       table,
       values,
       where: where,
@@ -90,27 +96,27 @@ class DatabaseService {
     String? where,
     List<Object?>? whereArgs,
   }) async {
-    final db = await _userDatabaseFuture;
-    return await db.delete(table, where: where, whereArgs: whereArgs);
+    final db = await userDatabase;
+    return db.delete(table, where: where, whereArgs: whereArgs);
   }
 
-  Future<List<Map<String, dynamic>>> rawQueryUserDb(
+  Future<List<Map<String, Object?>>> rawQueryUserDb(
     String sql, [
     List<Object?>? arguments,
   ]) async {
-    final db = await _userDatabaseFuture;
-    return await db.rawQuery(sql, arguments);
+    final db = await userDatabase;
+    return db.rawQuery(sql, arguments);
   }
 
   Future<T> transactionUserDb<T>(
     Future<T> Function(Transaction txn) action, {
     bool? exclusive,
   }) async {
-    final db = await _userDatabaseFuture;
-    return await db.transaction<T>(action, exclusive: exclusive);
+    final db = await userDatabase;
+    return db.transaction(action, exclusive: exclusive);
   }
 
-  Future<List<Map<String, dynamic>>> queryExercisesDb(
+  Future<List<Map<String, Object?>>> queryExercisesDb(
     String table, {
     bool? distinct,
     List<String>? columns,
@@ -123,7 +129,7 @@ class DatabaseService {
     int? offset,
   }) async {
     final db = await exercisesDatabase;
-    return await db.query(
+    return db.query(
       table,
       distinct: distinct,
       columns: columns,
@@ -137,17 +143,20 @@ class DatabaseService {
     );
   }
 
-  Future<List<Map<String, dynamic>>> rawQueryExercisesDb(
+  Future<List<Map<String, Object?>>> rawQueryExercisesDb(
     String sql, [
     List<Object?>? arguments,
   ]) async {
     final db = await exercisesDatabase;
-    return await db.rawQuery(sql, arguments);
+    return db.rawQuery(sql, arguments);
   }
 
-  Future<Database> _initDatabase() async {
-    final path = join(await getDatabasesPath(), 'move_your_body.db');
+  Future<Database> _initUserDatabase() async {
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'move_your_body.db');
+
     debugPrint('DB PATH: $path');
+
     return openDatabase(
       path,
       version: 8,
@@ -178,17 +187,21 @@ class DatabaseService {
         }
         if (oldVersion < 6) {
           await db.execute(
-            'ALTER TABLE session_schedule ADD COLUMN quick_plan_id INTEGER',
+            'ALTER TABLE user_data ADD COLUMN goal_embeddings BLOB',
+          );
+          await db.execute(
+            'ALTER TABLE user_data ADD COLUMN health_issue_embeddings BLOB',
           );
         }
         if (oldVersion < 7) {
+          await db.execute('ALTER TABLE session_schedule ADD COLUMN mood TEXT');
           await db.execute(
-            'ALTER TABLE quick_plans ADD COLUMN image_path TEXT',
+            'ALTER TABLE session_schedule ADD COLUMN notes TEXT',
           );
         }
         if (oldVersion < 8) {
           await db.execute(
-            'ALTER TABLE quick_plans ADD COLUMN is_custom INTEGER NOT NULL DEFAULT 0',
+            'ALTER TABLE session_schedule ADD COLUMN session_type TEXT',
           );
         }
       },
@@ -196,8 +209,8 @@ class DatabaseService {
   }
 
   Future<Database> _initExercisesDatabase() async {
-    final dbDirectory = await getDatabasesPath();
-    final dbPath = join(dbDirectory, 'exercises.db');
+    final databasesPath = await getDatabasesPath();
+    final dbPath = join(databasesPath, 'exercises.db');
 
     await _copyExercisesDatabaseIfNeeded(dbPath);
 
@@ -207,14 +220,19 @@ class DatabaseService {
   }
 
   Future<void> _copyExercisesDatabaseIfNeeded(String dbPath) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final copiedVersion = prefs.getInt('copied_exercises_db_version') ?? 0;
+    SharedPreferences? prefs;
+    int copiedVersion = 0;
+    try {
+      prefs = await SharedPreferences.getInstance();
+      copiedVersion =
+          prefs.getInt(DbPreferencesKeys.copiedExercisesDbVersion) ?? 0;
+    } catch (_) {}
 
     final dbFile = File(dbPath);
 
     final shouldCopy =
-        !await dbFile.exists() || copiedVersion < AppConstants.exercisesDbVersion;
+        !await dbFile.exists() ||
+        copiedVersion < AppConstants.exercisesDbVersion;
 
     if (!shouldCopy) {
       debugPrint('Exercises database already up to date.');
@@ -225,9 +243,11 @@ class DatabaseService {
 
     await dbFile.parent.create(recursive: true);
 
-    if (await dbFile.exists()) {
-      await dbFile.delete();
-    }
+    try {
+      if (await dbFile.exists()) {
+        await dbFile.delete();
+      }
+    } catch (_) {}
 
     final data = await rootBundle.load('assets/exercises.db');
 
@@ -235,11 +255,15 @@ class DatabaseService {
 
     await dbFile.writeAsBytes(bytes, flush: true);
 
-    await prefs.setInt(
-      DbPreferencesKeys.copiedExercisesDbVersion,
-      AppConstants.exercisesDbVersion,
-    );
+    try {
+      await prefs?.setInt(
+        DbPreferencesKeys.copiedExercisesDbVersion,
+        AppConstants.exercisesDbVersion,
+      );
+    } catch (_) {}
 
-    debugPrint('Exercises database copied at version ${AppConstants.exercisesDbVersion}');
+    debugPrint(
+      'Exercises database copied at version ${AppConstants.exercisesDbVersion}',
+    );
   }
 }
